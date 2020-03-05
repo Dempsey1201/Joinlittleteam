@@ -1,6 +1,8 @@
 <template>
     <div id="app">
-        <el-button>默认按钮</el-button>
+        <a href="http://localhost:8081/user.html">
+            <el-button type="primary" icon="el-icon-edit" circle></el-button>
+        </a>
     </div>
 </template>
 <script>

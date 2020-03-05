@@ -1,14 +1,24 @@
 module.exports = {
 	pages:{
-		page1:{
-			entry:"./src/user/main.js",
+		student:{
+			entry:"./src/pages/student/main.js",
 			template:"./public/index.html",
-			filename:"user.html"
+			filename:"student.html"
 		},
-		page2:{
-			entry:"./src/manager/main.js",
+		manager:{
+			entry:"./src/pages/manager/main.js",
 			template:"./public/index.html",
 			filename:"manager.html"
-		}
+		},
+		teacher:{
+			entry:"./src/pages/teacher/main.js",
+			template:"./public/index.html",
+			filename:"teacher.html"
+		},
+		login:{
+			entry:"./src/pages/login/main.js",
+			template:"./public/index.html",
+			filename:"login.html"
+		},
 	}
 }
