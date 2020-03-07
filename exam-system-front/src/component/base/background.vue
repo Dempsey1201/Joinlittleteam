@@ -1,5 +1,5 @@
 <template>
-    <canvas id="nokey" width="800" height="800" ref="canvasBg">
+    <canvas width="800" height="800" ref="canvasBg">
         Your Browser Don't Support Canvas, Please Download Chrome ^_^``
     </canvas>
 </template>
@@ -20,17 +20,12 @@
 					alpha: 1,//小球初始的透明度
 					phase: 0//用phase控制 alpha 的值的变化 phase 是弧度数
 				},
-				ball_color: {//小球颜色，加上 alpha 就有了透明度
-					r: 230,
-					g: 162,
-					b: 60
-				},
-				R:2,//设定所有小球半径为2
+				R:4,//设定所有小球半径为2
 				balls:[],//放小球的数组
 				new_balls:[],//更新小球的数组
 				alpha_f: 0.03,
 				alpha_phase:0,//连线属性
-				link_line_width:1,
+				link_line_width:0.5,
 				dis_limit:100,//距离100连线
 				add_mouse_point:true,//鼠标小球
 				mouse_in:false,
@@ -44,9 +39,18 @@
 				},
                 num:80
 			}
-		}
+		},
+		props:{
+			ball_color: {//小球颜色，加上 alpha 就有了透明度
+				type: Object
+			},
+            bg_color:{
+				type:String
+            }
+        }
 		, mounted() {
 			this.ctx = this.$refs.canvasBg.getContext('2d')
+			this.$refs.canvasBg.style.backgroundColor = this.bg_color;
 			this.resize();
 			window.addEventListener("resize", () => {
 				this.can_w = window.innerWidth;//canvas 的宽
@@ -68,8 +72,6 @@
 					}
 				})
 				this.balls = new_balls.slice(0)//过滤掉 mouse_ball
-				console.log(this.balls);
-
 			})
 			document.addEventListener("mousemove",(e)=>{
 				this.mouse_ball.x = e.pageX;
@@ -82,6 +84,7 @@
 				this.can_h = window.innerHeight;
 				this.$refs.canvasBg.setAttribute("width", this.can_w + "px")
 				this.$refs.canvasBg.setAttribute("height", this.can_h + "px")
+
             },
 			//生成min-max随机数
 	        randomNumFrom(min, max) {
@@ -211,7 +214,7 @@
 					        // fraction 越大说明距离越远，那么连线透明度应该越低
 					        alpha = 1 - fraction;
 
-					        this.ctx.strokeStyle = 'rgba(250,236,216,'+alpha+')';
+					        this.ctx.strokeStyle = `rgba(${this.ball_color.r},${this.ball_color.g},${this.ball_color.b},${alpha})`;
 					        this.ctx.lineWidth = this.link_line_width//线宽
 
 					        this.ctx.beginPath();
@@ -249,7 +252,10 @@
 
 <style scoped>
     canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
         display: block;
-        background-color:  transparent;
     }
 </style>
