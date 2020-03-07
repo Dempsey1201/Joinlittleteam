@@ -25,16 +25,15 @@
                 <el-menu
                         :default-active="activeIndex"
                         class="el-menu-demo" mode="horizontal"
+                        router="true"
                 >
-                    <el-menu-item index="1" class="nav">
-                        <router-link class="tag" tag="div" to="/login.html/login">
-                            登陆
-                        </router-link>
+                    <el-menu-item index="/login.html/login" class="nav">
+                        <router-link class="tag" tag="div" to="">
+                        登陆
+                    </router-link>
                     </el-menu-item>
-                    <el-menu-item index="2" class="nav">
-                        <router-link class="tag" tag="div" to="/login.html/register">
-                            注册
-                        </router-link>
+                    <el-menu-item index="/login.html/register" class="nav">
+                        注册
                     </el-menu-item>
                 </el-menu>
                 <router-view></router-view>
@@ -110,13 +109,7 @@
                     border-radius:10px;
                     min-width: 300px !important;
                     .nav{
-                        padding: 0 !important;
-                        width: 60px;
                         text-align: center;
-                    }
-                    .tag{
-                        width: 100%;
-                        height: 100%;
                     }
                 }
 

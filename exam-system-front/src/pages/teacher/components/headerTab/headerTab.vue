@@ -1,28 +1,28 @@
 <template>
     <div id="headerTab">
         <transition name="el-zoom-in-center">
-            <tab class="showTab" v-show="showTabData"></tab>
+            <tab class="showTab hidden-md-and-up" v-show="showTabData"></tab>
         </transition>
-        <el-menu class="el-menu-demo" mode="horizontal">
-            <el-menu-item index="5" class="hidden-md-and-up"
-                @click="showTab"
+        <el-menu class="el-menu-demo" mode="horizontal"
+                 background-color="rgba(255,255,255,0.5)"
+        >
+            <el-menu-item index="0"
+                          @click="hideIndex"
+                          disabled
+                          class="head"
+            >PTA考试系统</el-menu-item>
+
+            <el-menu-item index="1" class="hidden-md-and-up"
+                @click="showTab()"
             >
-                <i class="el-icon-s-unfold" ></i>
+                <i class="el-icon-s-unfold" v-if="showTabData"></i>
+                <i class="el-icon-s-fold" v-else></i>
             </el-menu-item>
-            <el-menu-item index="1">处理中心</el-menu-item>
-            <el-submenu index="2">
-                <template slot="title">我的工作台</template>
-                <el-menu-item index="2-1">选项1</el-menu-item>
-                <el-menu-item index="2-2">选项2</el-menu-item>
-                <el-menu-item index="2-3">选项3</el-menu-item>
-                <el-submenu index="2-4">
-                    <template slot="title">选项4</template>
-                    <el-menu-item index="2-4-1">选项1</el-menu-item>
-                    <el-menu-item index="2-4-2">选项2</el-menu-item>
-                    <el-menu-item index="2-4-3">选项3</el-menu-item>
-                </el-submenu>
-            </el-submenu>
-            <el-menu-item index="3" disabled>消息中心</el-menu-item>
+
+            <el-menu-item index="2"
+                 @click="hideIndex"
+            >处理中心</el-menu-item>
+            <el-menu-item index="3" @click="hideIndex">个人中心</el-menu-item>
         </el-menu>
     </div>
 </template>
@@ -33,7 +33,7 @@
 		name: "headerTab"
         ,data(){
 			return{
-				showTabData:false
+				showTabData:false,
             }
         }
         ,components:{
@@ -41,7 +41,10 @@
         },
         methods:{
 	        showTab(){
-		        this.showTabData = (this.showTabData ? false:true);
+		        this.showTabData = !this.showTabData;
+            },
+	        hideIndex(){
+		        this.showTabData = false
             }
         }
 	}
@@ -51,11 +54,19 @@
     .el-icon-s-unfold{
         font-size: 20px;
         cursor: pointer;
+        color: rgb(64, 158, 255) !important;
     }
     .showTab{
         position: absolute;
-        top: 0;
+        top: 60px;
         left: 0;
-        /*z-index: 10;*/
+        z-index: 10;
+    }
+    .head{
+        font-size: 35px !important;
+        cursor: default !important;
+        color: #409eff !important;
+        font-weight: bold !important;
+        opacity: 1 !important;
     }
 </style>

@@ -3,6 +3,7 @@
         <background :bg_color="bg_color" :ball_color="ball_color"></background>
         <el-container class="con">
             <el-header class="elHeader">
+                <!-- 头部导航 -->
                 <headerTab></headerTab>
             </el-header>
             <el-container>
@@ -10,10 +11,12 @@
                         width="250px"
                         class="hidden-sm-and-down"
                 >
+                    <!-- 左侧导航 -->
                     <tab></tab>
                 </el-aside>
                 <el-main>
-
+                    <!-- 中间内容区 -->
+                    <router-view></router-view>
                 </el-main>
             </el-container>
         </el-container>
