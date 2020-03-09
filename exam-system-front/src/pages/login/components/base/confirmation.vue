@@ -52,7 +52,6 @@
 
             this.restart();
 
-	        this.$refs.btn.style.left = "0px"
             document.addEventListener("mousemove",this.mousemove)
             document.addEventListener("mouseup",this.mouseup)
         },
@@ -63,7 +62,6 @@
 	            img.onload = ()=>{
 		            this.canvas_ctx.drawImage(img, 0, 0, this.w_, this.w_/2);
 		            this.block_ctx.drawImage(img, 0, 0, this.w_, this.w_/2);
-		            console.log(111);
 		            let blockWidth = this.w + this.r * 2;//滑块的宽度
 			        let _y = this.y - this.r * 2 + 2;// 滑块实际的y坐标
 			        let ImageData = this.block_ctx.getImageData(this.x, _y, blockWidth, blockWidth);
