@@ -6,7 +6,7 @@
         <el-form
                 ref="form"
                 :model="form"
-                label-width="70px"
+                label-width="80px"
                 :label-position="labelPosition"
                 :rules="rules"
         >
@@ -17,9 +17,9 @@
             <el-form-item label="密码" prop="password">
                 <el-input placeholder="请输入密码" v-model="form.password" show-password></el-input>
             </el-form-item>
-            <el-form-item label="选择身份">
-                <el-radio v-model="radio" label="1">学生</el-radio>
-                <el-radio v-model="radio" label="2">教师</el-radio>
+            <el-form-item label="选择身份" prop="radio">
+                <el-radio v-model="form.radio" label="1">学生</el-radio>
+                <el-radio v-model="form.radio" label="2">教师</el-radio>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submitForm('form')">立即登陆</el-button>
@@ -34,7 +34,7 @@
 	export default {
 		name: "login",
         data(){
-	        let validatePass2 = (rule, value, callback) => {
+	        let validatePass = (rule, value, callback) => {
 		        let reg1 = /[0-9]+/ //数字字母下划线
 		        let reg2 = /[,\.?~`!@#$%^&*(){}\[\]\-+/|\\]+///特殊字符
 		        let reg3 = /[A-z]+/
@@ -49,10 +49,10 @@
 			return{
 				form: {//表单数据内容
 					username: '',//用户名
-                    password: ''//密码
+                    password: '',//密码
+					radio:"1",// 1 为学生 2 为老师
 				},
 				labelPosition:"left",
-                radio:"1",// 1 为学生 2 为老师
                 coverShow:false,
                 rules:{
 					//表单基础验证内容
@@ -69,8 +69,15 @@
 		                    message: '请输入密码',
 		                    trigger: 'blur'
 	                    },
-                        { validator:validatePass2,trigger: 'blur'}
-                    ]
+                        { validator:validatePass,trigger: 'blur'}
+                    ],
+	                radio:[
+		                {
+			                required:true,
+			                message: '请选择身份',
+			                trigger: 'blur'
+		                }
+	                ]
                 }
             }
         },
