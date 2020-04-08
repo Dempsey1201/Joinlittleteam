@@ -1,12 +1,12 @@
 <template>
-    <div id="publishExam">
-        发布考试
+    <div id="searchExam">
+    
     </div>
 </template>
 
 <script>
 	export default {
-		name: "publishExam"
+		name: "searchExam"
 	}
 </script>
 

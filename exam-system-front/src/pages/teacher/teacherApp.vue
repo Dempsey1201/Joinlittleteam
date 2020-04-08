@@ -12,20 +12,27 @@
                         class="hidden-sm-and-down"
                 >
                     <!-- 左侧导航 -->
-                    <tab></tab>
+                    <tab :check="!bool"></tab>
                 </el-aside>
-                <el-main>
+                <el-aside
+                        width="64px"
+                        class="hidden-md-and-up"
+                >
+                    <!-- 左侧导航 -->
+                    <tab :check="bool"></tab>
+                </el-aside>
+                <el-main class="main-con">
                     <!-- 中间内容区 -->
-                    <router-view></router-view>
+                    <router-view class="main-content"></router-view>
                 </el-main>
             </el-container>
         </el-container>
     </div>
 </template>
 <script>
-    import tab from "./components/tab/tab";
+    import tab from "./components/tab";
     import background from "../../component/base/background";
-    import headerTab from "./components/headerTab/headerTab";
+    import headerTab from "./components/headerTab";
 	export default {
 		data () {
 			return {
@@ -35,6 +42,7 @@
 					b: 255
 				},
 				bg_color:"rgba(236, 245, 255,0.3)",//背景颜色
+                bool:true
 			};
 		},
         components:{
@@ -53,6 +61,9 @@
         height: 100%;
         /*overflow: hidden;*/
     }
+    textarea.el-textarea__inner{
+        resize:none;
+    }
     body {
         width: 100%;
         height: 100%;
@@ -64,6 +75,18 @@
                 height: 100%;
                 .elHeader{
                     padding: 0;
+                    height: 80px !important;
+                }
+                .main-con{
+                    padding: 20px;
+                    .main-content{
+                        box-sizing:border-box;
+                        padding: 20px;
+                        min-height: 100%;
+                        width: 100%;
+                        background-color: rgba(255, 255, 255, 0.74);
+                        box-shadow: 0 2px 12px 0 rgba(64, 158, 255, 0.18);
+                    }
                 }
             }
 
