@@ -7,6 +7,10 @@ package com.example.javaee.entity.classroom;
  */
 public class Classroom {
 
+    public int getId() {
+        return id;
+    }
+
     int id;
     String classname;
     String college;
