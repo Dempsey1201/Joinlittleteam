@@ -33,6 +33,7 @@
     import tab from "./components/tab";
     import background from "../../component/base/background";
     import headerTab from "./components/headerTab";
+    // import {teacherInfo,testPaper,stuGrade,classInfo} from "./api/getTeacherInfo"
 	export default {
 		data () {
 			return {
@@ -45,7 +46,26 @@
                 bool:true
 			};
 		},
-        components:{
+        created() {
+			// 创建的时候获取教师的所有信息，并存入 store 中
+            // 获取教师个人信息
+            // teacherInfo(12).then((res)=>{
+            // 	console.log(res);
+            // })
+            // // 获取班级管理信息
+            // classInfo(12).then(res=>{
+            // 	console.log(res);
+            // })
+            // // 获取试卷信息
+            // testPaper(12).then(res=>{
+            // 	console.log(res);
+            // })
+            // // 获取学生成绩信息
+            // stuGrade(12).then(res=>{
+            // 	console.log(res);
+            // })
+        },
+		components:{
 			tab,
             background,
             headerTab
@@ -63,6 +83,9 @@
     }
     textarea.el-textarea__inner{
         resize:none;
+    }
+    .el-select{
+        width: 100%;
     }
     body {
         width: 100%;

@@ -13,39 +13,30 @@
                     ></el-input>
                 </el-col>
             </el-form-item>
-            <el-form-item label="发布时间" required>
-                <el-row >
-                    <el-col :span="5">
-                        <el-form-item
-                                prop="startDate"
-                        >
-                            <el-date-picker
-                                    v-model="form.startDate"
-                                    type="date"
-                                    placeholder="选择日期"
-                                    style="margin-right: 15px;"
-                            >
-                            </el-date-picker>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="1"></el-col>
-                    <el-col :span="5">
-                        <el-form-item
-                                prop="startTime"
-                        >
-                            <el-time-select
-                                    v-model="form.startTime"
-                                    :picker-options="{
-                            start: '07:00',
-                            step: '00:15',
-                            end: '23:30'
-                        }"
-                                    placeholder="选择时间"
-                            >
-                            </el-time-select>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
+            <el-form-item label="选择班级" prop="selectClass">
+                <el-col :span="6">
+                    <el-select
+                            v-model="form.class"
+                            multiple
+                            filterable
+                            allow-create
+                            default-first-option
+                            placeholder="请选择班级">
+                        <el-option
+                                v-for="item in classInfo"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item.id">
+                        </el-option>
+                    </el-select>
+                </el-col>
+            </el-form-item>
+            <el-form-item label="发布时间" prop="startTime">
+                <el-date-picker
+                        v-model="form.startTime"
+                        type="datetime"
+                        placeholder="选择日期时间">
+                </el-date-picker>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submitForm('form')">立即创建</el-button>
@@ -54,17 +45,27 @@
     </div>
 </template>
 
+
 <script>
     import {mapGetters} from "vuex";
     import {mapActions} from "vuex";
 	export default {
 		name: "step1",
 		data() {
+			
+			let validateClass = (rule, value, callback) => {
+				if (!this.form.class.length) {
+					callback(new Error('请选择班级'));
+				} else {
+					callback();
+				}
+			};
+			
 			return {
 				form: {//表单数据内容
 					examName: "",//试卷名称
-					startDate: "",//开始日期
-					startTime: ""//开始时间
+					startTime: "",//开始日期时间
+                    class:[]
 				},
 				labelPosition: "left",
 				rules: {
@@ -76,25 +77,24 @@
 							trigger: 'blur'
 						}
 					],
-					startDate: [
-						{type: 'date', required: true, message: '请选择日期', trigger: 'blur'}
-					],
 					startTime: [
-						{type: 'string', required: true, message: '请选择时间', trigger: 'blur'}
+						{type: 'date', required: true, message: '请选择日期时间', trigger: 'blur'}
 					],
-				}
+					selectClass:[
+						{ validator:validateClass,required:true,trigger: 'blur'}
+                    ]
+				},
 			}
 		},
         computed:{
 			...mapGetters([
-				"newExamDetail"
+				"newExamDetail",
+                "classInfo"
             ]),
         },
         created() {
-	        this.from.examName=this.newExamDetail.examName;//试卷名称
-		    this.from.startDate=new Date(this.newExamDetail.startDate);//开始日期
-            this.from.startTime=this.newExamDetail.startTime;//开始时间
-            console.log("初始化")
+	        this.form.examName=this.newExamDetail.examName;//试卷名称
+		    this.form.startTime= this.newExamDetail.startTime ? new Date(this.newExamDetail.startTime):"";//开始日期
         },
 		methods: {
 			submitForm(formName) {
@@ -102,8 +102,8 @@
 					if (valid) {//表单验证成功
 						this.stepOne({
 							examName: this.form.examName,
-							startDate: this.form.startDate.toString(),
-							startTime: this.form.startTime,
+							startTime: this.form.startTime.toString(),
+                            className:this.form.class,
                             step:2// 当前是第一步，现在是第二部
 						})
 						// 跳转到下一环节
@@ -115,7 +115,6 @@
             ...mapActions([
 	            "stepOne"
             ]),
-            
 		}
 	}
 </script>
