@@ -9,12 +9,13 @@ public class Teacher {
 
     int id;
     String teachername;
+    String card;
     String email;
     String password;
     String sex;
     String college;
     String classno;
-    String HeadUrl;
+    String headUrl;
     String path;
     int status;
 
@@ -25,6 +26,14 @@ public class Teacher {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCard() {
+        return card;
+    }
+
+    public void setCard(String card) {
+        this.card = card;
     }
 
     public String getTeachername() {
@@ -76,11 +85,11 @@ public class Teacher {
     }
 
     public String getHeadUrl() {
-        return HeadUrl;
+        return headUrl;
     }
 
     public void setHeadUrl(String headUrl) {
-        HeadUrl = headUrl;
+        this.headUrl = headUrl;
     }
 
     public String getPath() {
@@ -99,17 +108,19 @@ public class Teacher {
         this.status = status;
     }
 
+
     @Override
     public String toString() {
         return "Teacher{" +
                 "id=" + id +
                 ", teachername='" + teachername + '\'' +
+                ", card='" + card + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", sex='" + sex + '\'' +
                 ", college='" + college + '\'' +
                 ", classno='" + classno + '\'' +
-                ", HeadUrl='" + HeadUrl + '\'' +
+                ", headUrl='" + headUrl + '\'' +
                 ", path='" + path + '\'' +
                 ", status=" + status +
                 '}';
