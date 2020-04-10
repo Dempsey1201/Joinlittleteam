@@ -14,7 +14,7 @@ public class User {
     String password;
     String email;
     String sex;
-    String HeadUrl;
+    String headUrl;
     String path;
     String classno;
     String college;
@@ -62,11 +62,11 @@ public class User {
     }
 
     public String getHeadUrl() {
-        return HeadUrl;
+        return headUrl;
     }
 
     public void setHeadUrl(String headUrl) {
-        HeadUrl = headUrl;
+        this.headUrl = headUrl;
     }
 
     public String getPath() {
@@ -109,7 +109,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", sex='" + sex + '\'' +
-                ", HeadUrl='" + HeadUrl + '\'' +
+                ", HeadUrl='" + headUrl + '\'' +
                 ", path='" + path + '\'' +
                 ", classno='" + classno + '\'' +
                 ", college='" + college + '\'' +
