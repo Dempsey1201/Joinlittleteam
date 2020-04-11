@@ -10,6 +10,7 @@ public class Classroom {
     int id;
     String classname;
     String college;
+    String major;
     int teacherno;
     String teachername;
     String studentno;
@@ -38,6 +39,14 @@ public class Classroom {
 
     public void setCollege(String college) {
         this.college = college;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
     }
 
     public int getTeacherno() {
@@ -78,6 +87,7 @@ public class Classroom {
                 "id=" + id +
                 ", classname='" + classname + '\'' +
                 ", college='" + college + '\'' +
+                ", major='" + major + '\'' +
                 ", teacherno=" + teacherno +
                 ", teachername='" + teachername + '\'' +
                 ", studentno='" + studentno + '\'' +
