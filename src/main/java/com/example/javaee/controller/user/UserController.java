@@ -29,9 +29,9 @@ public class UserController {
     UserService userService;
 
     @RequestMapping(value = "/login")
-    public User login(String card,String password) throws Exception{
+    public User login(String email,String password) throws Exception{
         User user = new User();
-        user.setCard(card);
+        user.setEmail(email);
         password=getMD5String(password);
         user.setPassword(password);
         return userService.login(user);

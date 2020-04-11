@@ -8,15 +8,14 @@
         <result property="password" column="password"/>
         <result property="card" column="card"/>
         <result property="sex" column="sex"/>
-        <result property="join_time" column="join_time"/>
     </resultMap>
-    <resultMap id="report" type="com.example.javaee.entity.report.Report">
-        <id property="id" column="id"/>
-        <result property="class_name" column="class_name"/>
-        <result property="teacher" column="teacher"/>
-        <result property="score" column="score"/>
-        <result property="join_time" column="join_time"/>
-    </resultMap>
+    <!--<resultMap id="report" type="com.example.javaee.entity.report.Report">-->
+        <!--<id property="id" column="id"/>-->
+        <!--<result property="class_name" column="class_name"/>-->
+        <!--<result property="teacher" column="teacher"/>-->
+        <!--<result property="score" column="score"/>-->
+        <!--<result property="join_time" column="join_time"/>-->
+    <!--</resultMap>-->
 
     <select id="login" resultType="user">
         SELECT *
