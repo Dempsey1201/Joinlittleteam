@@ -1,84 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.javaee.mapper.user.UserMapper">
-    <resultMap id="user" type="com.example.javaee.entity.user.User">
+<mapper namespace="com.example.javaee.mapper.teacher.TeacherMapper">
+    <resultMap id="teacher" type="com.example.javaee.entity.teacher.Teacher">
         <id property="id" column="id"/>
-        <result property="username" column="username"/>
+        <result property="teachername" column="teachername"/>
         <result property="password" column="password"/>
         <result property="card" column="card"/>
         <result property="sex" column="sex"/>
-        <result property="join_time" column="join_time"/>
+        <result property="college" column="college"/>
     </resultMap>
-    <resultMap id="report" type="com.example.javaee.entity.report.Report">
-        <id property="id" column="id"/>
-        <result property="class_name" column="class_name"/>
-        <result property="teacher" column="teacher"/>
-        <result property="score" column="score"/>
-        <result property="join_time" column="join_time"/>
-    </resultMap>
+    <!--<resultMap id="report" type="com.example.javaee.entity.report.Report">-->
+        <!--<id property="id" column="id"/>-->
+        <!--<result property="class_name" column="class_name"/>-->
+        <!--<result property="teacher" column="teacher"/>-->
+        <!--<result property="score" column="score"/>-->
+        <!--<result property="join_time" column="join_time"/>-->
+    <!--</resultMap>-->
 
-    <select id="login" resultType="user">
+    <select id="login" resultType="teacher">
         SELECT *
-        FROM t_user
+        FROM t_teacher
         WHERE card=#{user.card} and password=#{user.password}
     </select>
 
     <insert id="addUser">
-        INSERT INTO t_user
+        INSERT INTO t_teacher
         (username,card,password,college,join_time)
         VALUES (#{user.username},#{user.card},#{user.password},#{user.college},#{user.join_time})
     </insert>
 
     <select id="listUser" resultType="user">
         SELECT *
-        FROM t_user
+        FROM t_teacher
     </select>
 
     <update id="updateUser">
-        UPDATE t_user
+        UPDATE t_teacher
         SET phone=#{user.phone},email=#{user.email},password=#{user.password},join_time=#{user.join_time}
         WHERE id=#{user.id}
     </update>
 
     <update id="updatePassword">
-        UPDATE t_user
-        SET password=#{user.password}
-        WHERE id=#{user.id}
+        UPDATE t_teacher
+        SET password=#{teacher.password}
+        WHERE id=#{teacher.id}
     </update>
 
-    <delete id="deleteUser">
-        DELETE FROM t_user
+    <delete id="deleteTeacher">
+        DELETE FROM t_teacher
         WHERE card=#{card}
     </delete>
 
     <update id="uploadHead">
-        UPDATE t_user
-        SET HeadUrl=#{HeadUrl},path=#{path}
+        UPDATE t_teacher
+        SET headUrl=#{headUrl},path=#{path}
         WHERE id=#{id}
     </update>
 
-    <update id="updateStatus">
-        UPDATE t_user
-        SET status=#{status}
-        WHERE id=#{id}
-    </update>
+    <!--<update id="updateStatus">-->
+        <!--UPDATE t_user-->
+        <!--SET status=#{status}-->
+        <!--WHERE id=#{id}-->
+    <!--</update>-->
 
-    <select id="queryUser" resultType="user">
+    <select id="queryTeacher" resultType="teacher">
         SELECT *
-        FROM t_user
+        FROM t_teacher
         WHERE card=#{card}
     </select>
 
-    <select id="queryReport" resultType="report">
-        SELECT *
-        FROM t_report
-        WHERE stu_id=#{stu_id}
-    </select>
+    <!--<select id="queryReport" resultType="report">-->
+        <!--SELECT *-->
+        <!--FROM t_report-->
+        <!--WHERE stu_id=#{stu_id}-->
+    <!--</select>-->
 
-    <insert id="addFeelBack">
-        INSERT INTO t_feelback
-        (stu_id,message,status)
-        VALUES (#{feelBack.stu_id},#{feelBack.message},#{feelBack.status})
-    </insert>
+    <!--<insert id="addFeelBack">-->
+        <!--INSERT INTO t_feelback-->
+        <!--(stu_id,message,status)-->
+        <!--VALUES (#{feelBack.stu_id},#{feelBack.message},#{feelBack.status})-->
+    <!--</insert>-->
 </mapper>

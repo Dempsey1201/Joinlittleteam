@@ -31,7 +31,7 @@ public class UserTest {
     @Test
     public void testAddUser()throws Exception{
         User user=new User();
-        user.setCard("test");
+        user.setEmail("test");
         user.setPassword("test");
         System.out.println(userController.addUser(user));
     }
@@ -47,7 +47,6 @@ public class UserTest {
     public void testUpdateUser()throws Exception{
         User user=new User();
         user.setId(77);
-        user.setPhone("1310000");
         user.setEmail("123123@qq.com");
         System.out.println(userController.update(user));
     }

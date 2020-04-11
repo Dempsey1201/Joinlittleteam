@@ -28,22 +28,22 @@ public class AdminTest {
         System.out.println(adminController.login("123123","123"));
     }
 
-    @Test
-    public void testUpdate()throws Exception{
-        Admin admin=new Admin();
-        admin.setId(1);
-        admin.setEmail("123123@qq.com");
-        admin.setPassword("test");
-        System.out.println(adminController.update(admin));
-    }
-    @Test
-    public void testUpdateUser()throws Exception{
-        User admin=new User();
-        admin.setId(88);
-        admin.setMajor("rjgc");
-        admin.setCollege("sdasdasd");
-        System.out.println(adminController.updateUser(admin));
-    }
+//    @Test
+//    public void testUpdate()throws Exception{
+//        Admin admin=new Admin();
+//        admin.setId(1);
+//        admin.setEmail("123123@qq.com");
+//        admin.setPassword("test");
+//        System.out.println(adminController.update(admin));
+//    }
+//    @Test
+//    public void testUpdateUser()throws Exception{
+//        User admin=new User();
+//        admin.setId(88);
+//        admin.setMajor("rjgc");
+//        admin.setCollege("sdasdasd");
+//        System.out.println(adminController.updateUser(admin));
+//    }
     @Test
     public void testUpdateReport()throws Exception{
         Report report=new Report();

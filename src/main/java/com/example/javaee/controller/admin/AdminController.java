@@ -33,7 +33,7 @@ public class AdminController {
     @RequestMapping(value = "/login")
     public Admin login(String admin_card, String password) throws Exception{
         Admin admin=new Admin();
-        admin.setAdmin_card(admin_card);
+        admin.setCard(admin_card);
         password=getMD5String(password);
         admin.setPassword(password);
         return adminService.login(admin);

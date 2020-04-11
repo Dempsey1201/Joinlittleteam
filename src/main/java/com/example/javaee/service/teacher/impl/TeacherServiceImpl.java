@@ -103,7 +103,7 @@ public class TeacherServiceImpl implements TeacherService {
         List<Teacher> list=teacherMapper.listTeacher();
         for(int i=0;i<list.size();i++){
             Teacher teacher=list.get(i);
-            if(teacher.getTeacher_name().equals(name)){
+            if(teacher.getTeachername().equals(name)){
                 b=false;
                 return b;
             }
