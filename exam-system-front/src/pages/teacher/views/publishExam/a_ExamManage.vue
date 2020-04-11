@@ -18,9 +18,9 @@
 </template>
 
 <script>
-    import myExam from "./myExam";
-    import newExam from "./newExam";
-    import searchExam from "./searchExam";
+    import myExam from "./c_myExam";
+    import newExam from "./b_newExam";
+    import searchExam from "./d_searchExam";
 	export default {
 		name: "publishExam",
         data(){

@@ -13,7 +13,7 @@ export const stepOne = function (
 export const stepTwo = function (
 	{commit},
 	{description,endTime,check,testDuringTime,choiceOne,choiceMany,
-		judgeTest,feedFull,shortAnswer,tryTimes}
+		judgeTest,feedFull,shortAnswer,tryTimes,questionList}
 ) {
 	commit(types.SET_DESCRIPTION,description);
 	commit(types.SET_ENDTIME,endTime)
@@ -25,6 +25,7 @@ export const stepTwo = function (
 	commit(types.SET_FEEDFULL,feedFull)
 	commit(types.SET_SHORTANSWER,shortAnswer)
 	commit(types.SET_TRYTIMES,tryTimes)
+	commit(types.SET_QUESTIONLIST,questionList)
 }
 
 // methods 中

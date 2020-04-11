@@ -166,11 +166,71 @@
 	        submitForm(formName) {
 		        this.$refs[formName].validate((valid) => {
 			        if (valid) {//表单验证成功
-			        	if((this.form.choiceOne+this.form.choiceMany+this.form.judgeTest
-                            + this.form.feedFull+ this.form.shortAnswer)<=0){
+			        	let num = this.form.choiceOne+this.form.choiceMany+this.form.judgeTest
+					        + this.form.feedFull+ this.form.shortAnswer;
+			        	if(num<=0){
 					        this.$message.error('请添加题目');
 					        return;
                         }
+				        let questionList = [];
+				        
+				        {
+					        for (let j = 0; j < this.form.choiceOne; j++) {
+						        questionList.push({
+							        type: "choiceOne",
+							        question:"",// 题目问题
+							        answerA:"",// 选项A
+							        answerB:"",// 选项B
+							        answerC:"",// 选项C
+							        answerD:"",// 选项D
+							        rightAnswer:[]// 正确答案
+						        })
+					        }
+					        for (let j = 0; j < this.form.choiceMany; j++) {
+						        questionList.push({
+							        type: "choiceMany",
+							        question:"",// 题目问题
+							        answerA:"",// 选项A
+							        answerB:"",// 选项B
+							        answerC:"",// 选项C
+							        answerD:"",// 选项D
+							        rightAnswer:[]// 正确答案
+						        })
+					        }
+					        for (let j = 0; j < this.form.judgeTest; j++) {
+						        questionList.push({
+							        type: "judgeTest",
+							        question:"",// 题目问题
+							        answerA:"",// 选项A
+							        answerB:"",// 选项B
+							        answerC:"",// 选项C
+							        answerD:"",// 选项D
+							        rightAnswer:[]// 正确答案
+						        })
+					        }
+					        for (let j = 0; j < this.form.feedFull; j++) {
+						        questionList.push({
+							        type: "feedFull",
+							        question:"",// 题目问题
+							        answerA:"",// 选项A
+							        answerB:"",// 选项B
+							        answerC:"",// 选项C
+							        answerD:"",// 选项D
+							        rightAnswer:[]// 正确答案
+						        })
+					        }
+					        for (let j = 0; j < this.form.shortAnswer; j++) {
+						        questionList.push({
+							        type: "shortAnswer",
+							        question:"",// 题目问题
+							        answerA:"",// 选项A
+							        answerB:"",// 选项B
+							        answerC:"",// 选项C
+							        answerD:"",// 选项D
+							        rightAnswer:[]// 正确答案
+						        })
+					        }
+				        }
 			        	this.stepTwo({
 					        description:this.form.description,//试卷描述
 					        endTime: this.form.endTime.toString(),//截至时间
@@ -182,6 +242,7 @@
 					        feedFull:this.form.feedFull,// 填空题
 					        shortAnswer:this.form.shortAnswer,// 简答题
 					        tryTimes:this.form.tryTimes,//尝试次数
+                            questionList:questionList// 题目列表
                         })
 				        this.setStep(3);//进入到第三环节
 				        // 跳转到下一环节

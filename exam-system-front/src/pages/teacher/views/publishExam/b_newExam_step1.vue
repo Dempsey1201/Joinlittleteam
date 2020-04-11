@@ -1,7 +1,7 @@
 <template>
     <div class="step1">
         <el-form
-                ref="form"
+                ref="form1"
                 :model="form"
                 label-width="80px"
                 :label-position="labelPosition"
@@ -39,7 +39,7 @@
                 </el-date-picker>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="submitForm('form')">立即创建</el-button>
+                <el-button type="primary" @click="submitForm('form1')">立即创建</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -95,6 +95,7 @@
         created() {
 	        this.form.examName=this.newExamDetail.examName;//试卷名称
 		    this.form.startTime= this.newExamDetail.startTime ? new Date(this.newExamDetail.startTime):"";//开始日期
+            this.form.class = this.newExamDetail.class;
         },
 		methods: {
 			submitForm(formName) {

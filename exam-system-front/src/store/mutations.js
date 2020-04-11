@@ -1,6 +1,7 @@
 import * as types from "./mutations-type"
 const mutations = {
 	// 试卷相关
+	// step1
 	[types.SET_EXAMNAME](state,examName){// 试卷名称
 		state.newExamDetail.examName = examName;
 	},
@@ -10,6 +11,7 @@ const mutations = {
 	[types.SET_CLASS](state,className){//发布到哪些班级
 		state.newExamDetail.class = className;
 	},
+	// step2
 	[types.SET_DESCRIPTION](state,description){// 试卷描述
 		state.newExamDetail.description = description;
 	},
@@ -40,7 +42,9 @@ const mutations = {
 	[types.SET_TRYTIMES](state,tryTimes){//可尝试次数
 		state.newExamDetail.tryTimes = tryTimes;
 	},
-	
+	[types.SET_QUESTIONLIST](state,questionList){
+		state.newExamDetail.questionList = JSON.stringify(questionList);
+	},
 	
 	
 	// 生成试卷进行到的步骤
@@ -48,7 +52,7 @@ const mutations = {
 		state.step = step;
 	},
 	
-	
+	// 班级
 	[types.SET_CLASSINFO](state,data){// 可能会添加班级或是删除班级
 		if(data.operation==="添加"){// 如果是添加就传info
 			state.classInfo.push(data.info);
