@@ -2,11 +2,12 @@ import * as types from "./mutations-type"
 
 export const stepOne = function (
 	{commit},
-	{examName,startTime,className,step}
+	{examName,startTime,className,share,step}
 ) {
 	commit(types.SET_EXAMNAME,examName);
 	commit(types.SET_STARTTIME,startTime);
 	commit(types.SET_CLASS,className);
+	commit(types.SET_SHARE,share)
 	commit(types.SET_STEP,step);
 };
 

@@ -3,6 +3,7 @@
 export const SET_EXAMNAME = "SET_EXAMNAME";// 设置试卷名称
 export const SET_STARTTIME = "SET_STARTTIME";// 设置发布考试时间
 export const SET_CLASS = "SET_CLASS";//发布试卷的班级
+export const SET_SHARE = "SET_SHARE";// 是否共享
 // step2
 export const SET_DESCRIPTION = "SET_DESCRIPTION";//试卷描述
 export const SET_ENDTIME = "SET_ENDTIME";//截至日期时间

@@ -6,6 +6,7 @@ const state = {
 		class:[],//发布班级
 		description:"",//试卷描述
 		endTime: "",//截至时间
+		share:1,// 是否共享
 		check: "无限制",//试卷是否限制时间
 		testDuringTime:10,// 考试时间/分钟，默认10分钟
 		choiceOne:0,// 单选题

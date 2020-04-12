@@ -11,6 +11,9 @@ const mutations = {
 	[types.SET_CLASS](state,className){//发布到哪些班级
 		state.newExamDetail.class = className;
 	},
+	[types.SET_SHARE](state,share){
+		state.newExamDetail.share = share;
+	},
 	// step2
 	[types.SET_DESCRIPTION](state,description){// 试卷描述
 		state.newExamDetail.description = description;

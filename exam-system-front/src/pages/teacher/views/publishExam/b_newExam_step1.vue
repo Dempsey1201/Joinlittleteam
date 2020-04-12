@@ -13,6 +13,12 @@
                     ></el-input>
                 </el-col>
             </el-form-item>
+            <el-form-item label="是否共享" required>
+                <el-radio-group v-model="form.share">
+                    <el-radio :label="1">是</el-radio>
+                    <el-radio :label="0">否</el-radio>
+                </el-radio-group>
+            </el-form-item>
             <el-form-item label="选择班级" prop="selectClass">
                 <el-col :span="6">
                     <el-select
@@ -65,7 +71,8 @@
 				form: {//表单数据内容
 					examName: "",//试卷名称
 					startTime: "",//开始日期时间
-                    class:[]
+                    class:[],
+                    share:0
 				},
 				labelPosition: "left",
 				rules: {
@@ -96,6 +103,7 @@
 	        this.form.examName=this.newExamDetail.examName;//试卷名称
 		    this.form.startTime= this.newExamDetail.startTime ? new Date(this.newExamDetail.startTime):"";//开始日期
             this.form.class = this.newExamDetail.class;
+	        this.form.share = this.newExamDetail.share;
         },
 		methods: {
 			submitForm(formName) {
@@ -105,6 +113,7 @@
 							examName: this.form.examName,
 							startTime: this.form.startTime.toString(),
                             className:this.form.class,
+                            share:this.form.share,
                             step:2// 当前是第一步，现在是第二部
 						})
 						// 跳转到下一环节
