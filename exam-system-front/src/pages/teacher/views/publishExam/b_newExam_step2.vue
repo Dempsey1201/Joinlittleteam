@@ -183,6 +183,7 @@
 							        answerB:"",// 选项B
 							        answerC:"",// 选项C
 							        answerD:"",// 选项D
+                                    isOK:false,
 							        rightAnswer:[]// 正确答案
 						        })
 					        }
@@ -194,6 +195,7 @@
 							        answerB:"",// 选项B
 							        answerC:"",// 选项C
 							        answerD:"",// 选项D
+							        isOK:false,
 							        rightAnswer:[]// 正确答案
 						        })
 					        }
@@ -205,6 +207,7 @@
 							        answerB:"",// 选项B
 							        answerC:"",// 选项C
 							        answerD:"",// 选项D
+							        isOK:false,
 							        rightAnswer:[]// 正确答案
 						        })
 					        }
@@ -216,6 +219,7 @@
 							        answerB:"",// 选项B
 							        answerC:"",// 选项C
 							        answerD:"",// 选项D
+							        isOK:false,
 							        rightAnswer:[]// 正确答案
 						        })
 					        }
@@ -227,6 +231,7 @@
 							        answerB:"",// 选项B
 							        answerC:"",// 选项C
 							        answerD:"",// 选项D
+							        isOK:false,
 							        rightAnswer:[]// 正确答案
 						        })
 					        }

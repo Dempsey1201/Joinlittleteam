@@ -29,6 +29,27 @@ export const stepTwo = function (
 	commit(types.SET_QUESTIONLIST,questionList)
 }
 
+export const stepFour = function (// 初始化
+	{commit}
+) {
+	commit(types.SET_EXAMNAME,"");
+	commit(types.SET_STARTTIME,"");
+	commit(types.SET_CLASS,[]);
+	commit(types.SET_DESCRIPTION,"");
+	commit(types.SET_ENDTIME,"");
+	commit(types.SET_SHARE,1);
+	commit(types.SET_CHECK,"无限制");
+	commit(types.SET_TESTDURINGTIME,10);
+	commit(types.SET_CHOICEONE,0);
+	commit(types.SET_CHOICEMANY,0);
+	commit(types.SET_JUDGETEST,0);
+	commit(types.SET_FEEDFULL,0);
+	commit(types.SET_SHORTANSWER,0);
+	commit(types.SET_TRYTIMES,1);
+	commit(types.SET_QUESTIONLIST,"");
+}
+
+
 // methods 中
 // ...mapActions([
 // 	"selectPlay"

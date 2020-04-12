@@ -51,10 +51,10 @@
                     </el-form-item>
                     <el-form-item label="填写答案" prop="rightAnswer">
                         <el-radio-group v-model="item.rightAnswer">
-                            <el-radio label="A"></el-radio>
-                            <el-radio label="B"></el-radio>
-                            <el-radio label="C"></el-radio>
-                            <el-radio label="D"></el-radio>
+                            <el-radio :label="'A:'+item.answerA"></el-radio>
+                            <el-radio :label="'B:'+item.answerB"></el-radio>
+                            <el-radio :label="'C:'+item.answerC"></el-radio>
+                            <el-radio :label="'D:'+item.answerD"></el-radio>
                         </el-radio-group>
                     </el-form-item>
                     <el-form-item>
@@ -113,10 +113,10 @@
                     </el-form-item>
                     <el-form-item label="填写答案" prop="rightAnswer">
                         <el-checkbox-group v-model="item.rightAnswer">
-                            <el-checkbox label="A"></el-checkbox>
-                            <el-checkbox label="B"></el-checkbox>
-                            <el-checkbox label="C"></el-checkbox>
-                            <el-checkbox label="D"></el-checkbox>
+                            <el-checkbox :label="'A:'+item.answerA"></el-checkbox>
+                            <el-checkbox :label="'B:'+item.answerB"></el-checkbox>
+                            <el-checkbox :label="'C:'+item.answerC"></el-checkbox>
+                            <el-checkbox :label="'D:'+item.answerD"></el-checkbox>
                         </el-checkbox-group>
                     </el-form-item>
                     <el-form-item>
@@ -178,8 +178,8 @@
                         </el-col>
                     </el-form-item>
                     <el-form-item label="填写答案" prop="rightAnswer">
-                        <el-col class="line" :span="6" v-model="item.rightAnswer">
-                            <el-input placeholder="答案内容，用逗号分隔" v-model="item.question"
+                        <el-col class="line" :span="6">
+                            <el-input placeholder="答案内容，用逗号分隔" v-model="item.rightAnswer"
                             ></el-input>
                         </el-col>
                     </el-form-item>
@@ -210,11 +210,11 @@
                         </el-col>
                     </el-form-item>
                     <el-form-item label="填写答案" prop="rightAnswer">
-                        <el-col class="line" :span="6" v-model="item.rightAnswer">
+                        <el-col class="line" :span="6">
                             <el-input
                                     type="textarea"
                                     :rows="2"
-                                    placeholder="答案内容" v-model="item.question"
+                                    placeholder="答案内容" v-model="item.rightAnswer"
                             ></el-input>
                         </el-col>
                     </el-form-item>
@@ -225,6 +225,9 @@
                     </el-form-item>
                 </el-form>
             </el-row>
+            <el-button type="primary"
+                       @click="finalSubmit"
+            >提交试题</el-button>
         </div>
     </div>
 </template>
@@ -257,7 +260,7 @@
                         
                     ]
                 },
-                questionListFinal:[]
+                finalList:[]
             }
         },
         computed:{
@@ -267,12 +270,11 @@
         },
         created() {
             this.questionList = JSON.parse(this.newExamDetail.questionList);// 题目列表
-            console.log(this.questionList)
         },
 		methods:{
 	        ...mapMutations({
 		        setStep:"SET_STEP",// 设置阶段
-                //setQuestions:"SET_QUESTIONLIST"// 设置考试问题
+                setQuestions:"SET_QUESTIONLIST"// 设置考试问题
 	        }),
 	        prevStep(){// 点击上一步
 		        this.setStep(2);
@@ -280,12 +282,27 @@
 			submitForm(formName,item) {// 每道试题的表单验证
 				this.$refs[formName][0].validate((valid) => {
 					if (valid) {//表单验证成功
-					    this.questionListFinal.push(item);
+						item.isOK = true;
+						this.finalList.push(item);// 可以在这里改变属性
+						this.$message({
+							message: '添加成功',
+							type: 'success'
+						});
 					} else {
 						return false;
 					}
 				});
 			},
+			finalSubmit(){
+	        	let list = this.questionList.filter(item=>!item.isOK);
+	        	if(list.length){
+			        this.$message.error('请填写所有的试题并提交');
+                }else{
+	        		// 在这里用 finalList 向后端提交
+	        		this.setQuestions(this.questionList);
+	        		this.setStep(4);
+                }
+            }
         }
 	}
 </script>
@@ -296,6 +313,5 @@
     }
     .el-form{
         margin-top: 10px;
-        border-bottom: 1px solid #dddddd;
     }
 </style>

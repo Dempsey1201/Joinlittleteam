@@ -3,7 +3,6 @@
         <el-button style="display: block" type="primary" size="mini" @click="prevStep">上一步</el-button>
         <div class="formList">
             <el-form
-                    
                     ref="questionList"
                     :model="questionList"
                     label-width="80px"

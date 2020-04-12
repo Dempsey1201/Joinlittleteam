@@ -5,7 +5,7 @@
             <span>{{userInfo.name}}</span>
         </div>
         
-        <div class="head">PTA考试系统教师管理</div>
+        <div class="head">成才考试系统教师管理</div>
     </div>
 </template>
 
