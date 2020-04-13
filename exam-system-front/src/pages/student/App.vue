@@ -1,18 +1,24 @@
 <template>
-    <div id="app">
-        <el-button
-        ></el-button>
-    </div>
+  <div id="app">
+    <navBar />
+    <router-view></router-view>
+  </div>
 </template>
 <script>
-	export default {
-		data () {
-			return {
-			};
-		},
-	}
+
+import navBar from "./components/nav";
+
+export default {
+  components: {
+    navBar
+  },
+  data() {
+    return {};
+  }
+};
 </script>
 
 <style lang="less">
+
 
 </style>
