@@ -1,21 +1,15 @@
-package com.example.javaee.mapper.question;
+package com.example.javaee.service.question;
 
 import com.example.javaee.entity.question.Question;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 /**
  * author dongml
- * time 2020/4/11
+ * time 2020/3/12
  * description
  */
-@Mapper
-public interface QuestionMapper {
-
-
+public interface QuestionService {
     List<Question> getAll() throws Exception;
-
     boolean insertNewQuestion(Question question) throws Exception;
-
 }

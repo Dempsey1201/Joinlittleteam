@@ -2,11 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.javaee.mapper.question.QuestionMapper">
-    <resultMap id="admin" type="com.example.javaee.entity.question.Question">
-        <id property="id" column="id"/>
-        <result property="adminname" column="adminname"/>
-        <result property="password" column="password"/>
-        <result property="card" column="card"/>
+    <resultMap id="Question" type="com.example.javaee.entity.question.Question">
+        <id property="pid" column="pid"/>
+        <result property="question" column="question"/>
+        <result property="oa" column="oa"/>
+        <result property="ob" column="ob"/>
+        <result property="oc" column="oc"/>
+        <result property="od" column="od"/>
+        <result property="answer" column="answer"/>
+        <result property="qtype" column="type"/>
+        <result property="author" column="author"/>
+        <result property="subject" column="subject"/>
     </resultMap>
+
+    <select id="getAll" resultType="Question">
+        select *
+        from t_question
+    </select>
+
+    <insert id="insertNewQuestion" parameterType="Question">
+        insert into t_question(question,oa,ob,oc,od,answer,qtype,author,subject)
+        values (#{Question.question},#{Question.oa},#{Question.ob},#{Question.oc},#{Question.od},#{Question.answer},#{Question.qtype},#{Question.author},#{Question.subject})
+    </insert>
+
+    <delete id="deleteQuestion" parameterType="Question">
+        delete from t_question
+        where qid = #{Question.qid}
+    </delete>
+
+    <update id="updateQuestion" parameterType="Question">
+        update t_question
+        values (#{Question.question},#{Question.oa},#{Question.ob},#{Question.oc},#{Question.od},#{Question.answer},#{Question.qtype},#{Question.author},#{Question.subject})
+        where qid = Question.qid
+    </update>
 
 </mapper>
