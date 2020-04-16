@@ -15,17 +15,18 @@
                 </div>
             </el-col>
             <el-col class="con"
-                    :xs="{span:10,offset:5}"
-                    :sm="{span:8,offset:7}"
-                    :md="{span:7,offset:12}"
-                    :lg="{span:5,offset:0}"
-                    :xl="{span:5,offset:0}"
+                    :xs="{span:11,offset:5}"
+                    :sm="{span:9,offset:7}"
+                    :md="{span:8,offset:12}"
+                    :lg="{span:6,offset:0}"
+                    :xl="{span:6,offset:0}"
             >
                 <!-- 导航 -->
                 <el-menu
                         :default-active="activeIndex"
+                        default-active="/login.html/login"
                         class="el-menu-demo" mode="horizontal"
-                        router="true"
+                        :router="bool"
                 >
                     <el-menu-item index="/login.html/login" class="nav">
                         <router-link class="tag" tag="div" to="">
@@ -54,7 +55,8 @@
 					b: 255
                 },
 				bg_color:"rgba(236, 245, 255,0.3)",//背景颜色
-				activeIndex: '1'
+				activeIndex: '1',
+                bool:true
 		    }
 		},
         components:{
