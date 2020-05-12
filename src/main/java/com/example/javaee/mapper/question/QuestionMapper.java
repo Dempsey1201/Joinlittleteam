@@ -2,6 +2,7 @@ package com.example.javaee.mapper.question;
 
 import com.example.javaee.entity.question.Question;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,4 +19,7 @@ public interface QuestionMapper {
 
     boolean insertNewQuestion(Question question) throws Exception;
 
+    String getAnswer(@Param("qid")Integer qid);
+
+    boolean deleteQuestion(Question question);
 }

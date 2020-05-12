@@ -36,4 +36,10 @@
         where qid = Question.qid
     </update>
 
+    <select id="getAnswer">
+        select answer
+        from t_question
+        where qid = #{qid}
+    </select>
+
 </mapper>

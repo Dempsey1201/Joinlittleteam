@@ -29,6 +29,9 @@ public class Question {
 
     String subject;
 
+    public Question() {
+    }
+
     public Question(String question, String oa, String ob, String oc, String od, String answer, int qtype, String author, String subject) {
         this.question = question;
         this.oa = oa;

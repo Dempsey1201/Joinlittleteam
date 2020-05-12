@@ -12,4 +12,8 @@ import java.util.List;
 public interface QuestionService {
     List<Question> getAll() throws Exception;
     boolean insertNewQuestion(Question question) throws Exception;
+    String getAnswer(Integer qid);
+    boolean firstJudge(String answer,Integer id);
+    List<String> secondJudge(String answer,Integer qid);
+    boolean deleteQuestion(Question question);
 }
