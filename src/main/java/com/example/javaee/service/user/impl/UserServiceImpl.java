@@ -78,16 +78,16 @@ public class UserServiceImpl implements UserService {
         return userMapper.listUser();
     }
     @Override
-    public List<User> queryUser(String card)throws Exception{
-        return userMapper.queryUser(card);
+    public List<User> queryUser(int id)throws Exception{
+        return userMapper.queryUser(id);
     }
     @Override
     public List<Report> queryReport(int id)throws Exception{
         return userMapper.queryReport(id);
     }
     @Override
-    public int delete(String card)throws Exception{
-        return userMapper.deleteUser(card);
+    public int delete(int id)throws Exception{
+        return userMapper.deleteUser(id);
     }
     /**
      * 判断用户名

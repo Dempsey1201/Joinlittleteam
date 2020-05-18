@@ -9,6 +9,7 @@ public class Classroom {
 
     int id;
     String classname;
+    String classno;
     String college;
     String major;
     int teacherno;
@@ -81,11 +82,20 @@ public class Classroom {
         this.paperno = paperno;
     }
 
+    public String getClassno() {
+        return classno;
+    }
+
+    public void setClassno(String classno) {
+        this.classno = classno;
+    }
+
     @Override
     public String toString() {
         return "Classroom{" +
                 "id=" + id +
                 ", classname='" + classname + '\'' +
+                ", classno='" + classno + '\'' +
                 ", college='" + college + '\'' +
                 ", major='" + major + '\'' +
                 ", teacherno=" + teacherno +

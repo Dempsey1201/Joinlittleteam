@@ -26,22 +26,24 @@ public class UserTest {
     }
     @Test
     public void testLogin()throws Exception{
-        System.out.println(userController.login("2018013194","123"));
+        System.out.println(userController.login("test","test"));
     }
     @Test
     public void testAddUser()throws Exception{
         User user=new User();
+        user.setUsername("name");
         user.setEmail("test");
         user.setPassword("test");
+        user.setSex("女");
         System.out.println(userController.addUser(user));
     }
     @Test
     public void testQueryUser()throws Exception{
-        System.out.println(userController.queryUser("2018000001"));
+        System.out.println(userController.queryUser(1));
     }
     @Test
     public void testDeleteUser()throws Exception{
-        System.out.println(userController.delete("2018013333"));
+        System.out.println(userController.delete(3));
     }
     @Test
     public void testUpdateUser()throws Exception{
@@ -50,35 +52,35 @@ public class UserTest {
         user.setEmail("123123@qq.com");
         System.out.println(userController.update(user));
     }
-    @Test
-    public void testUpdateStatus()throws Exception{
-        int id=94,status=1;
-        System.out.println(userController.updateUserStatus(id,status));
-    }
+//    @Test
+//    public void testUpdateStatus()throws Exception{
+//        int id=94,status=1;
+//        System.out.println(userController.updateUserStatus(id,status));
+//    }
 
     @Test
     public void testUpdatePassword()throws Exception{
         User user=new User();
-        user.setId(94);
+        user.setId(4);
         user.setPassword("test");
         System.out.println(userController.updatePassword(user));
     }
 
-    @Test
-    public void testQueryReport()throws Exception{
-        System.out.println(userController.queryReport(77));
-    }
-
-    @Test
-    public void testUplode()throws Exception{
-        System.out.println(userController.queryReport(77));
-    }
-    @Test
-    public void testAddFeelBack()throws Exception{
-        FeelBack feelBack=new FeelBack();
-        feelBack.setStu_id(80);
-        feelBack.setStatus(0);
-        feelBack.setMessage("成绩复议");
-        System.out.println(userController.addFeelBack(feelBack));
-    }
+//    @Test
+//    public void testQueryReport()throws Exception{
+//        System.out.println(userController.queryReport(77));
+//    }
+//
+//    @Test
+//    public void testUplode()throws Exception{
+//        System.out.println(userController.queryReport(77));
+//    }
+//    @Test
+//    public void testAddFeelBack()throws Exception{
+//        FeelBack feelBack=new FeelBack();
+//        feelBack.setStu_id(80);
+//        feelBack.setStatus(0);
+//        feelBack.setMessage("成绩复议");
+//        System.out.println(userController.addFeelBack(feelBack));
+//    }
 }

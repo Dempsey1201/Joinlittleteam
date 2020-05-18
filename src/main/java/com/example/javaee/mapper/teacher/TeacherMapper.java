@@ -59,11 +59,11 @@ public interface TeacherMapper {
 
     /**
      * 删除
-     * @param teacher_card
+     * @param
      * @return
      * @throws Exception
      */
-    public int deleteTeacher(@Param("teacher_card")String teacher_card)throws Exception;
+    public int deleteTeacher(@Param("id")int id)throws Exception;
 
     /**
      * 列出所有user
@@ -76,7 +76,7 @@ public interface TeacherMapper {
      * @return
      * @throws Exception
      */
-    public List<Teacher> queryTeacher(@Param("teacher_card")String teacher_card)throws Exception;
+    public Teacher queryTeacher(@Param("card")String card)throws Exception;
     /**
      * 查询------------------------有问题
      * @return

@@ -23,9 +23,9 @@ public interface UserService {
 
     public List<User> list()throws Exception;
 
-    public List<User> queryUser(String card)throws Exception;
+    public List<User> queryUser(int id)throws Exception;
 
-    public int delete(String card)throws Exception;
+    public int delete(int id)throws Exception;
 
     public int addUser(User user)throws Exception;
 

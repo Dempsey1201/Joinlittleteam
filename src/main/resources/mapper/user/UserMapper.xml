@@ -6,7 +6,7 @@
         <id property="id" column="id"/>
         <result property="username" column="username"/>
         <result property="password" column="password"/>
-        <result property="card" column="card"/>
+        <result property="email" column="email"/>
         <result property="sex" column="sex"/>
     </resultMap>
     <!--<resultMap id="report" type="com.example.javaee.entity.report.Report">-->
@@ -20,13 +20,13 @@
     <select id="login" resultType="user">
         SELECT *
         FROM t_user
-        WHERE card=#{user.card} and password=#{user.password}
+        WHERE email=#{user.email} and password=#{user.password}
     </select>
 
     <insert id="addUser">
         INSERT INTO t_user
-        (username,card,password,college,join_time)
-        VALUES (#{user.username},#{user.card},#{user.password},#{user.college},#{user.join_time})
+        (username,email,password,sex,college)
+        VALUES (#{user.username},#{user.email},#{user.password},#{user.sex},#{user.college})
     </insert>
 
     <select id="listUser" resultType="user">
@@ -36,7 +36,7 @@
 
     <update id="updateUser">
         UPDATE t_user
-        SET phone=#{user.phone},email=#{user.email},password=#{user.password},join_time=#{user.join_time}
+        SET email=#{user.email},password=#{user.password}
         WHERE id=#{user.id}
     </update>
 
@@ -48,12 +48,12 @@
 
     <delete id="deleteUser">
         DELETE FROM t_user
-        WHERE card=#{card}
+        WHERE id=#{id}
     </delete>
 
     <update id="uploadHead">
         UPDATE t_user
-        SET HeadUrl=#{HeadUrl},path=#{path}
+        SET headUrl=#{headUrl},path=#{path}
         WHERE id=#{id}
     </update>
 
@@ -66,7 +66,7 @@
     <select id="queryUser" resultType="user">
         SELECT *
         FROM t_user
-        WHERE card=#{card}
+        WHERE id=#{id}
     </select>
 
     <select id="queryReport" resultType="report">

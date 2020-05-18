@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.javaee.mapper.classroom.ClassroomMapper">
-    <resultMap id="admin" type="com.example.javaee.entity.classroom.Classroom">
+    <resultMap id="classroom" type="com.example.javaee.entity.classroom.Classroom">
         <id property="id" column="id"/>
         <result property="classname" column="classname"/>
-        <result property="" column="password"/>
-        <result property="card" column="card"/>
+        <result property="classno" column="classno"/>
+        <result property="college" column="college"/>
     </resultMap>
     <!--<resultMap id="feelBack" type="com.example.javaee.entity.feelback.FeelBack">-->
     <!--<id property="id" column="id"/>-->
@@ -15,22 +15,22 @@
     <!--<result property="join_time" column="join_time"/>-->
     <!--</resultMap>-->
 
-    <select id="login" resultType="admin">
-        SELECT *
-        FROM t_admin
-        WHERE admincard=#{admin.admincard} and password=#{admin.password}
-    </select>
-
-    <select id="queryAdmin" resultType="admin">
-        SELECT *
-        FROM t_admin
-        WHERE id=#{id}
-    </select>
-
-    <!--<select id="listFeelBack" resultType="feelBack">-->
-    <!--SELECT *-->
-    <!--FROM t_feelback-->
+    <!--<select id="login" resultType="admin">-->
+        <!--SELECT *-->
+        <!--FROM t_admin-->
+        <!--WHERE admincard=#{admin.admincard} and password=#{admin.password}-->
     <!--</select>-->
+
+    <!--<select id="queryAdmin" resultType="admin">-->
+        <!--SELECT *-->
+        <!--FROM t_admin-->
+        <!--WHERE id=#{id}-->
+    <!--</select>-->
+
+    <select id="listClassroom" resultType="classroom">
+    SELECT *
+    FROM t_classroom
+    </select>
 
     <!--<update id="updateFeelBack">-->
     <!--UPDATE t_feelback-->
@@ -38,15 +38,15 @@
     <!--WHERE id=#{feelback.id}-->
     <!--</update>-->
 
-    <!--<delete id="deleteFeelBack">-->
-    <!--DELETE FROM t_feelback-->
-    <!--WHERE id=#{id}-->
-    <!--</delete>-->
+    <delete id="deleteClassroom">
+    DELETE FROM t_classroom
+    WHERE id=#{id}
+    </delete>
 
-    <update id="updateAdmin">
-        UPDATE t_admin
-        SET adminname=#{admin.adminanme},password=#{admin.password}
-        WHERE id=#{admin.id}
+    <update id="update">
+        UPDATE t_classroom
+        SET classname=#{classroom.classname},major=#{classroom.major},college=#{classroom.college}
+        WHERE id=#{classroom.id}
     </update>
 
     <!--<update id="updateUser">-->
@@ -61,10 +61,10 @@
     <!--WHERE id=#{report.id}-->
     <!--</update>-->
 
-    <!--<insert id="addReport">-->
-    <!--INSERT INTO t_report-->
-    <!--(class_name,teacher,stu_id,score,point,credit)-->
-    <!--VALUES (#{report.class_name},#{report.teacher},-->
-    <!--#{report.stu_id},#{report.score},#{report.point},#{report.credit})-->
-    <!--</insert>-->
+    <insert id="addClassroom">
+    INSERT INTO t_classroom
+    (classname,classno,teacherno,teachername,college,major)
+    VALUES (#{classroom.classname},#{classroom.classno},
+    #{classroom.teacherno},#{classroom.teachername},#{classroom.college},#{classroom.major})
+    </insert>
 </mapper>
