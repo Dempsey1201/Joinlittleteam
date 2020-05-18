@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.javaee.mapper.classroom.ClassroomMapper">
+    <resultMap id="classroom" type="com.example.javaee.entity.classroom.Classroom">
+        <id property="id" column="id"/>
+        <result property="classname" column="classname"/>
+        <result property="classno" column="classno"/>
+        <result property="college" column="college"/>
+    </resultMap>
+    <!--<resultMap id="feelBack" type="com.example.javaee.entity.feelback.FeelBack">-->
+    <!--<id property="id" column="id"/>-->
+    <!--<result property="stu_id" column="stu_id"/>-->
+    <!--<result property="message" column="message"/>-->
+    <!--<result property="join_time" column="join_time"/>-->
+    <!--</resultMap>-->
+
+    <!--<select id="login" resultType="admin">-->
+        <!--SELECT *-->
+        <!--FROM t_admin-->
+        <!--WHERE admincard=#{admin.admincard} and password=#{admin.password}-->
+    <!--</select>-->
+
+    <!--<select id="queryAdmin" resultType="admin">-->
+        <!--SELECT *-->
+        <!--FROM t_admin-->
+        <!--WHERE id=#{id}-->
+    <!--</select>-->
+
+    <select id="listClassroom" resultType="classroom">
+    SELECT *
+    FROM t_classroom
+    </select>
+
+    <!--<update id="updateFeelBack">-->
+    <!--UPDATE t_feelback-->
+    <!--SET status=#{feelback.status}-->
+    <!--WHERE id=#{feelback.id}-->
+    <!--</update>-->
+
+    <delete id="deleteClassroom">
+    DELETE FROM t_classroom
+    WHERE id=#{id}
+    </delete>
+
+    <update id="update">
+        UPDATE t_classroom
+        SET classname=#{classroom.classname},major=#{classroom.major},college=#{classroom.college}
+        WHERE id=#{classroom.id}
+    </update>
+
+    <!--<update id="updateUser">-->
+    <!--UPDATE t_user-->
+    <!--SET major=#{user.major},college=#{user.college}-->
+    <!--WHERE id=#{user.id}-->
+    <!--</update>-->
+
+    <!--<update id="updateReport">-->
+    <!--UPDATE t_report-->
+    <!--SET score=#{report.score},point=#{report.point}-->
+    <!--WHERE id=#{report.id}-->
+    <!--</update>-->
+
+    <insert id="addClassroom">
+    INSERT INTO t_classroom
+    (classname,classno,teacherno,teachername,college,major)
+    VALUES (#{classroom.classname},#{classroom.classno},
+    #{classroom.teacherno},#{classroom.teachername},#{classroom.college},#{classroom.major})
+    </insert>
+</mapper>

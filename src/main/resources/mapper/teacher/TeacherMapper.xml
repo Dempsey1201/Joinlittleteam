@@ -21,16 +21,16 @@
     <select id="login" resultType="teacher">
         SELECT *
         FROM t_teacher
-        WHERE card=#{user.card} and password=#{user.password}
+        WHERE card=#{teacher.card} and password=#{teacher.password}
     </select>
 
-    <insert id="addUser">
+    <insert id="addTeacher">
         INSERT INTO t_teacher
-        (username,card,password,college,join_time)
-        VALUES (#{user.username},#{user.card},#{user.password},#{user.college},#{user.join_time})
+        (teachername,card,password,college,sex,email)
+        VALUES (#{teacher.teachername},#{teacher.card},#{teacher.password},#{teacher.college},#{teacher.sex},#{teacher.email})
     </insert>
 
-    <select id="listUser" resultType="user">
+    <select id="listTeacher" resultType="teacher">
         SELECT *
         FROM t_teacher
     </select>
@@ -49,7 +49,7 @@
 
     <delete id="deleteTeacher">
         DELETE FROM t_teacher
-        WHERE card=#{card}
+        WHERE id=#{id}
     </delete>
 
     <update id="uploadHead">

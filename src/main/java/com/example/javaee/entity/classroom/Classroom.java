@@ -9,7 +9,9 @@ public class Classroom {
 
     int id;
     String classname;
+    String classno;
     String college;
+    String major;
     int teacherno;
     String teachername;
     String studentno;
@@ -38,6 +40,14 @@ public class Classroom {
 
     public void setCollege(String college) {
         this.college = college;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
     }
 
     public int getTeacherno() {
@@ -72,12 +82,22 @@ public class Classroom {
         this.paperno = paperno;
     }
 
+    public String getClassno() {
+        return classno;
+    }
+
+    public void setClassno(String classno) {
+        this.classno = classno;
+    }
+
     @Override
     public String toString() {
         return "Classroom{" +
                 "id=" + id +
                 ", classname='" + classname + '\'' +
+                ", classno='" + classno + '\'' +
                 ", college='" + college + '\'' +
+                ", major='" + major + '\'' +
                 ", teacherno=" + teacherno +
                 ", teachername='" + teachername + '\'' +
                 ", studentno='" + studentno + '\'' +

@@ -62,16 +62,16 @@ public class UserController {
     }
 
     @RequestMapping(value = "/queryUser")
-    public List<User> queryUser(String card) throws Exception{
-        return userService.queryUser(card);
+    public List<User> queryUser(int id) throws Exception{
+        return userService.queryUser(id);
     }
     @RequestMapping(value = "/queryReport")
     public List<Report> queryReport(int id) throws Exception{
         return userService.queryReport(id);
     }
     @RequestMapping(value = "/delete")
-    public int delete(@RequestParam(value = "card", required = false) String card) throws Exception{
-        return userService.delete(card);
+    public int delete(@RequestParam(value = "id", required = false)int id) throws Exception{
+        return userService.delete(id);
     }
     @RequestMapping(value = "/updatePassword")
     public int updatePassword(User user) throws Exception{
