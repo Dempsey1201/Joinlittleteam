@@ -42,7 +42,28 @@ const routes = [
 			icon:"el-icon-document",
 			text:"成绩管理"
 		},
-		component:stuGrade
+		component:stuGrade,
+		children:[
+			{
+				path:"/teacher.html/stuGrade",
+				redirect:"/teacher.html/stuGrade/showClass"
+			},
+			{
+				path:"/teacher.html/stuGrade/showClass",
+				component:()=>import("../views/stuGrade/showClass"),
+				name:"showClass"
+			},
+			{
+				path:"/teacher.html/stuGrade/showPaper",
+				component:()=>import("../views/stuGrade/showPaper"),
+				name:"showPaper"
+			},
+			{
+				path:"/teacher.html/stuGrade/showStudent",
+				component:()=>import("../views/stuGrade/showStudent"),
+				name:"showStudent"
+			},
+		]
 	}
 ]
 
