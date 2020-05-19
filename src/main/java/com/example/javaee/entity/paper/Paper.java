@@ -1,5 +1,8 @@
 package com.example.javaee.entity.paper;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -20,11 +23,15 @@ public class Paper {
 
     String classno;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     Date start_time;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     Date end_time;
 
-    Date last_time;
+    Double last_time;
     public String getExam_name() {
         return exam_name;
     }
@@ -81,11 +88,11 @@ public class Paper {
         this.end_time = end_time;
     }
 
-    public Date getLast_time() {
+    public Double getLast_time() {
         return last_time;
     }
 
-    public void setLast_time(Date last_time) {
+    public void setLast_time(Double last_time) {
         this.last_time = last_time;
     }
 
