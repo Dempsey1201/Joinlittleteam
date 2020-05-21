@@ -1,6 +1,7 @@
 package com.example.javaee.service.question;
 
-import com.example.javaee.entity.question.Question;
+import com.example.javaee.entity.question.Question1;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -10,10 +11,14 @@ import java.util.List;
  * description
  */
 public interface QuestionService {
-    List<Question> getAll() throws Exception;
-    boolean insertNewQuestion(Question question) throws Exception;
+    List<Question1> getAll() throws Exception;
+    boolean insertNewQuestion(Question1 question) throws Exception;
     String getAnswer(Integer qid);
     boolean firstJudge(String answer,Integer id);
     List<String> secondJudge(String answer,Integer qid);
-    boolean deleteQuestion(Question question);
+    boolean deleteQuestion(Integer qid);
+    List<Question1> searchSubject(String subject);
+    List<Question1> searchQuestion(String question);
+    List<Question1> searchQuestionBySubject(String subject,String question);
+    boolean updateQuestion(Question1 question);
 }

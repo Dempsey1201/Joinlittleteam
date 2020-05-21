@@ -7,9 +7,9 @@ import java.util.Objects;
  * time 2020/4/11
  * description
  */
-public class Question {
+public class Question1 {
 
-    int pid;
+    int  qid;
 
     String question;
 
@@ -29,10 +29,10 @@ public class Question {
 
     String subject;
 
-    public Question() {
+    public Question1() {
     }
 
-    public Question(String question, String oa, String ob, String oc, String od, String answer, int qtype, String author, String subject) {
+    public Question1(String question, String oa, String ob, String oc, String od, String answer, int qtype, String author, String subject) {
         this.question = question;
         this.oa = oa;
         this.ob = ob;
@@ -44,12 +44,52 @@ public class Question {
         this.subject = subject;
     }
 
-    public int getPid() {
-        return pid;
+    public String getOa() {
+        return oa;
     }
 
-    public void setPid(int pid) {
-        this.pid = pid;
+    public void setOa(String oa) {
+        this.oa = oa;
+    }
+
+    public String getOb() {
+        return ob;
+    }
+
+    public void setOb(String ob) {
+        this.ob = ob;
+    }
+
+    public String getOc() {
+        return oc;
+    }
+
+    public void setOc(String oc) {
+        this.oc = oc;
+    }
+
+    public String getOd() {
+        return od;
+    }
+
+    public void setOd(String od) {
+        this.od = od;
+    }
+
+    public int getQtype() {
+        return qtype;
+    }
+
+    public void setQtype(int qtype) {
+        this.qtype = qtype;
+    }
+
+    public int getQid() {
+        return qid;
+    }
+
+    public void setQid(int pid) {
+        this.qid = pid;
     }
 
     public String getQuestion() {
@@ -58,38 +98,6 @@ public class Question {
 
     public void setQuestion(String question) {
         this.question = question;
-    }
-
-    public String getA() {
-        return oa;
-    }
-
-    public void setA(String a) {
-        this.oa = a;
-    }
-
-    public String getB() {
-        return ob;
-    }
-
-    public void setB(String b) {
-        this.ob = b;
-    }
-
-    public String getC() {
-        return oc;
-    }
-
-    public void setC(String c) {
-        this.oc = c;
-    }
-
-    public String getD() {
-        return od;
-    }
-
-    public void setD(String d) {
-        this.od = d;
     }
 
     public String getAnswer() {
@@ -127,9 +135,9 @@ public class Question {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Question)) return false;
-        Question question1 = (Question) o;
-        return pid == question1.pid &&
+        if (!(o instanceof Question1)) return false;
+        Question1 question1 = (Question1) o;
+        return qid == question1.qid &&
                 qtype == question1.qtype &&
                 Objects.equals(question, question1.question) &&
                 Objects.equals(oa, question1.oa) &&
@@ -143,13 +151,13 @@ public class Question {
 
     @Override
     public int hashCode() {
-        return Objects.hash(pid, question, oa, ob, oc, od, answer, qtype, author, subject);
+        return Objects.hash(qid, question, oa, ob, oc, od, answer, qtype, author, subject);
     }
 
     @Override
     public String toString() {
         return "QuestionMapper{" +
-                "pid=" + pid +
+                "pid=" + qid +
                 ", question='" + question + '\'' +
                 ", a='" + oa + '\'' +
                 ", b='" + ob + '\'' +

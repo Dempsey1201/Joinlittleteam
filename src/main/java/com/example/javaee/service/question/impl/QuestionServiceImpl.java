@@ -1,8 +1,9 @@
 package com.example.javaee.service.question.impl;
 
-import com.example.javaee.entity.question.Question;
+import com.example.javaee.entity.question.Question1;
 import com.example.javaee.mapper.question.QuestionMapper;
 import com.example.javaee.service.question.QuestionService;
+import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +21,12 @@ public class QuestionServiceImpl implements QuestionService {
     QuestionMapper questionMapper;
 
     @Override
-    public List<Question> getAll() throws Exception{
+    public List<Question1> getAll() throws Exception{
         return questionMapper.getAll();
     }
 
     @Override
-    public boolean insertNewQuestion(Question question) throws Exception{
+    public boolean insertNewQuestion(Question1 question) throws Exception{
         return questionMapper.insertNewQuestion(question);
     }
 
@@ -57,7 +58,27 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public boolean deleteQuestion(Question question){
-        return questionMapper.deleteQuestion(question);
+    public boolean deleteQuestion(Integer qid){
+        return questionMapper.deleteQuestion(qid);
+    }
+
+    @Override
+    public List<Question1> searchSubject(String subject){
+        return questionMapper.searchSubject(subject);
+    }
+
+    @Override
+    public List<Question1> searchQuestion(String question){
+        return questionMapper.searchQuestion(question);
+    }
+
+    @Override
+    public List<Question1> searchQuestionBySubject(String subject,String question){
+        return questionMapper.searchQuestionBySubject(subject,question);
+    }
+
+    @Override
+    public boolean updateQuestion(Question1 question){
+        return questionMapper.updateQuestion(question);
     }
 }

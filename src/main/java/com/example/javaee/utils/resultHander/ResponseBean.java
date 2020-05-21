@@ -1,5 +1,9 @@
 package com.example.javaee.utils.resultHander;
 
+/**
+ * 一开始是准备使用bean作为返回数据的，开发进度不允许
+ * @param <T>
+ */
 public class ResponseBean<T> {
     private boolean success;
     private T data;

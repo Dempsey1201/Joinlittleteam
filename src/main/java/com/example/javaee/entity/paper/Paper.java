@@ -1,6 +1,7 @@
 package com.example.javaee.entity.paper;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -13,9 +14,9 @@ import java.util.Objects;
  */
 public class Paper {
 
-    int qid;
+    int pid;
 
-    String exam_name;
+    String pname;
 
     int share;
 
@@ -32,20 +33,41 @@ public class Paper {
     Date end_time;
 
     Double last_time;
-    public String getExam_name() {
-        return exam_name;
+
+    Integer full_score;
+
+    String subject;
+
+    public Paper(){
+
     }
 
-    public void setExam_name(String exam_name) {
-        this.exam_name = exam_name;
+    public Paper(String pname, int share, String teacher, String classno, Date start_time, Date end_time, Double last_time, Integer full_score, String subject) {
+        this.pname = pname;
+        this.share = share;
+        this.teacher = teacher;
+        this.classno = classno;
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.last_time = last_time;
+        this.full_score = full_score;
+        this.subject = subject;
     }
 
-    public int getQid() {
-        return qid;
+    public String getPname() {
+        return pname;
     }
 
-    public void setQid(int qid) {
-        this.qid = qid;
+    public void setPname(String exam_name) {
+        this.pname = exam_name;
+    }
+
+    public int getPid() {
+        return pid;
+    }
+
+    public void setPid(int qid) {
+        this.pid = qid;
     }
 
     public int getShare() {
@@ -102,9 +124,9 @@ public class Paper {
         if (this == o) return true;
         if (!(o instanceof Paper)) return false;
         Paper paper = (Paper) o;
-        return qid == paper.qid &&
+        return pid == paper.pid &&
                 share == paper.share &&
-                Objects.equals(exam_name, paper.exam_name) &&
+                Objects.equals(pname, paper.pname) &&
                 Objects.equals(teacher, paper.teacher) &&
                 Objects.equals(classno, paper.classno) &&
                 Objects.equals(start_time, paper.start_time) &&
@@ -114,14 +136,14 @@ public class Paper {
 
     @Override
     public int hashCode() {
-        return Objects.hash(qid, exam_name, share, teacher, classno, start_time, end_time, last_time);
+        return Objects.hash(pid, pname, share, teacher, classno, start_time, end_time, last_time);
     }
 
     @Override
     public String toString() {
         return "Paper{" +
-                "qid=" + qid +
-                ", exam_name='" + exam_name + '\'' +
+                "qid=" + pid +
+                ", exam_name='" + pname + '\'' +
                 ", share=" + share +
                 ", teacher='" + teacher + '\'' +
                 ", classno='" + classno + '\'' +

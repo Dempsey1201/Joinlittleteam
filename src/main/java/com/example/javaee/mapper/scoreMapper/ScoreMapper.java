@@ -17,4 +17,5 @@ public interface ScoreMapper {
 
     Integer getScore(@Param("sid") Integer sid,@Param("pid") Integer pid);
     List<UtilClass> getScoreByUser(Integer sid);
+    Integer getQscore(Integer qid,Integer pid);
 }

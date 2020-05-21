@@ -4,7 +4,7 @@
 <mapper namespace="com.example.javaee.mapper.paper.PaperMapper">
     <resultMap id="Paper" type="com.example.javaee.entity.paper.Paper">
         <id property="qid" column="qid"/>
-        <result property="exam_name" column="exam_name"/>
+        <result property="pname" column="pname"/>
         <result property="share" column="share"/>
         <result property="teacher" column="teacher"/>
         <result property="classno" column="classno"/>
@@ -14,25 +14,46 @@
         <result property="full_score" column="full_score"/>
     </resultMap>
 
-    <select id="getAll" resultType="Question">
+    <select id="getAll" resultType="Paper">
         select *
         from t_paper
     </select>
 
-    <insert id="insertNewQuestion" parameterType="Question">
-        insert into t_paper(exam_name,share,teacher,classno,start_time,end_time,qtype,author,subject)
-        values (#{Paper.exam_name},#{Paper.share},#{Paper.teacher},#{Paper.classno},#{Paper.start_time},#{Paper.end_time},#{Paper.last_time},#{Paper.full_score})
+    <insert id="insertNewPaper" parameterType="Paper">
+        insert into t_paper(pname,share,teacher,classno,start_time,end_time,qtype,author,subject)
+        values (#{Paper.pname},#{Paper.share},#{Paper.teacher},#{Paper.classno},#{Paper.start_time},#{Paper.end_time},#{Paper.last_time},#{Paper.full_score})
     </insert>
 
-    <delete id="deleteQuestion" parameterType="Question">
-        delete from t_paper,t_paper_question
-        where t_paper.pid = #{pid},t_paper_question.pid = #{pid}
+    <delete id="deletePaper">
+        delete from t_paper
+        where pid = #{pid}
     </delete>
 
-    <update id="updateQuestion" parameterType="Question">
-        update t_question
-        values (#{Question.question},#{Question.oa},#{Question.ob},#{Question.oc},#{Question.od},#{Question.answer},#{Question.qtype},#{Question.author},#{Question.subject})
-        where qid = Question.qid
-    </update>
+    <delete id="deleteAnswer">
+        delete from t_paperToQuestion
+        where pid = #{pid}
+    </delete>
 
+    <select id="searchPaper" resultType="com.example.javaee.entity.paper.Paper">
+        select *
+        from t_paper
+        where pname like concat('%',#{pname},'%') and share = 1
+    </select>
+
+    <insert id="isDone" >
+        insert into t_done
+        values (#{pid},#{sid},1)
+    </insert>
+
+    <select id="getDone" resultType="Integer">
+        select done
+        from t_done
+        where pid = #{pid},sid = #{sid}
+    </select>
+    
+    <select id="getQscore" resultType="Integer">
+        select qscore
+        from t_paperToQuestion
+        where pid = #{pid} and qid = #{qid}
+    </select>
 </mapper>

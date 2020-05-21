@@ -24,7 +24,8 @@
     <select id="getClassAnswer" resultType="com.example.javaee.entity.utilClass.UtilClass">
         select t_paperToQuestion.no,question,t_answerbyuser.answer,qscore,getscore,qtype
         from t_answerbyuser,t_paperToQuestion,t_question
-        where pid = #{pid} and sid = #{sid}
+        where pid = #{pid} and sid = #{sid} and t_paperToQuestion.qid = t_question.qid and
+        t_answerbyuser.qid = t_paperToQuestion.qid
         order by t_paperToQuestion.no
     </select>
     

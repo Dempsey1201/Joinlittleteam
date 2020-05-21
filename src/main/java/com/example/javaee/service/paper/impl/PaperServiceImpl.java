@@ -9,7 +9,6 @@ import com.example.javaee.service.paper.PaperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Null;
 import java.util.List;
 
 /**
@@ -61,4 +60,58 @@ public class PaperServiceImpl implements PaperService {
         return answerMapper.correctByTeacher(qid,sid,getscore);
     }
 
+    @Override
+    public boolean storeAnswer(Integer pid,List<Integer>qid,Integer sid,List<String> answer){
+        int i  = 0;
+        for(i = 0;i < qid.size();i++){
+            Integer integer = qid.get(i);
+            String string = answer.get(i);
+            answerMapper.insertAnswer(sid,integer,string);
+            if(answerMapper.getAnswer(sid,integer).equals(string)){
+                Integer integer1 = scoreMapper.getQscore(integer,pid);
+                answerMapper.correctByTeacher(integer,sid,integer1);
+            }else {
+                answerMapper.correctByTeacher(integer,sid,0);
+            }
+        }
+        if(i == qid.size()){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @Override
+    public List<Paper> getAll(){
+        return paperMapper.getAll();
+    }
+
+    @Override
+    public boolean insertNewPaper(Paper paper){
+        return paperMapper.insertNewPaper(paper);
+    }
+
+    @Override
+    public boolean deletePaper(Integer pid){
+        return paperMapper.deletePaper(pid) && paperMapper.deleteAnswer(pid);
+    }
+
+    @Override
+    public List<Paper> searchPaper(String pname){
+        return paperMapper.searchPaper(pname);
+    }
+
+    @Override
+    public boolean isDone(Integer sid,Integer pid){
+        return paperMapper.isDone(sid,pid);
+    }
+
+    @Override
+    public boolean getDone(Integer sid,Integer pid){
+        if(paperMapper.getDone(sid,pid) != 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
