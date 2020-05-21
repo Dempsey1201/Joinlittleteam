@@ -75,7 +75,14 @@ public interface UserMapper {
      * @return
      * @throws Exception
      */
-    public List<User> queryUser(@Param("id")int id)throws Exception;
+    public User queryUser(@Param("id")int id)throws Exception;
+
+    /**
+     * 查询
+     * @return
+     * @throws Exception
+     */
+    public User query(@Param("email")String email)throws Exception;
     /**
      * 查询
      * @return

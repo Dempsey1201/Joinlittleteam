@@ -78,8 +78,12 @@ public class UserServiceImpl implements UserService {
         return userMapper.listUser();
     }
     @Override
-    public List<User> queryUser(int id)throws Exception{
+    public User queryUser(int id)throws Exception{
         return userMapper.queryUser(id);
+    }
+    @Override
+    public User query(String email)throws Exception{
+        return userMapper.query(email);
     }
     @Override
     public List<Report> queryReport(int id)throws Exception{

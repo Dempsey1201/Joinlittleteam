@@ -20,7 +20,7 @@ public interface TeacherService {
 
     public int updateTeacherPassword(Teacher teacher) throws Exception;
 
-    public int updateStatus(int id,int status) throws Exception;
+   // public int updateStatus(int id,int status) throws Exception;
 
     public List<Teacher> list()throws Exception;
 

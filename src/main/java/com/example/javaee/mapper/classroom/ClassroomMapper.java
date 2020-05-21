@@ -22,6 +22,21 @@ public interface ClassroomMapper {
      * @throws Exception
      */
     public int deleteClassroom(@Param("id")int id)throws Exception;
+    /**
+     *
+     * @param
+     * @return
+     * @throws Exception
+     */
+    public Classroom queryClassroom(@Param("id")int id)throws Exception;
+
+    /**
+     *
+     * @param
+     * @return
+     * @throws Exception
+     */
+    public Classroom query(@Param("str")String str)throws Exception;
 
     /**
      *
@@ -38,6 +53,39 @@ public interface ClassroomMapper {
      * @throws Exception
      */
     public int update(@Param("classroom")Classroom classroom)throws Exception;
+
+    /**
+     *
+     * @param
+     * @return
+     * @throws Exception
+     */
+    public int join(@Param("idStr")String idStr,@Param("cid")int cid)throws Exception;
+    /**
+     *
+     * @param
+     * @return
+     * @throws Exception
+     */
+    public int joinB(@Param("id")int id,@Param("cidStr")String cidStr)throws Exception;
+
+    /**
+     *
+     * @param
+     * @return
+     * @throws Exception
+     */
+    public int out(@Param("idStr")String idStr,@Param("cid")int cid)throws Exception;
+    /**
+     *
+     * @param
+     * @return
+     * @throws Exception
+     */
+    public int outB(@Param("id")int id,@Param("cidStr")String cidStr)throws Exception;
+
+
+
     /**
      * 列出所有
      * @return

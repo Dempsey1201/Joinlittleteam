@@ -4,12 +4,14 @@ import com.example.javaee.entity.teacher.Teacher;
 import com.example.javaee.entity.user.User;
 import com.example.javaee.service.teacher.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -45,6 +47,17 @@ public class TeacherController {
         teacher.setPassword(getMD5String(str));
         return teacherService.addTeacher(teacher);
     }
+    @RequestMapping(value = "/updatePassword")
+    public int updatePassword(Teacher teacher) throws Exception{
+        String str=teacher.getPassword();
+        teacher.setPassword(getMD5String(str));
+        return teacherService.updateTeacherPassword(teacher);
+    }
+
+    @RequestMapping(value = "/updateTeacher")
+    public int updateTeacher(Teacher teacher) throws Exception{
+        return teacherService.update(teacher);
+    }
     @RequestMapping(value = "/login")
     public Teacher login(String card,String password) throws Exception{
         Teacher teacher=new Teacher();
@@ -52,6 +65,36 @@ public class TeacherController {
         password=getMD5String(password);
         teacher.setPassword(password);
         return teacherService.login(teacher);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/uploadHead")
+    public int pictureupload(@RequestParam(value = "imgStr", required=false)String imgStr, int id)throws Exception{
+        if (StringUtils.isEmpty(imgStr)) // 图像数据为空
+            return 0;
+        Base64.Decoder decoder = Base64.getDecoder();
+//      String words_to = "/opt/yfn/upload/user";
+        String words_to = "E://yfn/";
+        String son = id+".jpg";
+        String imgFilePath = words_to +son;
+        String host = "/img/"+son;
+        try {
+            // Base64解码
+            byte[] b = decoder.decode(imgStr);
+            for (int i = 0; i < b.length; ++i) {
+                if (b[i] < 0) {// 调整异常数据
+                    b[i] += 256;
+                }
+            }
+            OutputStream out = new FileOutputStream(imgFilePath);
+            out.write(b);
+            out.flush();
+            out.close();
+            teacherService.uploadHead(id,imgFilePath,host);
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
     }
     public static String getMD5String(String str) {
         try {

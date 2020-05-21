@@ -49,6 +49,26 @@ public class ClassroomController {
         return classroomService.update(classroom);
     }
 
+    @RequestMapping(value = "/joinClassRoom")
+    public int joinClassRoom(int id,int cid) throws Exception{
+        return classroomService.joinClassroom(id,cid);
+    }
+
+    @RequestMapping(value = "/outClassRoom")
+    public int outClassRoom(int id,int cid) throws Exception{
+        return classroomService.outClassroom(id,cid);
+    }
+
+    @RequestMapping(value = "/query")
+    public Classroom query(int id) throws Exception{
+        return classroomService.query(id);
+    }
+
+    @RequestMapping(value = "/queryClassroom")
+    public Classroom queryClassRoom(String classno) throws Exception{
+        return classroomService.queryClassroom(classno);
+    }
+
 
     public static String getMD5String(String str) {
         try {
@@ -63,15 +83,6 @@ public class ClassroomController {
             return null;
         }
 
-//        char secret='8';    //加密文字符
-//
-//        System.out.println("请输入您想加密的内容：");
-//
-//        String pass=str;
-//
-//        System.out.println("原字符串内容："+pass);
-//
-//        String secretResult= secret(pass,secret);
     }
 
 

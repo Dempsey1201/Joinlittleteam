@@ -47,7 +47,7 @@ public interface TeacherMapper {
      * @return
      * @throws Exception
      */
-    public int updateTeacherPassword(@Param("teacher")Teacher teacher)throws Exception;
+    public int updatePassword(@Param("teacher")Teacher teacher)throws Exception;
 
     /**
      * 更新状态
@@ -55,7 +55,7 @@ public interface TeacherMapper {
      * @return
      * @throws Exception
      */
-    public int updateStatus(@Param("id")int id,@Param("status")int status)throws Exception;
+    //public int updateStatus(@Param("id")int id,@Param("status")int status)throws Exception;
 
     /**
      * 删除

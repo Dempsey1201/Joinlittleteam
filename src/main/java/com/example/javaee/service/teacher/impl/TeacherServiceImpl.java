@@ -61,18 +61,18 @@ public class TeacherServiceImpl implements TeacherService {
      */
     @Override
     public int updateTeacherPassword(Teacher teacher) throws Exception{
-        return teacherMapper.updateTeacherPassword(teacher);
+        return teacherMapper.updatePassword(teacher);
     }
     /**
      * 修改状态
-     * @param id
+     * @param
      * @return
      * @throws Exception
      */
-    @Override
-    public int updateStatus(int id,int status) throws Exception{
-        return teacherMapper.updateStatus(id,status);
-    }
+//    @Override
+//    public int updateStatus(int id,int status) throws Exception{
+//        return teacherMapper.updateStatus(id,status);
+//    }
     @Override
     public List<Teacher> list()throws Exception{
         return teacherMapper.listTeacher();

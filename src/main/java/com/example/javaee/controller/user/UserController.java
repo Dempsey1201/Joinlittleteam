@@ -39,8 +39,6 @@ public class UserController {
 
     @RequestMapping(value = "/updateUser")
     public int update(User user) throws Exception{
-        String str=user.getPassword();
-        user.setPassword(getMD5String(str));
         return userService.update(user);
     }
 
@@ -62,13 +60,18 @@ public class UserController {
     }
 
     @RequestMapping(value = "/queryUser")
-    public List<User> queryUser(int id) throws Exception{
+    public User queryUser(int id) throws Exception{
         return userService.queryUser(id);
     }
-    @RequestMapping(value = "/queryReport")
-    public List<Report> queryReport(int id) throws Exception{
-        return userService.queryReport(id);
+
+    @RequestMapping(value = "/query")
+    public User query(String email) throws Exception{
+        return userService.query(email);
     }
+//    @RequestMapping(value = "/queryReport")
+//    public List<Report> queryReport(int id) throws Exception{
+//        return userService.queryReport(id);
+//    }
     @RequestMapping(value = "/delete")
     public int delete(@RequestParam(value = "id", required = false)int id) throws Exception{
         return userService.delete(id);
@@ -109,10 +112,14 @@ public class UserController {
             return 0;
         }
     }
-    @RequestMapping(value = "/addFeelBack")
-    public int addFeelBack(FeelBack feelBack) throws Exception{
-        return userService.addFeelBack(feelBack);
-    }
+//    @RequestMapping(value = "/addFeelBack")
+//    public int addFeelBack(FeelBack feelBack) throws Exception{
+//        return userService.addFeelBack(feelBack);
+//    }
+
+
+
+
     public static String getMD5String(String str) {
         try {
             //利用Java自带的MessageDigest类实现的最简单的MD5加密方法

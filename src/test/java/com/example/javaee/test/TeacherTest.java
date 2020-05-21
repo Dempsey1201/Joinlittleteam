@@ -39,6 +39,22 @@ public class TeacherTest {
         System.out.println(teacherController.addTeacher(teacher));
     }
     @Test
+    public void testUpdateUser()throws Exception{
+        Teacher teacher=new Teacher();
+        teacher.setTeachername("dongml");
+        teacher.setEmail("test");
+        teacher.setId(1);
+        teacher.setCollege("东北师大");
+        System.out.println(teacherController.updateTeacher(teacher));
+    }
+    @Test
+    public void testUpdate()throws Exception{
+        Teacher teacher=new Teacher();
+        teacher.setId(1);
+        teacher.setPassword("test");
+        System.out.println(teacherController.updatePassword(teacher));
+    }
+    @Test
     public void testDelete()throws Exception{
         System.out.println(teacherController.delete(2));
     }

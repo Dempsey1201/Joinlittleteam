@@ -35,10 +35,10 @@
         FROM t_teacher
     </select>
 
-    <update id="updateUser">
+    <update id="updateTeacher">
         UPDATE t_teacher
-        SET phone=#{user.phone},email=#{user.email},password=#{user.password},join_time=#{user.join_time}
-        WHERE id=#{user.id}
+        SET teachername=#{teacher.teachername},email=#{teacher.email},college=#{teacher.college}
+        WHERE id=#{teacher.id}
     </update>
 
     <update id="updatePassword">
