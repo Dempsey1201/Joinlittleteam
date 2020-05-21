@@ -49,30 +49,30 @@ public class AdminController {
         admin.setPassword(getMD5String(admin.getPassword()));
         return adminService.update(admin);
     }
-    @RequestMapping(value = "/addReport")
-    public int addReport(Report report) throws Exception{
-        return adminService.addReport(report);
-    }
-    @RequestMapping(value = "/updateUser")
-    public int updateUser(User user) throws Exception{
-        return adminService.updateUser(user);
-    }
-    @RequestMapping(value = "/updateReport")
-    public int updateReport(Report report) throws Exception{
-        return adminService.updateReport(report);
-    }
-    @RequestMapping(value = "/updateFeelBack")
-    public int updateFeelBack(FeelBack feelBack) throws Exception{
-        return adminService.updateFeelBack(feelBack);
-    }
-    @RequestMapping(value = "/deleteFeelBack")
-    public int deleteFeelBack(int id) throws Exception{
-        return adminService.deleteFeelBack(id);
-    }
-    @RequestMapping(value = "/listFeelBack")
-    public List<FeelBack> listFeelBack() throws Exception{
-        return adminService.listFeelBack();
-    }
+//    @RequestMapping(value = "/addReport")
+//    public int addReport(Report report) throws Exception{
+//        return adminService.addReport(report);
+//    }
+//    @RequestMapping(value = "/updateUser")
+//    public int updateUser(User user) throws Exception{
+//        return adminService.updateUser(user);
+//    }
+//    @RequestMapping(value = "/updateReport")
+//    public int updateReport(Report report) throws Exception{
+//        return adminService.updateReport(report);
+//    }
+//    @RequestMapping(value = "/updateFeelBack")
+//    public int updateFeelBack(FeelBack feelBack) throws Exception{
+//        return adminService.updateFeelBack(feelBack);
+//    }
+//    @RequestMapping(value = "/deleteFeelBack")
+//    public int deleteFeelBack(int id) throws Exception{
+//        return adminService.deleteFeelBack(id);
+//    }
+//    @RequestMapping(value = "/listFeelBack")
+//    public List<FeelBack> listFeelBack() throws Exception{
+//        return adminService.listFeelBack();
+//    }
     public static String getMD5String(String str) {
         try {
             //利用Java自带的MessageDigest类实现的最简单的MD5加密方法
