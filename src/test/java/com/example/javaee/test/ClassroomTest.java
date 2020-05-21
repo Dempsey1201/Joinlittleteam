@@ -49,4 +49,24 @@ public class ClassroomTest {
         System.out.println(classroomController.addClassroom(classroom));
     }
 
+    @Test
+    public void testJoin()throws Exception{
+        System.out.println(classroomController.joinClassRoom(1,9));
+    }
+
+    @Test
+    public void testOut()throws Exception{
+        System.out.println(classroomController.outClassRoom(1,9));
+    }
+
+    @Test
+    public void testQuery()throws Exception{
+        System.out.println(classroomController.query(1));
+    }
+
+    @Test
+    public void testQueryClassroom()throws Exception{
+        System.out.println(classroomController.queryClassRoom("aa"));
+    }
+
 }

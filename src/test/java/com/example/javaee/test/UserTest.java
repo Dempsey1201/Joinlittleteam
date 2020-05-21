@@ -42,13 +42,18 @@ public class UserTest {
         System.out.println(userController.queryUser(1));
     }
     @Test
+    public void testQuery()throws Exception{
+        System.out.println(userController.query("test"));
+    }
+    @Test
     public void testDeleteUser()throws Exception{
         System.out.println(userController.delete(3));
     }
     @Test
     public void testUpdateUser()throws Exception{
         User user=new User();
-        user.setId(77);
+        user.setId(2);
+        user.setUsername("testUpdate");
         user.setEmail("123123@qq.com");
         System.out.println(userController.update(user));
     }

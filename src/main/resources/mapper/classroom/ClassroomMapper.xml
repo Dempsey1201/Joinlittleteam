@@ -7,6 +7,7 @@
         <result property="classname" column="classname"/>
         <result property="classno" column="classno"/>
         <result property="college" column="college"/>
+        <result property="sid" column="sid"/>
     </resultMap>
     <!--<resultMap id="feelBack" type="com.example.javaee.entity.feelback.FeelBack">-->
     <!--<id property="id" column="id"/>-->
@@ -32,6 +33,18 @@
     FROM t_classroom
     </select>
 
+    <select id="queryClassroom" resultType="classroom">
+    SELECT *
+    FROM t_classroom
+    where id=#{id}
+    </select>
+
+    <select id="query" resultType="classroom">
+    SELECT *
+    FROM t_classroom
+    where classno=#{str}
+    </select>
+
     <!--<update id="updateFeelBack">-->
     <!--UPDATE t_feelback-->
     <!--SET status=#{feelback.status}-->
@@ -49,11 +62,29 @@
         WHERE id=#{classroom.id}
     </update>
 
-    <!--<update id="updateUser">-->
-    <!--UPDATE t_user-->
-    <!--SET major=#{user.major},college=#{user.college}-->
-    <!--WHERE id=#{user.id}-->
-    <!--</update>-->
+    <update id="joinB">
+    UPDATE t_user
+    SET classno=#{cidStr}
+    WHERE id=#{id}
+    </update>
+
+    <update id="join">
+    UPDATE t_classroom
+    SET sid=#{idStr}
+    WHERE id=#{cid}
+    </update>
+
+    <update id="outB">
+    UPDATE t_user
+    SET classno=#{cidStr}
+    WHERE id=#{id}
+    </update>
+
+    <update id="out">
+    UPDATE t_classroom
+    SET sid=#{idStr}
+    WHERE id=#{cid}
+    </update>
 
     <!--<update id="updateReport">-->
     <!--UPDATE t_report-->

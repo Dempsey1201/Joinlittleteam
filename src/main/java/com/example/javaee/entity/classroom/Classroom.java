@@ -14,7 +14,7 @@ public class Classroom {
     String major;
     int teacherno;
     String teachername;
-    String studentno;
+    String sid;
     String paperno;
 
 
@@ -66,12 +66,12 @@ public class Classroom {
         this.teachername = teachername;
     }
 
-    public String getStudentno() {
-        return studentno;
+    public String getSid() {
+        return sid;
     }
 
-    public void setStudentno(String studentno) {
-        this.studentno = studentno;
+    public void setSid(String sid) {
+        this.sid = sid;
     }
 
     public String getPaperno() {
@@ -100,7 +100,7 @@ public class Classroom {
                 ", major='" + major + '\'' +
                 ", teacherno=" + teacherno +
                 ", teachername='" + teachername + '\'' +
-                ", studentno='" + studentno + '\'' +
+                ", sid='" + sid + '\'' +
                 ", paperno='" + paperno + '\'' +
                 '}';
     }
