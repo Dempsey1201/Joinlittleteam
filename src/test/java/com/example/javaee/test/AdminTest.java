@@ -25,17 +25,17 @@ public class AdminTest {
 
     @Test
     public void testLogin()throws Exception{
-        System.out.println(adminController.login("123123","123"));
+        System.out.println(adminController.login("123123","test"));
     }
 
-//    @Test
-//    public void testUpdate()throws Exception{
-//        Admin admin=new Admin();
-//        admin.setId(1);
-//        admin.setEmail("123123@qq.com");
-//        admin.setPassword("test");
-//        System.out.println(adminController.update(admin));
-//    }
+    @Test
+    public void testUpdate()throws Exception{
+        Admin admin=new Admin();
+        admin.setId(1);
+        admin.setPassword("test");
+        admin.setAdminname("test22");
+        System.out.println(adminController.update(admin));
+    }
 //    @Test
 //    public void testUpdateUser()throws Exception{
 //        User admin=new User();
@@ -44,28 +44,28 @@ public class AdminTest {
 //        admin.setCollege("sdasdasd");
 //        System.out.println(adminController.updateUser(admin));
 //    }
+//    @Test
+//    public void testUpdateReport()throws Exception{
+//        Report report=new Report();
+//        report.setClass_name("绿色化学");
+//        report.setId(18);
+//        report.setScore("100");
+//        report.setPoint("2");
+//        System.out.println(adminController.updateReport(report));
+//    }
+//    @Test
+//    public void testUpdateFeelBack()throws Exception{
+//        FeelBack feelBack=new FeelBack();
+//        feelBack.setId(12);
+//        feelBack.setStatus(1);
+//        System.out.println(adminController.updateFeelBack(feelBack));
+//    }
     @Test
-    public void testUpdateReport()throws Exception{
-        Report report=new Report();
-        report.setClass_name("绿色化学");
-        report.setId(18);
-        report.setScore("100");
-        report.setPoint("2");
-        System.out.println(adminController.updateReport(report));
+    public void testQuery()throws Exception{
+        System.out.println(adminController.queryAdmin(1));
     }
-    @Test
-    public void testUpdateFeelBack()throws Exception{
-        FeelBack feelBack=new FeelBack();
-        feelBack.setId(12);
-        feelBack.setStatus(1);
-        System.out.println(adminController.updateFeelBack(feelBack));
-    }
-    @Test
-    public void testListFeelBack()throws Exception{
-        System.out.println(adminController.listFeelBack());
-    }
-    @Test
-    public void testDeleteFeelBack()throws Exception{
-        System.out.println(adminController.deleteFeelBack(13));
-    }
+//    @Test
+//    public void testDeleteFeelBack()throws Exception{
+//        System.out.println(adminController.deleteFeelBack(13));
+//    }
 }

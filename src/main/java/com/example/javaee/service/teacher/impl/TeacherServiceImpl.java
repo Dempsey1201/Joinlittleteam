@@ -3,9 +3,7 @@ package com.example.javaee.service.teacher.impl;
 import com.example.javaee.entity.feelback.FeelBack;
 import com.example.javaee.entity.report.Report;
 import com.example.javaee.entity.teacher.Teacher;
-import com.example.javaee.entity.user.User;
 import com.example.javaee.mapper.teacher.TeacherMapper;
-import com.example.javaee.mapper.user.UserMapper;
 import com.example.javaee.service.teacher.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,24 +61,24 @@ public class TeacherServiceImpl implements TeacherService {
      */
     @Override
     public int updateTeacherPassword(Teacher teacher) throws Exception{
-        return teacherMapper.updateTeacherPassword(teacher);
+        return teacherMapper.updatePassword(teacher);
     }
     /**
      * 修改状态
-     * @param id
+     * @param
      * @return
      * @throws Exception
      */
-    @Override
-    public int updateStatus(int id,int status) throws Exception{
-        return teacherMapper.updateStatus(id,status);
-    }
+//    @Override
+//    public int updateStatus(int id,int status) throws Exception{
+//        return teacherMapper.updateStatus(id,status);
+//    }
     @Override
     public List<Teacher> list()throws Exception{
         return teacherMapper.listTeacher();
     }
     @Override
-    public List<Teacher> queryTeacher(String card)throws Exception{
+    public Teacher queryTeacher(String card)throws Exception{
         return teacherMapper.queryTeacher(card);
     }
     @Override
@@ -88,8 +86,8 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherMapper.queryReport(id);
     }
     @Override
-    public int delete(String card)throws Exception{
-        return teacherMapper.deleteTeacher(card);
+    public int delete(int id)throws Exception{
+        return teacherMapper.deleteTeacher(id);
     }
     /**
      * 判断用户名

@@ -47,7 +47,7 @@ public interface TeacherMapper {
      * @return
      * @throws Exception
      */
-    public int updateTeacherPassword(@Param("teacher")Teacher teacher)throws Exception;
+    public int updatePassword(@Param("teacher")Teacher teacher)throws Exception;
 
     /**
      * 更新状态
@@ -55,15 +55,15 @@ public interface TeacherMapper {
      * @return
      * @throws Exception
      */
-    public int updateStatus(@Param("id")int id,@Param("status")int status)throws Exception;
+    //public int updateStatus(@Param("id")int id,@Param("status")int status)throws Exception;
 
     /**
      * 删除
-     * @param teacher_card
+     * @param
      * @return
      * @throws Exception
      */
-    public int deleteTeacher(@Param("teacher_card")String teacher_card)throws Exception;
+    public int deleteTeacher(@Param("id")int id)throws Exception;
 
     /**
      * 列出所有user
@@ -76,7 +76,7 @@ public interface TeacherMapper {
      * @return
      * @throws Exception
      */
-    public List<Teacher> queryTeacher(@Param("teacher_card")String teacher_card)throws Exception;
+    public Teacher queryTeacher(@Param("card")String card)throws Exception;
     /**
      * 查询------------------------有问题
      * @return

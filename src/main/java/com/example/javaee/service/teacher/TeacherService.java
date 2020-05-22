@@ -20,13 +20,13 @@ public interface TeacherService {
 
     public int updateTeacherPassword(Teacher teacher) throws Exception;
 
-    public int updateStatus(int id,int status) throws Exception;
+   // public int updateStatus(int id,int status) throws Exception;
 
     public List<Teacher> list()throws Exception;
 
-    public List<Teacher> queryTeacher(String teacher_card)throws Exception;
+    public Teacher queryTeacher(String card)throws Exception;
 
-    public int delete(String card)throws Exception;
+    public int delete(int id)throws Exception;
 
     public int addTeacher(Teacher teacher)throws Exception;
 

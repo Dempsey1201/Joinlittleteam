@@ -18,7 +18,7 @@
     <select id="login" resultType="admin">
         SELECT *
         FROM t_admin
-        WHERE admincard=#{admin.admincard} and password=#{admin.password}
+        WHERE card=#{admin.card} and password=#{admin.password}
     </select>
 
     <select id="queryAdmin" resultType="admin">
@@ -45,7 +45,7 @@
 
     <update id="updateAdmin">
         UPDATE t_admin
-        SET adminname=#{admin.adminanme},password=#{admin.password}
+        SET adminname=#{admin.adminname},password=#{admin.password}
         WHERE id=#{admin.id}
     </update>
 

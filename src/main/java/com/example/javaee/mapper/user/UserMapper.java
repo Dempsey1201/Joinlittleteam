@@ -49,7 +49,7 @@ public interface UserMapper {
     public int updatePassword(@Param("user")User user)throws Exception;
 
     /**
-     * 更新密码
+     * 更新
      * @param id
      * @return
      * @throws Exception
@@ -58,11 +58,11 @@ public interface UserMapper {
 
     /**
      * 删除
-     * @param card
+     * @param
      * @return
      * @throws Exception
      */
-    public int deleteUser(@Param("card")String card)throws Exception;
+    public int deleteUser(@Param("id")int id)throws Exception;
 
     /**
      * 列出所有user
@@ -75,7 +75,14 @@ public interface UserMapper {
      * @return
      * @throws Exception
      */
-    public List<User> queryUser(@Param("card")String card)throws Exception;
+    public User queryUser(@Param("id")int id)throws Exception;
+
+    /**
+     * 查询
+     * @return
+     * @throws Exception
+     */
+    public User query(@Param("email")String email)throws Exception;
     /**
      * 查询
      * @return
@@ -88,7 +95,7 @@ public interface UserMapper {
      * @return
      * @throws Exception
      */
-    public int uploadHead(@Param("id")int id,@Param("path")String path,@Param("HeadUrl")String HeadUrl)throws Exception;
+    public int uploadHead(@Param("id")int id,@Param("path")String path,@Param("headUrl")String headUrl)throws Exception;
     /**
      * 增加反馈
      * @param feelBack
