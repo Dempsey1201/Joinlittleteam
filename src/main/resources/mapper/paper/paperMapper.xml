@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.javaee.mapper.paper.PaperMapper">
+    <resultMap id="Paper" type="com.example.javaee.entity.paper.Paper">
+        <id property="qid" column="qid"/>
+        <result property="pname" column="pname"/>
+        <result property="share" column="share"/>
+        <result property="teacher" column="teacher"/>
+        <result property="classno" column="classno"/>
+        <result property="start_time" column="start_time"/>
+        <result property="end_time" column="end_time"/>
+        <result property="last_time" column="last_time"/>
+        <result property="full_score" column="full_score"/>
+    </resultMap>
+
+    <select id="getAll" resultType="Paper">
+        select *
+        from t_paper
+    </select>
+
+    <insert id="insertNewPaper" parameterType="Paper">
+        insert into t_paper(pname,share,teacher,classno,start_time,end_time,qtype,author,subject)
+        values (#{Paper.pname},#{Paper.share},#{Paper.teacher},#{Paper.classno},#{Paper.start_time},#{Paper.end_time},#{Paper.last_time},#{Paper.full_score})
+    </insert>
+
+    <delete id="deletePaper">
+        delete from t_paper
+        where pid = #{pid}
+    </delete>
+
+    <delete id="deleteAnswer">
+        delete from t_paperToQuestion
+        where pid = #{pid}
+    </delete>
+
+    <select id="searchPaper" resultType="com.example.javaee.entity.paper.Paper">
+        select *
+        from t_paper
+        where pname like concat('%',#{pname},'%') and share = 1
+    </select>
+
+    <insert id="isDone" >
+        insert into t_done
+        values (#{pid},#{sid},1)
+    </insert>
+
+    <select id="getDone" resultType="Integer">
+        select done
+        from t_done
+        where pid = #{pid},sid = #{sid}
+    </select>
+
+    <select id="getPaperQuestion" resultType="com.example.javaee.entity.question.Question1">
+        select t_paperToQuestion.no,t_question.qid,question,oa,ob,oc,od,answer,qtype,author,subject,t_paperToQuestion.qscore
+        from t_question,t_paperToQuestion
+        where t_question.qid = t_paperToQuestion.qid and t_paperToQuestion.pid = #{pid}
+        order by t_paperToQuestion.no
+    </select>
+
+    <insert id="insertQuestionToPaper">
+        insert into t_paperToQuestion
+        values (#{pid},#{no},#{qid},#{qscore})
+    </insert>
+
+    <select id="selectMainKey" resultType="Integer">
+        select auto_increment
+        from information_schema.`TABLES`
+        where table_name='t_paper'
+    </select>
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.javaee.mapper.scoreMapper.ScoreMapper">
+
+    <select id="getScore" resultType="java.lang.Integer">
+        select score
+        from t_score
+        where sid = #{sid} and pid = #{pid}
+    </select>
+
+    <select id="getScoreByUser" resultType="com.example.javaee.entity.utilClass.UtilClass">
+        select pname,score
+        from t_paper,t_score
+        where sid = #{sid} and t_paper.pid = t_score.pid
+    </select>
+
+    <select id="getQscore" resultType="Integer">
+        select qscore
+        from t_paperToQuestion
+        where pid = #{pid} and qid = #{qid}
+    </select>
+
+    <insert id="insertUserScore" >
+       insert into t_score
+       values (#{sid},#{pid},#{score})
+    </insert>
+
+    <update id="updateUserScore">
+        update t_score
+        set sid = #{sid} , pid = #{pid} , score = #{score}
+        where sid = #{sid} and pid = #{pid}
+    </update>
+</mapper>
