@@ -29,6 +29,16 @@ public class Question1 {
 
     String subject;
 
+    Integer qscore;
+
+    public Integer getQscore() {
+        return qscore;
+    }
+
+    public void setQscore(Integer qscore) {
+        this.qscore = qscore;
+    }
+
     public Question1() {
     }
 

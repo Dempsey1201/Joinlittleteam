@@ -18,4 +18,6 @@ public interface ScoreMapper {
     Integer getScore(@Param("sid") Integer sid,@Param("pid") Integer pid);
     List<UtilClass> getScoreByUser(Integer sid);
     Integer getQscore(Integer qid,Integer pid);
+    boolean insertUserScore(Integer pid,Integer sid,Integer score);
+    boolean updateUserScore(Integer pid,Integer sid,Integer score);
 }

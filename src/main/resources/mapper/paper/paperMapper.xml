@@ -50,10 +50,22 @@
         from t_done
         where pid = #{pid},sid = #{sid}
     </select>
-    
-    <select id="getQscore" resultType="Integer">
-        select qscore
-        from t_paperToQuestion
-        where pid = #{pid} and qid = #{qid}
+
+    <select id="getPaperQuestion" resultType="com.example.javaee.entity.question.Question1">
+        select t_paperToQuestion.no,t_question.qid,question,oa,ob,oc,od,answer,qtype,author,subject,t_paperToQuestion.qscore
+        from t_question,t_paperToQuestion
+        where t_question.qid = t_paperToQuestion.qid and t_paperToQuestion.pid = #{pid}
+        order by t_paperToQuestion.no
+    </select>
+
+    <insert id="insertQuestionToPaper">
+        insert into t_paperToQuestion
+        values (#{pid},#{no},#{qid},#{qscore})
+    </insert>
+
+    <select id="selectMainKey" resultType="Integer">
+        select auto_increment
+        from information_schema.`TABLES`
+        where table_name='t_paper'
     </select>
 </mapper>

@@ -15,7 +15,7 @@
         values (#{qid},#{sid},#{answer})
     </insert>
 
-    <select id="getAnswer" resultType="String">
+    <select id="getUserAnswer" resultType="String">
         select answer
         from t_answerbyuser
         where sid = #{sid} and qid = #{qid}

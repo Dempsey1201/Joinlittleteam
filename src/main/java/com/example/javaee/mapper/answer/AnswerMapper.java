@@ -18,6 +18,6 @@ public interface AnswerMapper {
     List<UtilClass> getClassAnswer(Integer sid,Integer qid,Integer pid);
     List<Paper> getPaperByClass(@Param("classno") Integer classno);
     boolean insertAnswer(@Param("sid") Integer sid,@Param("qid") Integer qid,@Param("answer") String answer);
-    String getAnswer(Integer sid,Integer qid);
+    String getUserAnswer(Integer sid,Integer qid);
     boolean correctByTeacher(Integer qid,Integer sid,Integer getscore);
 }

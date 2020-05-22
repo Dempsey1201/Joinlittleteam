@@ -23,7 +23,7 @@ public interface PaperService {
     List<UtilClass> getClassAnswer(Integer sid,Integer qid,Integer pid);
     List<Paper> getPaperByClass(Integer classno);
     boolean insertAnswer(Integer sid,Integer qid,String answer);
-    boolean correctByTeacher(Integer qid,Integer sid,Integer getscore);
+    boolean correctByTeacher(Integer pid,Integer qid,Integer sid,Integer getscore);
     boolean storeAnswer(Integer pid,List<Integer>qid,Integer sid,List<String>answer);
     List<Paper> getAll();
     boolean insertNewPaper(Paper paper);
@@ -31,4 +31,9 @@ public interface PaperService {
     List<Paper> searchPaper(String pname);
     boolean isDone(Integer sid,Integer pid);
     boolean getDone(Integer sid,Integer pid);
+    boolean insertUserScore(Integer pid,Integer sid,Integer score);
+    boolean updateUserScore(Integer pid,Integer sid,Integer score);
+    List<Question1> getPaperQuestion(Integer pid);
+    boolean insertQuestionToPaper(List<Integer> pid,List<Integer> no,List<Integer> qid,List<Integer> qscore);
+    boolean reusePaper(Integer pid);
 }
