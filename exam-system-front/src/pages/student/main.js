@@ -8,7 +8,10 @@ import axios from 'axios'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';//样式文件单独引入
 Vue.use(ElementUI);
-Vue.use(axios)
+// import axios from "axios";
+import vueAxios from "vue-axios";
+Vue.use(vueAxios,axios);
+axios.defaults.baseURL="http://47.94.210.131:8080/"
 
 Vue.config.productionTip = false
 

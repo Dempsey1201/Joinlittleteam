@@ -1,6 +1,6 @@
 <template>
     <div id="stuGrade">
-        学生成绩
+        <router-view></router-view>
     </div>
 </template>
 
