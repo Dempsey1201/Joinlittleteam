@@ -1,18 +1,19 @@
 <template>
   <div class="main">
     <!-- <div class="main-box"> -->
-    <router-view></router-view>
+    <router-view class="main-content"></router-view>
     <!-- </div> -->
   </div>
 </template>
-<style scoped>
+<style lang="less">
 .main {
-  background: white;
-  padding: 20px;
-  box-sizing: border-box;
-  box-shadow: 0 5px 12px 0 rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  min-height: 100%;
+  padding: 2px !important;
+  .main-content {
+    box-sizing: border-box;
+    min-height: 100%;
+    width: 100%;
+    box-shadow: 0 2px 12px 0 rgba(64, 158, 255, 0.18);
+  }
 }
 </style>
 <script>

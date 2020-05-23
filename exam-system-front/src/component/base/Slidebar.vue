@@ -3,7 +3,7 @@
     <el-menu
       default-active="/informationentry"
       class="el-menu-vertical-demo"
-      background-color="rgb(6, 58, 110)"
+      background-color="rgba(255,255,255,0.75)"
       text-color="rgb(191, 203, 217)"
       active-text-color="#409EFF"
       router
@@ -44,14 +44,14 @@ ul {
 }
 
 .sidebar {
-  background-color: rgb(6, 58, 110);
+  background-color: rgba(255,255,255,0.75);
   color: rgb(37, 23, 23);
   height: calc(100vh - 70px);
 }
 
-.el-menu-item:focus {
+/* .el-menu-item:focus {
   background-color: rgb(28, 55, 95) !important;
-}
+} */
 
 .el-menu-item {
   font-size: 14px;

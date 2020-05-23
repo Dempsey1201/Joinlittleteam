@@ -4,10 +4,11 @@
       class="avatar-uploader"
       action="string"
       :show-file-list="false"
-      :before-upload="beforeUpload"
+      :on-success="handleAvatarSuccess"
       ref="upload"
       :auto-upload="false"
       :http-request="httpRequest"
+      :before-upload="beforeUpload"
     >
       <img v-if="imageUrl" :src="imageUrl" class="avatar" />
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -25,6 +26,10 @@ export default {
     };
   },
   methods: {
+    //显示图片
+    handleAvatarSuccess(res, file) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+      },
     //上传图像前的限制
     beforeUpload(file) {
       const isJPG = file.type === "image/jpeg";
@@ -59,11 +64,11 @@ export default {
               type: "success",
               message: "修改失败，请输入完整信息"
             });
-            getAll().then(res => {
-              console.log(res.data);
-              this.tableData = res.data;
-              this.length = this.tableData.length;
-            });
+            // getAll().then(res => {
+            //   console.log(res.data);
+            //   this.tableData = res.data;
+            //   this.length = this.tableData.length;
+            // });
             this.$refs.upload.clearFiles();
             this.$refs.uploadForm.resetFields();
           } else {
@@ -82,27 +87,27 @@ export default {
 </script>
 
 <style scoped>
-.avatar-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.avatar-uploader .el-upload:hover {
-  border-color: #409eff;
-}
-.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  line-height: 178px;
-  text-align: center;
-}
-.avatar {
-  width: 178px;
-  height: 178px;
-  display: block;
-}
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
 </style>

@@ -2,7 +2,7 @@
   <div class="myGrade">
     <el-table
       :data="tableData"
-      style="width: 100%"
+      style="width: 100%;"
       :default-sort="{prop: 'date', order: 'descending'}"
     >
       <el-table-column prop="id" label="班级" sortable></el-table-column>
@@ -44,9 +44,14 @@ export default {
   },
 };
 </script>
-
 <style scoped>
-.myGrade {
-  color: red;
+.el-table{
+  background-color:rgba(255, 255, 255, 0.74) !important;
 }
+.el-table th{
+    background:rgba(255, 255, 255, 0.74) !important;
+  }
+  .el-table tr{
+   background:rgba(255, 255, 255, 0.74) !important;
+  }
 </style>

@@ -2,7 +2,7 @@
   <div class="leftContent">
     <div class="top">
       <div class="pic">
-        <img src="../../../../public/img/pta.png" alt width="40%" />
+        成才考试
       </div>
       <div class="detail">
         <div class="one">
@@ -61,13 +61,15 @@ a{
   // height: 500px;
   // background-color: #fff;
   .top {
-    background-color: #fff;
+    background-color: rgba(255,255,255,0.7);
     // border: 1px solid red;
     border-radius: 5px;
     overflow: hidden;
     .pic {
-      background: rgb(10, 73, 145);
+      color: #fff;
+      background: #409eff !important;
       text-align: center;
+      padding: 8px;
     }
     .detail {
       padding-top: 0.5rem;
@@ -99,7 +101,7 @@ a{
   .middle {
     cursor: pointer;
     margin-top: 10px;
-    background: #fff;
+    background:rgba(255,255,255,0.7);
     padding: 7px;
     border-radius: 5px;
     overflow: hidden;
@@ -107,7 +109,7 @@ a{
       font-size: 0.875rem;
       font-weight: 400;
       line-height: 1.5;
-      background: #1b75dc;
+      background: #409eff !important;
       color: #fff;
       .el-icon-s-order{
         margin-left: 5%;
@@ -117,7 +119,7 @@ a{
   }
   .bottom{
     margin-top: 10px;
-    background: #fff;
+    background: rgba(255,255,255,0.7);
     overflow: hidden;
     border-radius: 6px;
     padding: 10px;

@@ -76,7 +76,7 @@ export default {
   .title {
     display: flex;
     padding: 7px;
-    background: #fff;
+    background:rgba(255,255,255,0.7);
     border-radius: 5px;
     span {
       padding: 3px;
@@ -93,13 +93,13 @@ export default {
     font-size: 16px;
     margin-top: 10px;
     padding: 10px;
-    background: #fff;
+    background: rgba(255,255,255,0.7);
     border-radius: 5px;
   }
   .info {
     margin-top: 10px;
     padding: 10px;
-    background: #fff;
+    background: rgba(255,255,255,0.7);
     border-radius: 5px;
     .top {
       display: flex;
@@ -117,8 +117,8 @@ export default {
       }
       button {
         // flex: 1;
-        background-color: rgb(153, 153, 153);
-        border-color: rgb(153, 153, 153);
+        background-color: rgb(153, 153, 153.0.8);
+        border-color: rgb(153, 153, 153,0.8);
         padding: 3px 5px;
         font-size: 12px;
       }

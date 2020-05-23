@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="8">
         <div class="left">
-          <img src="../../../../public/img/下载.png" alt width="80%" />
+          成才考试系统
         </div>
       </el-col>
       <el-col :span="15">
@@ -42,16 +42,19 @@ body {
   width: 100%;
   background-color: #eff4f7;
   .navBar {
-    background-color: #fff;
+    background-color: rgba(255,255,255,0.7);
     height: 64px;
     line-height: 64px;
     border-bottom: 1px;
     box-shadow: 0 2px 3px 0 rgba(155, 155, 155, 0.29);
     .left {
+      font-size: 30px !important;
+      color: #409eff !important;
+      opacity: 1 !important;
+      height: 64px;
+      line-height: 64px;
+      background-color:rgba(255,255,255,0.7);
       margin-left: 10%;
-      img {
-        vertical-align: middle;
-      }
     }
     .right {
       float: right;

@@ -2,10 +2,10 @@
   <div class="prifole">
     <div class="title">我的账号</div>
     <div class="content">
-      <el-form label-position="left" label-width="80px" :model="formLabelAlign">
+      <el-form label-position="left" label-width="80px">
         <el-form-item label="昵称">
           <label v-if="isShow">{{student.username}}</label>
-          <el-input v-model="formLabelAlign.name" style="width: 200px" v-else></el-input>
+          <el-input v-model="nickname" style="width: 200px" v-else></el-input>
           <el-button
             type="primary"
             plain
@@ -13,7 +13,7 @@
             style="margin-left: 10px"
             v-if="isShow"
           >修改昵称</el-button>
-          <el-button type="primary" plain @click="confirm1" style="margin-left: 10px" v-else>确定</el-button>
+          <el-button type="primary" plain @click="changeNick" style="margin-left: 10px" v-else>确定</el-button>
         </el-form-item>
         <el-form-item label="学校">
           <label>{{student.college}}</label>
@@ -36,10 +36,28 @@
           center
           style="padding: 10px"
         >
-          <upload-img/>
+          <!-- //上传图片 -->
+          <!-- <div class="upload"> -->
+          <el-upload
+            class="upload-demo"
+            ref="upload"
+            action="string"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :auto-upload="false"
+            :http-request="httpRequest"
+            :file-list="fileList"
+            list-type="picture"
+            :limit="1"
+            :before-upload="beforeUpload"
+          >
+            <el-button size="small" type="primary">上传</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过1MB</div>
+          </el-upload>
+          <!-- </div> -->
           <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="confirm2">确 定</el-button>
+            <el-button @click="dialogVisible2 = false">取 消</el-button>
+            <el-button type="primary" @click="changeImg">确 定</el-button>
           </span>
         </el-dialog>
 
@@ -72,13 +90,13 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
               <el-button @click="dialogVisible = false">取 消</el-button>
-              <el-button type="primary" @click="confirm2">确 定</el-button>
+              <el-button type="primary" @click="changePass">确 定</el-button>
             </span>
           </el-dialog>
         </el-form-item>
         <el-form-item label="应邀做题">
-          <el-input v-model="formLabelAlign.type" style="width: 200px"></el-input>
-          <el-button type="primary" plain @click="change4" style="margin-left: 10px">接受邀请</el-button>
+          <el-input v-model="acceptNum" style="width: 200px"></el-input>
+          <el-button type="primary" plain @click="accept" style="margin-left: 10px">接受邀请</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -86,26 +104,16 @@
 </template>
 
 <script>
-import uploadImg from "../components/upload";
+import axios from "axios";
 export default {
   name: "prifole",
-  components: {
-    uploadImg
-  },
   data() {
     return {
       //从后端请求的学生信息
       student: {
-        username: "vampire",
-        email: "1559114369@qq.com",
-        college: "东北师范大学",
-        headUrl:
-          "https://images.ptausercontent.com/9724e874-2854-49ae-bd8d-71c5cc4a0968.jpg"
+       
       },
-      formLabelAlign: {
-        name: "",
-        type: ""
-      },
+      nickname: "",
       isShow: true,
       isShow2: true,
       //修改密码的弹窗
@@ -116,20 +124,37 @@ export default {
         checkPass: ""
       },
       //图片上传的弹窗
-      dialogVisible2: false
+      dialogVisible2: false,
+      //图片地址
+      fileList: [],
+      //做题的邀请码
+      acceptNum: ""
     };
+  },
+  created() {
+    //获取用户的id，通过id获取用户的信息
+     axios.post("http://47.94.210.131:8080/user/queryUser").then(function(res) {
+        res = res.data;
+        console.log(res);
+        this.data.student=res
+      });
   },
   methods: {
     //点击上传
     upload() {
       this.dialogVisible2 = true;
     },
+
+    //修改昵称
     change1() {
       this.isShow = !this.isShow;
     },
-    confirm1() {
+    changeNick() {
       this.isShow = !this.isShow;
       //像后端传送数据
+      axios.post("http://47.94.210.131:8080/user/list").then(function(res) {
+        res = res.data;
+      });
     },
     //修改邮箱
     change2() {
@@ -143,7 +168,7 @@ export default {
           this.$message({
             type: "success",
             message: "你的邮箱是: " + value
-            //像后端传输
+            //像后端传输邮箱
           });
         })
         .catch(() => {
@@ -157,7 +182,7 @@ export default {
     change3() {
       this.dialogVisible = true;
     },
-    confirm2() {
+    changePass() {
       console.log(this.ruleForm.pass, this.ruleForm.checkPass);
       if (this.ruleForm.pass != this.ruleForm.checkPass) {
         this.$message({
@@ -175,21 +200,82 @@ export default {
       this.ruleForm.pass = "";
       this.ruleForm.checkPass = "";
     },
-    change4() {
-      if (this.formLabelAlign.type == "") {
+    //做题邀请码
+    accept() {
+      if (this.acceptNum == "") {
         this.$message({
           message: "请输入邀请码",
           type: "warning"
         });
       } else {
-        this.formLabelAlign.type = "";
+        //像后端传送数据
+        this.acceptNum = "";
         this.$message({
           message: "传送成功",
           type: "success"
         });
-
-        //像后端传送数据
       }
+    },
+    //上传图片问题
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+    beforeUpload(file) {
+      console.log(file);
+      const isSize = file.size / 1024 / 1024 < 1;
+      if (!isSize) {
+        this.$message({
+          message: "上传的文件不能超过1MB",
+          type: "error"
+        });
+      }
+      console.log(file);
+      return isSize;
+    },
+    httpRequest(params) {
+      let fd = new FormData();
+      console.log(params);
+      fd.append("picture", params.file);
+      // fd.append("url", this.input1);
+      fd.forEach((value, key) => {
+        console.log(key, typeof value, value);
+      });
+      console.log(fd);
+      let config = {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      };
+      axios
+        .post("后端地址", fd, config)
+        .then(res => {
+          if (res.data == true) {
+            this.$message({
+              type: "success",
+              message: "添加成功"
+            });
+            this.$refs.upload.clearFiles();
+            this.$refs.uploadForm.resetFields();
+          } else {
+            console.log(res);
+            this.$message({
+              type: "error",
+              message: res.data
+            });
+          }
+        })
+        .catch(res => {
+          console.log(res);
+        });
+      return true;
+    },
+    //点击修改上传图片
+    changeImg() {
+      this.dialogVisible2 = false;
+      this.$refs.upload.submit(); // 这S里是执行文件上传的函数，其实也就是获取我们要上传的文件
     }
   }
 };
@@ -198,8 +284,8 @@ export default {
 <style lang="less">
 .prifole {
   color: #333333;
-  border: 1px solid #e7eaf1;
-  box-shadow: 0 1px 3px rgba(0, 37, 55, 0.05);
+  // border: 1px solid #e7eaf1;
+  // box-shadow: 0 1px 3px rgba(0, 37, 55, 0.05);
   box-sizing: border-box;
   .title {
     font-size: 14px;
@@ -213,5 +299,8 @@ export default {
       padding: 10px;
     }
   }
+}
+.upload-demo {
+  text-align: center;
 }
 </style>
