@@ -97,7 +97,8 @@
 		        this.$refs[formName].validate((valid) => {
 			        if (valid) {//表单验证成功
 			        	//开始机器人验证
-				        this.coverShow = true;
+				        // this.coverShow = true;
+                        this.idenCode({code:true});
 			        } else {
 				        return false;
 			        }
@@ -113,7 +114,8 @@
                             email:"test",
                             password:"test"
                         }).then(res=>{
-                            this.setUserInfo(res.data)
+                            sessionStorage.setItem("userInfo",JSON.stringify(res.data))
+                            this.setUserInfo(JSON.stringify(res.data))
                             this.$router.push({
                                 path:this.$root._router.options.routes[2].path
                             })
@@ -125,7 +127,8 @@
                             card:"201800",
                             password:"test"
                         }).then(res=>{
-                            this.setUserInfo(res.data);
+                            sessionStorage.setItem("userInfo",JSON.stringify(res.data))
+                            this.setUserInfo(JSON.stringify(res.data))
                             this.$router.push({
                                 path:this.$root._router.options.routes[2].path
                             })

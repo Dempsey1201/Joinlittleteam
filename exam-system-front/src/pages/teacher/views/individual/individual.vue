@@ -3,43 +3,41 @@
         <!--        个人中心上传头像、修改密码、绑定邮箱-->
 
         <div class="show">
-            <el-upload
+            <div
                     class="avatar-uploader"
-                    action="https://jsonplaceholder.typicode.com/posts/"
-                    :show-file-list="false"
-                    :http-request="uploadImg"
-                    :on-success="handleAvatarSuccess"
-                    :before-upload="beforeAvatarUpload">
-                <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                <i v-show="!imageUrl" class="el-icon-plus"></i>
-            </el-upload>
+
+            >
+                <input type="file" @change="uploadImg(files)">
+                <img v-if="info.headUrl" :src="imageUrl" class="avatar">
+                <i v-if="!info.headUrl" class="el-icon-plus"></i>
+            </div>
             <div class="info">
-                <p><span class="ti">昵称：</span><span class="con">{{userInfo.teachername}}</span></p>
-                <p><span class="ti">工号</span><span class="con">{{userInfo.card}}</span></p>
-                <p><span class="ti">学校：</span><span class="con">{{userInfo.college}}</span></p>
-                <p><span class="ti">性别：</span><span class="con">{{userInfo.sex}}</span></p>
+                <p><span class="ti">昵称：</span><span class="con">{{info.teachername}}</span></p>
+                <p><span class="ti">工号</span><span class="con">{{info.card}}</span></p>
+                <p><span class="ti">学校：</span><span class="con">{{info.college}}</span></p>
+                <p><span class="ti">性别：</span><span class="con">{{info.sex}}</span></p>
             </div>
         </div>
         <div class="change">
-            <el-form ref="username" label-position="left" label-width="80px" :model="userInfo">
+            <el-form ref="username" label-position="left" label-width="80px" :model="info">
                 <el-form-item label="用户名">
-                    <el-input v-model="userInfo.teachername" ></el-input>
+                    <el-input v-model="info.teachername" ></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('username')">修改</el-button>
                 </el-form-item>
             </el-form>
-            <el-form ref="email" label-position="left" label-width="80px" :model="userInfo">
+            <el-form ref="email" label-position="left" label-width="80px" :model="info">
                 <el-form-item label="邮箱">
-                    <el-input v-model="userInfo.email" placeholder="邮箱"></el-input>
+                    <el-input v-model="info.email" placeholder="邮箱"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('email')">修改</el-button>
                 </el-form-item>
             </el-form>
-            <el-form ref="pwd" label-position="left" label-width="80px" :model="userInfo">
+            <el-form ref="pwd" label-position="left" label-width="80px" :model="info">
                 <el-form-item label="密码">
-                    <el-input v-model="userInfo.password" show-password placeholder="密码" :value="userInfo.password"></el-input>
+                    <el-input v-model="info.password" show-password placeholder="密码" :value="info.password"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('pwd')">修改</el-button>
@@ -50,22 +48,14 @@
 </template>
 
 <script>
-    import {mapGetters} from "vuex";
+    import {updateOther,updatePwd} from "../../api/individual";
+
     export default {
         name: "individual",
         data(){
             return{
-                imageUrl: 'http://imgsrc.baidu.com/forum/w=580/sign=f53607cadc54564ee565e43183df9cde/a23692014c086e06a1f7049203087bf40bd1cb3f.jpg',
                 isActive: !this.imageUrl,
-                // userInfo:{
-                //     teachername:"老师",// 姓名
-                //     card:"2018011010",// 工号
-                //     headUrl:"",// 头像
-                //     email:"29341098@qq.com",// 邮箱
-                //     sex:"女",// 性别
-                //     college:"东北师范大学",// 学校
-                //     password:"evwtwt",// 密码
-                // }
+                info:JSON.parse(sessionStorage.getItem("userInfo"))
             }
         },
         created() {
@@ -73,35 +63,55 @@
 
         },
         computed:{
-            ...mapGetters([
-               "userInfo"
-           ])
+
         },
         methods: {
-            handleAvatarSuccess(res, file) {
-                this.imageUrl = URL.createObjectURL(file.raw);
-            },
-            beforeAvatarUpload(file) {
-                const isJPG = file.type === 'image/jpeg';
-                const isLt2M = file.size / 1024 / 1024 < 2;
-
-                if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 2MB!');
-                }
-                return isLt2M;// return false 就不会执行后面的内容
-            },
             uploadImg(files){
                 console.log(files);
                 const formData = new FormData();
                 formData.append("file",files.file);
                 console.log(formData.get("file"))// formData 本就是个空对象，要用 get 方法获取其中内容
-
                 // 将formData传到后端，后端再返回图片地址
             },
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        alert('submit!');
+                        // alert('submit!');
+                        if(formName==="email"||formName==="username"){
+                            if(confirm("确定要修改吗？")===true){
+                                updateOther({
+                                    college:this.info.password,
+                                    email:this.info.email,
+                                    teachername:this.info.teachername,
+                                    id:this.info.id
+                                }).then(res=>{
+                                    console.log(res.data)
+                                    if(res.data.msg===1){
+                                        this.$message({
+                                            message: '修改密码成功',
+                                            type: 'success'
+                                        });
+                                    }
+                                })
+                            }
+                        }
+                        if(formName=="pwd"){
+                            if(confirm("确定要修改密码吗？")===true){
+                                updatePwd({
+                                    password:this.info.password,
+                                    id:this.info.id
+                                }).then(res=>{
+                                    console.log(res.data)
+                                    if(res.data===1){
+                                        this.$message({
+                                            message: '修改密码成功',
+                                            type: 'success'
+                                        });
+                                    }
+                                })
+                            }
+                        }
+                        sessionStorage.setItem("userInfo",JSON.stringify(this.info))
                     } else {
                         console.log('error submit!!');
                         return false;
@@ -130,9 +140,17 @@
                 cursor: pointer;
                 border-radius: 50%;
                 border: 1px solid #ddd;
+                input[type="file"]{
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    opacity: 0;
+                    position: relative;
+                    z-index: 1;
+                    cursor: pointer;
+                }
             }
             .avatar-uploader .el-icon-plus{
-                /*display: block;*/
                 position: absolute;
                 top: 0;
                 left: 0;
@@ -142,11 +160,14 @@
                 height: 150px;
                 line-height: 150px;
                 text-align: center;
+
             }
             .avatar-uploader:hover .el-icon-plus{
                 display: block !important;
-                background-color: rgba(0,0,0,0.3);
                 color: #424242;
+            }
+            .avatar-uploader:hover{
+                background-color: rgba(0,0,0,0.2);
             }
             .avatar {
                 width: 150px;

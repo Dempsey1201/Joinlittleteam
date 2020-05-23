@@ -42,6 +42,6 @@ const state = {
 			name:"班级3"
 		}
 	],
-	userInfo:{}
+	userInfo:sessionStorage.getItem("userInfo")
 }
 export default state;
