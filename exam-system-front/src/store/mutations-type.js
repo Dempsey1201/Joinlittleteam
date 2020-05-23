@@ -25,3 +25,5 @@ export const SET_STEP = "SET_STEP";// 设置试卷名称
 // 班级对象
 export const SET_CLASSINFO = "SET_CLASSINFO";// 设置班级信息
 
+// 用户对象
+export const SET_USERINFO = "SET_USERINFO"// 设置用户信息

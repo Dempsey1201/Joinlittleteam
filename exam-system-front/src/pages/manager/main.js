@@ -9,6 +9,7 @@ Vue.use(ElementUI);
 import axios from "axios";
 import vueAxios from "vue-axios";
 Vue.use(vueAxios,axios);
+axios.defaults.baseURL = "http://47.94.210.131:8080";
 
 Vue.config.productionTip = false
 

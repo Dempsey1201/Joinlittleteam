@@ -15,10 +15,5 @@ module.exports = {
 			template:"./public/index.html",
 			filename:"teacher.html"
 		},
-		login:{
-			entry:"./src/pages/login/main.js",
-			template:"./public/index.html",
-			filename:"login.html"
-		},
 	}
 }

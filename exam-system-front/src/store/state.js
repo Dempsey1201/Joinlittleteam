@@ -41,6 +41,7 @@ const state = {
 			id:3,
 			name:"班级3"
 		}
-	]
+	],
+	userInfo:{}
 }
 export default state;
