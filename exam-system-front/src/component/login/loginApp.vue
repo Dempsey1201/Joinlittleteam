@@ -1,7 +1,5 @@
 <template>
     <div id="app">
-        <background :ball_color="ball_color" :bg_color="bg_color"></background>
-
         <el-row class="card">
             <el-col class="hidden-md-and-down"
                 :xs="{span:5}"

@@ -5,10 +5,7 @@
     </div>
 </template>
 <script>
-    import tab from "./components/tab";
     import background from "../../component/base/background";
-    import headerTab from "./components/headerTab";
-    // import {teacherInfo,testPaper,stuGrade,classInfo} from "./api/getTeacherInfo"
 	export default {
 		data () {
 			return {
@@ -18,10 +15,11 @@
 					b: 255
 				},
 				bg_color:"rgba(236, 245, 255,0.3)",//背景颜色
-
 			};
 		},
-
+        components:{
+		    background
+        }
 	}
 </script>
 

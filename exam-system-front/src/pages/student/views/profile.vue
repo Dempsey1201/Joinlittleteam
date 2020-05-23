@@ -133,7 +133,7 @@ export default {
     };
   },
   created() {
-    this.data.userInfo=this.$store.state.userInfo;
+    // this.data.userInfo=this.$store.state.userInfo;
     // console.log(this.data.userInfo)
     //获取用户的id，通过id获取用户的信息
     //  axios.post("http://47.94.210.131:8080/user/queryUser").then(function(res) {
