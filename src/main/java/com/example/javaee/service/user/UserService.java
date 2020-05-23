@@ -27,6 +27,8 @@ public interface UserService {
 
     public User query(String email)throws Exception;
 
+    public List<User> queryClass(int id)throws Exception;
+
     public int delete(int id)throws Exception;
 
     public int addUser(User user)throws Exception;

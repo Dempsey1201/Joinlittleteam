@@ -39,6 +39,18 @@
     where id=#{id}
     </select>
 
+    <select id="queryTea" resultType="classroom">
+    SELECT *
+    FROM t_classroom
+    where teacherno=#{id}
+    </select>
+
+    <select id="queryLike" resultType="classroom">
+    SELECT *
+    FROM t_classroom
+    where classname like '%${name}%'
+    </select>
+
     <select id="query" resultType="classroom">
     SELECT *
     FROM t_classroom

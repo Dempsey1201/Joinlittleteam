@@ -1,7 +1,6 @@
 package com.example.javaee.entity.paper;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;

@@ -61,6 +61,15 @@ public class ClassroomServiceImpl implements ClassroomService {
         //String[] arr = str.split(",");
         return classroomMapper.join(idStr,cid)+classroomMapper.joinB(id,str);
     }
+    public List<Classroom> queryUserClassroom(String str)throws Exception{
+        String[] arr=str.split(",");
+        List<Classroom> list=new ArrayList<Classroom>();
+        for(String x:arr){
+            int n=Integer.parseInt(x);
+            list.add(classroomMapper.queryClassroom(n));
+        }
+        return list;
+    }
     @Override
     public int outClassroom(int id,int cid) throws Exception{
         User user=userService.queryUser(id);
@@ -100,6 +109,14 @@ public class ClassroomServiceImpl implements ClassroomService {
     @Override
     public Classroom queryClassroom(String str) throws Exception{
         return classroomMapper.query(str);
+    }
+    @Override
+    public List<Classroom> queryTeaClassroom(int id) throws Exception{
+        return classroomMapper.queryTea(id);
+    }
+    @Override
+    public List<Classroom> queryLike(String name) throws Exception{
+        return classroomMapper.queryLike(name);
     }
 
 }

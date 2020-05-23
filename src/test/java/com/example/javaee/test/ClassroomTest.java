@@ -51,7 +51,7 @@ public class ClassroomTest {
 
     @Test
     public void testJoin()throws Exception{
-        System.out.println(classroomController.joinClassRoom(1,9));
+        System.out.println(classroomController.joinClassRoom(1,"aa"));
     }
 
     @Test
@@ -67,6 +67,20 @@ public class ClassroomTest {
     @Test
     public void testQueryClassroom()throws Exception{
         System.out.println(classroomController.queryClassRoom("aa"));
+    }
+
+    @Test
+    public void testQueryUserClassroom()throws Exception{
+        System.out.println(classroomController.queryUserClassRoom(1));
+    }
+
+    @Test
+    public void testQueryTeaClassroom()throws Exception{
+        System.out.println(classroomController.queryTeaClassRoom(1));
+    }
+    @Test
+    public void testQueryLike()throws Exception{
+        System.out.println(classroomController.queryLike("2"));
     }
 
 }

@@ -3,11 +3,13 @@ package com.example.javaee.service.user.impl;
 import com.example.javaee.entity.feelback.FeelBack;
 import com.example.javaee.entity.report.Report;
 import com.example.javaee.entity.user.User;
+import com.example.javaee.mapper.classroom.ClassroomMapper;
 import com.example.javaee.mapper.user.UserMapper;
 import com.example.javaee.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +22,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    ClassroomMapper classroomMapper;
 
     /**
      * 登录
@@ -84,6 +89,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public User query(String email)throws Exception{
         return userMapper.query(email);
+    }
+    @Override
+    public List<User> queryClass(int id)throws Exception{
+        String str=classroomMapper.queryClassroom(id).getSid();
+        String[] arr=str.split(",");
+        List<User> list=new ArrayList<User>();
+        for(String x:arr){
+            int n=Integer.parseInt(x);
+            list.add(userMapper.queryUser(n));
+        }
+        return list;
+
     }
     @Override
     public List<Report> queryReport(int id)throws Exception{

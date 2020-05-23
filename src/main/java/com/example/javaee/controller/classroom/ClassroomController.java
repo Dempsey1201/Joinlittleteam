@@ -1,7 +1,9 @@
 package com.example.javaee.controller.classroom;
 
 import com.example.javaee.entity.classroom.Classroom;
+import com.example.javaee.entity.user.User;
 import com.example.javaee.service.classroom.ClassroomService;
+import com.example.javaee.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,12 +28,16 @@ public class ClassroomController {
     @Autowired
     ClassroomService classroomService;
 
+    @Autowired
+    UserService userService;
+
     @RequestMapping(value = "/addClassroom")
-    public int addClassroom(Classroom classroom) throws Exception{
+    public String addClassroom(Classroom classroom) throws Exception{
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         //Date date=new Date();
         classroom.setClassno(getMD5String(sdf.format(new Date())));
-        return classroomService.addClassroom(classroom);
+        classroomService.addClassroom(classroom);
+        return classroom.getClassno();
     }
 
     @RequestMapping(value = "/list")
@@ -50,7 +56,8 @@ public class ClassroomController {
     }
 
     @RequestMapping(value = "/joinClassRoom")
-    public int joinClassRoom(int id,int cid) throws Exception{
+    public int joinClassRoom(int id,String classno) throws Exception{
+        int cid=classroomService.queryClassroom(classno).getId();
         return classroomService.joinClassroom(id,cid);
     }
 
@@ -67,6 +74,21 @@ public class ClassroomController {
     @RequestMapping(value = "/queryClassroom")
     public Classroom queryClassRoom(String classno) throws Exception{
         return classroomService.queryClassroom(classno);
+    }
+
+    @RequestMapping(value = "/queryUserClassroom")
+    public List<Classroom> queryUserClassRoom(int id) throws Exception{
+        User user=userService.queryUser(id);
+        return classroomService.queryUserClassroom(user.getClassno());
+    }
+    @RequestMapping(value = "/queryTeaClassroom")
+    public List<Classroom> queryTeaClassRoom(int id) throws Exception{
+        return classroomService.queryTeaClassroom(id);
+    }
+
+    @RequestMapping(value = "/queryLike")
+    public List<Classroom> queryLike(String name) throws Exception{
+        return classroomService.queryLike(name);
     }
 
 

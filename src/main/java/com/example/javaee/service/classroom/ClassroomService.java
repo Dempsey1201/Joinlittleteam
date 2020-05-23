@@ -19,4 +19,7 @@ public interface ClassroomService {
     public int outClassroom(int id,int cid) throws Exception;
     public Classroom query(int id) throws Exception;
     public Classroom queryClassroom(String str) throws Exception;
+    public List<Classroom> queryUserClassroom(String str)throws Exception;
+    public List<Classroom> queryTeaClassroom(int id)throws Exception;
+    public List<Classroom> queryLike(String name)throws Exception;
 }

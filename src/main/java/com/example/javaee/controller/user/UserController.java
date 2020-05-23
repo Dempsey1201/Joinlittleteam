@@ -64,6 +64,11 @@ public class UserController {
         return userService.queryUser(id);
     }
 
+    @RequestMapping(value = "/queryClass")
+    public List<User> queryClass(int id) throws Exception{
+        return userService.queryClass(id);
+    }
+
     @RequestMapping(value = "/query")
     public User query(String email) throws Exception{
         return userService.query(email);
@@ -77,23 +82,24 @@ public class UserController {
         return userService.delete(id);
     }
     @RequestMapping(value = "/updatePassword")
-    public int updatePassword(User user) throws Exception{
+    public String updatePassword(User user) throws Exception{
         String str=user.getPassword();
         user.setPassword(getMD5String(str));
-        return userService.updatePassword(user);
+        userService.updatePassword(user);
+        return user.getPassword();
     }
 
     @ResponseBody
-    @RequestMapping(value = "/uploadHead")
+    @RequestMapping(value = "/uploadHead",method = RequestMethod.POST)
     public int pictureupload(@RequestParam(value = "imgStr", required=false)String imgStr,int id)throws Exception{
         if (StringUtils.isEmpty(imgStr)) // 图像数据为空
             return 0;
         Decoder decoder = Base64.getDecoder();
-//      String words_to = "/opt/yfn/upload/user";
-        String words_to = "E://yfn/";
+        //String words_to = "/opt/yfn/upload/user";
+        String words_to = "47.94.210.131://yfn/";
         String son = id+".jpg";
         String imgFilePath = words_to +son;
-        String host = "/img/"+son;
+        String host = "/img/user"+son;
         try {
             // Base64解码
             byte[] b = decoder.decode(imgStr);

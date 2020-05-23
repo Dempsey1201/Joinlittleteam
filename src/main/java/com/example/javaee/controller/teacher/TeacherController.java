@@ -68,16 +68,16 @@ public class TeacherController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/uploadHead")
+    @RequestMapping(value = "/uploadHead",method = RequestMethod.POST)
     public int pictureupload(@RequestParam(value = "imgStr", required=false)String imgStr, int id)throws Exception{
         if (StringUtils.isEmpty(imgStr)) // 图像数据为空
             return 0;
         Base64.Decoder decoder = Base64.getDecoder();
 //      String words_to = "/opt/yfn/upload/user";
-        String words_to = "E://yfn/";
+        String words_to = "47.47.94.210.131://yfn/";
         String son = id+".jpg";
         String imgFilePath = words_to +son;
-        String host = "/img/"+son;
+        String host = "/img/teacher"+son;
         try {
             // Base64解码
             byte[] b = decoder.decode(imgStr);

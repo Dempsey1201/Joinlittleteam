@@ -44,6 +44,21 @@ public interface ClassroomMapper {
      * @return
      * @throws Exception
      */
+    public List<Classroom> queryTea(@Param("id")int id)throws Exception;
+    /**
+     *
+     * @param
+     * @return
+     * @throws Exception
+     */
+    public List<Classroom> queryLike(@Param("name")String name)throws Exception;
+
+    /**
+     *
+     * @param
+     * @return
+     * @throws Exception
+     */
     public int addClassroom(@Param("classroom")Classroom classroom)throws Exception;
 
     /**
