@@ -23,7 +23,7 @@
 export default {
   data() {
     return {
-      routers: this.$root._router.options.routes[2].children,
+      routers: this.$root._router.options.routes[3].children,
     };
   },
   methods: {},

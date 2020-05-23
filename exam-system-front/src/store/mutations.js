@@ -62,6 +62,11 @@ const mutations = {
 		}else {//如果是删除就传index
 			state.classInfo.splice(data.info,1);
 		}
+	},
+
+	// 用户信息
+	[types.SET_USERINFO](state,data){
+		state.userInfo = data;
 	}
 }
 

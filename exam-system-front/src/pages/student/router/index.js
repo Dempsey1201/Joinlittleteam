@@ -3,14 +3,35 @@ import VueRouter from 'vue-router'
 import app from '../App'
 import personal from '../components/personal.vue'
 import home from '../components/home.vue'
+import loginApp from "../../../component/login/loginApp";
+import login from "../../../component/login/components/login/login";
+import register from "../../../component/login/components/register/register";
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/student.html',
-    redirect: './student.html/home'
+    redirect: '/student.html/login'
   },
+  {
+		path: '/student.html/login',
+		component: loginApp,
+		children: [
+			{
+				path: '/student.html/login',
+				redirect:'/student.html/login/login'
+			},
+			{
+				path: '/student.html/login/login',
+				component: login
+			},
+			{
+				path: '/student.html/login/register',
+				component: register
+			}
+		]
+	},
   {
     path: '/student.html/home',
     name: 'Home',
@@ -37,7 +58,7 @@ const routes = [
         component: () => import("../views/myGrade.vue")
       }
     ],
-  }
+  },
 ]
 
 const router = new VueRouter({

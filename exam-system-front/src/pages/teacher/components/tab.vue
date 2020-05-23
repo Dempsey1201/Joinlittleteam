@@ -25,7 +25,7 @@
         data(){
 			return{
 				bool:true,
-                route:this.$router.options.routes.slice(1,this.$router.options.routes.length)
+                route:this.$root._router.options.routes[2].children.filter(item=>item.meta)
             }
         },
         props:{
@@ -34,6 +34,7 @@
             }
         },
         created() {
+		    console.log(this.$root._router.options.routes[2].children)
         }
 	}
 </script>

@@ -23,7 +23,7 @@
         <div class="change">
             <el-form ref="username" label-position="left" label-width="80px" :model="userInfo">
                 <el-form-item label="用户名">
-                    <el-input v-model="userInfo.username" ></el-input>
+                    <el-input v-model="userInfo.teachername" ></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('username')">修改</el-button>
@@ -50,25 +50,32 @@
 </template>
 
 <script>
+    import {mapGetters} from "vuex";
     export default {
         name: "individual",
         data(){
             return{
                 imageUrl: 'http://imgsrc.baidu.com/forum/w=580/sign=f53607cadc54564ee565e43183df9cde/a23692014c086e06a1f7049203087bf40bd1cb3f.jpg',
                 isActive: !this.imageUrl,
-                userInfo:{
-                    teachername:"老师",// 姓名
-                    card:"2018011010",// 工号
-                    headUrl:"",// 头像
-                    email:"29341098@qq.com",// 邮箱
-                    sex:"女",// 性别
-                    college:"东北师范大学",// 学校
-                    password:"evwtwt",// 密码
-                }
+                // userInfo:{
+                //     teachername:"老师",// 姓名
+                //     card:"2018011010",// 工号
+                //     headUrl:"",// 头像
+                //     email:"29341098@qq.com",// 邮箱
+                //     sex:"女",// 性别
+                //     college:"东北师范大学",// 学校
+                //     password:"evwtwt",// 密码
+                // }
             }
         },
         created() {
             // 获取 数据以及图片路径等信息
+
+        },
+        computed:{
+            ...mapGetters([
+               "userInfo"
+           ])
         },
         methods: {
             handleAvatarSuccess(res, file) {

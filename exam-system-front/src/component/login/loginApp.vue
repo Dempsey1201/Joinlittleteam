@@ -23,17 +23,16 @@
             >
                 <!-- 导航 -->
                 <el-menu
-                        :default-active="activeIndex"
-                        default-active="/login.html/login"
+                        :default-active="router[1].path"
                         class="el-menu-demo" mode="horizontal"
                         :router="bool"
                 >
-                    <el-menu-item index="/login.html/login" class="nav">
+                    <el-menu-item :index="router[1].path" class="nav">
                         <router-link class="tag" tag="div" to="">
                         登陆
                     </router-link>
                     </el-menu-item>
-                    <el-menu-item index="/login.html/register" class="nav">
+                    <el-menu-item :index="router[2].path" class="nav">
                         注册
                     </el-menu-item>
                 </el-menu>
@@ -55,8 +54,8 @@
 					b: 255
                 },
 				bg_color:"rgba(236, 245, 255,0.3)",//背景颜色
-				activeIndex: '1',
-                bool:true
+                bool:true,
+                router:this.$root._router.options.routes[1].children
 		    }
 		},
         components:{
@@ -65,12 +64,11 @@
             register
         },
         created() {
-
         }
 	}
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
     html{
         margin: 0;
         padding: 0;
@@ -84,6 +82,7 @@
         margin: 0;
         padding: 0;
         #app{
+            box-sizing: border-box;
             padding-top: 100px;
             width: 100%;
             min-height: 100%;
