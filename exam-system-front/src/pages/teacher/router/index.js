@@ -46,7 +46,8 @@ const routes = [
 		children:[
 			{
 				path:"/teacher.html/stuGrade",
-				redirect:"/teacher.html/stuGrade/showClass"
+				component:()=>import("../views/stuGrade/showClass"),
+				name:"showClass"
 			},
 			{
 				path:"/teacher.html/stuGrade/showClass",

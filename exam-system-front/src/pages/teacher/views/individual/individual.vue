@@ -21,6 +21,14 @@
             </div>
         </div>
         <div class="change">
+            <el-form ref="username" label-position="left" label-width="80px" :model="userInfo">
+                <el-form-item label="用户名">
+                    <el-input v-model="userInfo.username" ></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="submitForm('username')">修改</el-button>
+                </el-form-item>
+            </el-form>
             <el-form ref="email" label-position="left" label-width="80px" :model="userInfo">
                 <el-form-item label="邮箱">
                     <el-input v-model="userInfo.email" placeholder="邮箱"></el-input>
