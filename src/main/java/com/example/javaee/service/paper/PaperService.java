@@ -36,4 +36,5 @@ public interface PaperService {
     List<Question1> getPaperQuestion(Integer pid);
     boolean insertQuestionToPaper(List<Integer> pid,List<Integer> no,List<Integer> qid,List<Integer> qscore);
     boolean reusePaper(Integer pid);
+    public List<Integer> getScoreByPaper(Integer pid,Integer claano);
 }

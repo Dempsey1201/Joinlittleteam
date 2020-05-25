@@ -126,4 +126,10 @@ public class PaperController {
     public boolean reusePaper(Integer pid) {
         return paperService.reusePaper(pid);
     }
+
+    @ResponseBody
+    @RequestMapping("/getScoreByPaper")
+    public List<Integer> getScoreByPaper(Integer pid,Integer classno){
+        return paperService.getScoreByPaper(pid,classno);
+    }
 }
