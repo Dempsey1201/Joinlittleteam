@@ -26,28 +26,13 @@
             </el-table-column>
             <el-table-column
                     align="right"
-                    min-width="210"
+                    min-width="50"
+                    label="操作"
             >
-                <template slot="header" slot-scope="scope">
-                    <el-button
-                            style="float: right;display: inline-block"
-                            size="mini"
-                    >Search</el-button>
-                    <el-input
-                            style="float: right;width: 143px"
-                            v-model="search"
-                            size="mini"
-                            placeholder="搜索"/>
-
-                </template>
                 <template slot-scope="scope">
                     <el-button
                             size="mini"
                             @click="handleEdit(scope.$index, scope.row)">查看</el-button>
-                    <el-button
-                            size="mini"
-                            type="danger"
-                            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -55,37 +40,24 @@
 </template>
 
 <script>
+    import {allClass} from "../../api/yourClass";
+
     export default {
         name: "showClass",
         data(){
             return{
-                classList:[
-                    {
-                        id:1,
-                        classname:"软件工程",
-                        college:"东北师范大学",
-                        major:"信息科学与技术"
-                    },
-                    {
-                        id:2,
-                        classname:"软件工程",
-                        college:"东北师范大学",
-                        major:"信息科学与技术"
-                    },
-                    {
-                        id:3,
-                        classname:"软件工程",
-                        college:"东北师范大学",
-                        major:"信息科学与技术"
-                    },
-                    {
-                        id:4,
-                        classname:"软件工程",
-                        college:"东北师范大学",
-                        major:"信息科学与技术"
-                    }],
+                classList:[],
                 search:""
             }
+        },
+        created() {
+            allClass({
+                id:JSON.parse(sessionStorage.getItem("userInfo")).id
+            }).then(res=>{
+                this.classList = res.data
+            }).catch(err=>{
+                throw err;
+            })
         },
         methods:{
             handleDelete(index,row){
@@ -99,7 +71,8 @@
                     }
                 })
             }
-        }
+        },
+
     }
 </script>
 

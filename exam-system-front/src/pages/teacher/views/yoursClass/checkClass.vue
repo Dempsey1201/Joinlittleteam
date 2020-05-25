@@ -15,44 +15,37 @@
             >
                 <template slot-scope="scope">
                     <el-image
-                            style="width: 100px; height: 100px;border-radius: 50%;border:1px solid red;"
-                            :src="url"
-                            :fit="fit"></el-image>
+                            style="width: 50px; height: 50px;border-radius: 50%;"
+                            :src="url+scope.row.headUrl"
+                            ></el-image>
                 </template>
             </el-table-column>
-
             <el-table-column
-                    prop="classname"
+                    prop="username"
                     class="name"
                     label="姓名"
                     min-width="180">
             </el-table-column>
             <el-table-column
                     prop="college"
-                    label="性别"
+                    label="学校"
                     min-width="180">
             </el-table-column>
-
+            <el-table-column
+                    prop="email"
+                    label="邮箱"
+                    min-width="180">
+            </el-table-column>
             <el-table-column
                     align="right"
                     min-width="210"
+                    label="操作"
             >
-                <template slot="header" slot-scope="scope">
-                    <el-button
-                            style="float: right;display: inline-block"
-                            size="mini"
-                    >Search</el-button>
-                    <el-input
-                            style="float: right;width: 143px"
-                            v-model="search"
-                            size="mini"
-                            placeholder="搜索"/>
-
-                </template>
                 <template slot-scope="scope">
                     <el-button
                             size="mini"
-                            @click="handleEdit(scope.$index, scope.row)">查看</el-button>
+                            type="danger"
+                            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -60,6 +53,8 @@
 </template>
 
 <script>
+    import {getStudent} from "../../api/yourClass";
+
     export default {
         name: "checkClass",
         props:{
@@ -70,10 +65,19 @@
         },
         data(){
             return{
-                stuList:[]
+                stuList:[],
+                url:"http://47.94.210.131:8080/"
             }
         },
         created() {
+            console.log(this.currentClass)
+            getStudent({
+                id:this.currentClass.id
+            }).then(res=>{
+                this.stuList = res.data;
+            }).catch(err=>{
+                throw err;
+            })
         },
         methods:{
             back(){

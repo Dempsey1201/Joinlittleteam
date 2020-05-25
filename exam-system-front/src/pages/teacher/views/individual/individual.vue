@@ -7,7 +7,7 @@
                     class="avatar-uploader"
 
             >
-                <input type="file" @change="uploadImg(files)">
+                <input ref="file" type="file" @change="uploadImg">
                 <img v-if="info.headUrl" :src="imageUrl" class="avatar">
                 <i v-if="!info.headUrl" class="el-icon-plus"></i>
             </div>
@@ -21,7 +21,7 @@
         <div class="change">
             <el-form ref="username" label-position="left" label-width="80px" :model="info">
                 <el-form-item label="用户名">
-                    <el-input v-model="info.teachername" ></el-input>
+                    <el-input v-model="info.teachername"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('username')">修改</el-button>
@@ -48,61 +48,70 @@
 </template>
 
 <script>
-    import {updateOther,updatePwd} from "../../api/individual";
-
+    import {updateOther, updatePwd,updateHeadUrl} from "../../api/individual";
+    import Qs from "qs";
     export default {
         name: "individual",
-        data(){
-            return{
+        data() {
+            return {
                 isActive: !this.imageUrl,
-                info:JSON.parse(sessionStorage.getItem("userInfo"))
+                info: JSON.parse(sessionStorage.getItem("userInfo"))
             }
         },
         created() {
             // 获取 数据以及图片路径等信息
 
         },
-        computed:{
-
-        },
+        computed: {},
         methods: {
-            uploadImg(files){
-                console.log(files);
-                const formData = new FormData();
-                formData.append("file",files.file);
-                console.log(formData.get("file"))// formData 本就是个空对象，要用 get 方法获取其中内容
-                // 将formData传到后端，后端再返回图片地址
+            uploadImg() {
+                console.log(this.$refs.file.files[0]);
+                let file = this.$refs.file.files[0];
+                let reader = new FileReader(file);
+                reader.readAsDataURL(file);
+                reader.onload = (e)=>{
+                    console.log(e);
+                    let data = e.currentTarget.result.split("base64,")[1];
+                    console.log(data)
+                    updateHeadUrl({
+                        imgStr:data,
+                        id:this.info.id
+                    }).then(res=>{
+                        console.log(res.data)
+                    }).catch(err=>{
+                        throw err;
+                    })
+                    // sessionStorage.setItem("userInfo", JSON.stringify(this.info))
+                }
             },
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        // alert('submit!');
-                        if(formName==="email"||formName==="username"){
-                            if(confirm("确定要修改吗？")===true){
+                        if (formName === "email" || formName === "username") {
+                            if (confirm("确定要修改吗？") === true) {
                                 updateOther({
-                                    college:this.info.password,
-                                    email:this.info.email,
-                                    teachername:this.info.teachername,
-                                    id:this.info.id
-                                }).then(res=>{
+                                    college: this.info.password,
+                                    email: this.info.email,
+                                    teachername: this.info.teachername,
+                                    id: this.info.id
+                                }).then(res => {
                                     console.log(res.data)
-                                    if(res.data.msg===1){
+                                    if (res.data == 1) {
                                         this.$message({
-                                            message: '修改密码成功',
+                                            message: '修改成功',
                                             type: 'success'
                                         });
                                     }
                                 })
                             }
                         }
-                        if(formName=="pwd"){
-                            if(confirm("确定要修改密码吗？")===true){
+                        if (formName == "pwd") {
+                            if (confirm("确定要修改密码吗？") === true) {
                                 updatePwd({
-                                    password:this.info.password,
-                                    id:this.info.id
-                                }).then(res=>{
-                                    console.log(res.data)
-                                    if(res.data===1){
+                                    password: this.info.password,
+                                    id: this.info.id
+                                }).then(res => {
+                                    if (res.data === 1) {
                                         this.$message({
                                             message: '修改密码成功',
                                             type: 'success'
@@ -111,27 +120,38 @@
                                 })
                             }
                         }
-                        sessionStorage.setItem("userInfo",JSON.stringify(this.info))
+                        sessionStorage.setItem("userInfo", JSON.stringify(this.info))
                     } else {
-                        console.log('error submit!!');
                         return false;
                     }
                 });
             },
+            getBase64Image(img) {
+                let canvas = document.createElement("canvas");
+                canvas.width = img.width;
+                canvas.height = img.height;
+                let ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0, img.width, img.height);
+                let ext = img.src.substring(img.src.lastIndexOf(".") + 1).toLowerCase();
+                let dataURL = canvas.toDataURL("image/" + ext);
+                return dataURL;
+            }
         }
     }
 </script>
 
 <style scoped lang="less">
 
-    #individual{
+    #individual {
         display: flex;
         justify-content: space-between;
-        .show{
+
+        .show {
             width: 39%;
-            border-top:1px solid #409EFF;
-            border-right:1px solid #409EFF;
-            .avatar-uploader{
+            border-top: 1px solid #409EFF;
+            border-right: 1px solid #409EFF;
+
+            .avatar-uploader {
                 position: relative;
                 width: 150px;
                 height: 150px;
@@ -140,7 +160,8 @@
                 cursor: pointer;
                 border-radius: 50%;
                 border: 1px solid #ddd;
-                input[type="file"]{
+
+                input[type="file"] {
                     display: block;
                     width: 100%;
                     height: 100%;
@@ -150,7 +171,8 @@
                     cursor: pointer;
                 }
             }
-            .avatar-uploader .el-icon-plus{
+
+            .avatar-uploader .el-icon-plus {
                 position: absolute;
                 top: 0;
                 left: 0;
@@ -162,39 +184,47 @@
                 text-align: center;
 
             }
-            .avatar-uploader:hover .el-icon-plus{
+
+            .avatar-uploader:hover .el-icon-plus {
                 display: block !important;
                 color: #424242;
             }
-            .avatar-uploader:hover{
-                background-color: rgba(0,0,0,0.2);
+
+            .avatar-uploader:hover {
+                background-color: rgba(0, 0, 0, 0.2);
             }
+
             .avatar {
                 width: 150px;
                 height: 150px;
                 display: block;
             }
-            .info{
-                padding:30px 20px;
-                span{
+
+            .info {
+                padding: 30px 20px;
+
+                span {
                     display: inline-block;
                 }
-                .ti{
+
+                .ti {
                     width: 100px;
                     color: #409EFF;
                 }
-                .con{
+
+                .con {
                     /*width: 70%;*/
                 }
             }
         }
-        .change{
+
+        .change {
             box-sizing: border-box;
             padding-left: 20px;
             padding-top: 20px;
             width: 59%;
-            border-left:1px solid #409EFF;
-            border-bottom:1px solid #409EFF;
+            border-left: 1px solid #409EFF;
+            border-bottom: 1px solid #409EFF;
         }
     }
 </style>

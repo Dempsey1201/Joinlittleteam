@@ -34,7 +34,6 @@
             }
         },
         created() {
-		    console.log(this.$root._router.options.routes[2].children)
         }
 	}
 </script>

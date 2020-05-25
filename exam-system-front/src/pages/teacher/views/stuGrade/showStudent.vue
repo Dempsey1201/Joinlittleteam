@@ -28,19 +28,8 @@
             <el-table-column
                     align="right"
                     min-width="210"
+                    label="操作"
             >
-                <template slot="header" slot-scope="scope">
-                    <el-button
-                            style="float: right;display: inline-block"
-                            size="mini"
-                    >Search</el-button>
-                    <el-input
-                            style="float: right;width: 143px"
-                            v-model="search"
-                            size="mini"
-                            placeholder="搜索"/>
-
-                </template>
                 <template slot-scope="scope">
                     <el-button
                             size="mini"
@@ -56,10 +45,19 @@
 </template>
 
 <script>
+    import {getGrades} from "../../api/stuGrade";
+
     export default {
         name: "showStudent",
         created() {
-          console.log(this.$route.params.row)
+            getGrades({
+                pid:this.$route.params.row.pid,
+                classno:this.$route.params.classInfo.id
+            }).then(res=>{
+                // console.log(res.data);
+            }).catch(err=>{
+                throw err;
+            })
         },
         data(){
             return{
@@ -72,7 +70,12 @@
         },
         methods:{
             prevStep(){
-                this.$router.go(-1);
+                this.$router.push({
+                    name: 'showPaper',
+                    params: {
+                        row: this.$route.params.classInfo,
+                    }
+                })
             },
         }
     }

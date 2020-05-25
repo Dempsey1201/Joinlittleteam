@@ -29,21 +29,16 @@
                             >
                             </el-table-column>
                             <el-table-column
-                                    align="right"
-                                    min-width="210"
+                                    prop="classno"
+                                    label="邀请码"
+                                    min-width="180"
                             >
-                                <template slot="header" slot-scope="scope">
-                                    <el-button
-                                            style="float: right;display: inline-block"
-                                            size="mini"
-                                    >Search</el-button>
-                                    <el-input
-                                            style="float: right;width: 143px"
-                                            v-model="search"
-                                            size="mini"
-                                            placeholder="搜索"/>
-
-                                </template>
+                            </el-table-column>
+                            <el-table-column
+                                    align="right"
+                                    min-width="180"
+                                    label="操作"
+                            >
                                 <template slot-scope="scope">
                                     <el-button
                                             size="mini"
@@ -61,7 +56,7 @@
                     ></checkClass>
                 </el-tab-pane>
                 <el-tab-pane label="新建班级" name="third">
-
+                    <newClass :classList="classList"></newClass>
                 </el-tab-pane>
             </el-tabs>
         </template>
@@ -71,39 +66,26 @@
 
 <script>
     import checkClass from "./checkClass";
+    import {allClass,deleteClass} from "../../api/yourClass";
+    import newClass from "./newClass";
     export default {
         name: "yoursClass",
         data(){
             return{
-                classList:[
-                    {
-                        id:1,
-                        classname:"软件工程",
-                        college:"东北师范大学",
-                        major:"信息科学与技术"
-                    },
-                    {
-                        id:2,
-                        classname:"软件工程",
-                        college:"东北师范大学",
-                        major:"信息科学与技术"
-                    },
-                    {
-                        id:3,
-                        classname:"软件工程",
-                        college:"东北师范大学",
-                        major:"信息科学与技术"
-                    },
-                    {
-                        id:4,
-                        classname:"软件工程",
-                        college:"东北师范大学",
-                        major:"信息科学与技术"
-                    }],
+                classList:[],
                 currentClass:{},
                 search:"",
                 activeName:"first"
             }
+        },
+        created() {
+            allClass({
+                id:JSON.parse(sessionStorage.getItem("userInfo")).id
+            }).then(res=>{
+                this.classList = res.data
+            }).catch(err=>{
+                throw err;
+            })
         },
         methods:{
             handleEdit(index, row){
@@ -113,11 +95,23 @@
                 this.currentClass = {};
             },
             handleDelete(index, row){
-                console.log(row);
+                if(confirm("确定要删除该班级吗？")){
+                    deleteClass({
+                        id:row.id
+                    }).then(res=>{
+                        if(res.data){
+                            this.classList.splice(index,1);
+                        }
+                    }).catch(err=>{
+                        throw err;
+                    })
+                }
+
             }
         },
         components:{
-            checkClass
+            checkClass,
+            newClass
         }
     }
 </script>

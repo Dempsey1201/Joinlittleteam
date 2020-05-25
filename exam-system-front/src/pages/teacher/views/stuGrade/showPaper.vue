@@ -9,14 +9,14 @@
                     min-width="50">
             </el-table-column>
             <el-table-column
-                    prop="exam_name"
+                    prop="pname"
                     class="name"
                     label="试卷名称"
                     min-width="180">
             </el-table-column>
             <el-table-column
-                    prop="classno"
-                    label="所属班级"
+                    prop="start_time"
+                    label="开始时间"
                     min-width="180">
             </el-table-column>
             <el-table-column
@@ -28,19 +28,8 @@
             <el-table-column
                     align="right"
                     min-width="210"
+                    label="操作"
             >
-                <template slot="header" slot-scope="scope">
-                    <el-button
-                            style="float: right;display: inline-block"
-                            size="mini"
-                    >Search</el-button>
-                    <el-input
-                            style="float: right;width: 143px"
-                            v-model="search"
-                            size="mini"
-                            placeholder="搜索"/>
-
-                </template>
                 <template slot-scope="scope">
                     <el-button
                             size="mini"
@@ -56,52 +45,37 @@
 </template>
 
 <script>
+    import {getPaper} from "../../api/stuGrade";
+
     export default {
         name: "showPaper",
         data(){
           return{
-              paperList:[
-                  {
-                      exam_name:"期中考试",
-                      classno:"软件二班",
-                      end_time:"2020-09-10"
-                  },
-                  {
-                      exam_name:"期中考试",
-                      classno:"软件二班",
-                      end_time:"2020-09-10"
-                  },
-                  {
-                      exam_name:"期中考试",
-                      classno:"软件二班",
-                      end_time:"2020-09-10"
-                  },
-                  {
-                      exam_name:"期中考试",
-                      classno:"软件二班",
-                      end_time:"2020-09-10"
-                  },
-                  {
-                      exam_name:"期中考试",
-                      classno:"软件二班",
-                      end_time:"2020-09-10"
-                  },
-              ],
+              paperList:[],
               search:""
           }
         },
         created() {
-            console.log(this.$route.params.row)
+            getPaper({
+                classno:this.$route.params.row.id
+            }).then(res=>{
+                this.paperList = res.data;
+            }).catch(err=>{
+                throw err;
+            })
         },
         methods:{
             prevStep(){
-                this.$router.go(-1);
+                this.$router.push({
+                    name: 'showClass'
+                })
             },
             handleEdit(index,row){
                 this.$router.push({
                     name: 'showStudent',
                     params: {
-                        row: row
+                        row: row,
+                        classInfo:this.$route.params.row
                     }
                 })
             },
