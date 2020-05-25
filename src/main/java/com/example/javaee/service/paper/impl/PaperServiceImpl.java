@@ -10,7 +10,7 @@ import com.example.javaee.mapper.question.QuestionMapper;
 import com.example.javaee.mapper.scoreMapper.ScoreMapper;
 import com.example.javaee.service.paper.PaperService;
 import com.example.javaee.service.user.UserService;
-import org.omg.PortableInterceptor.INACTIVE;
+//import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

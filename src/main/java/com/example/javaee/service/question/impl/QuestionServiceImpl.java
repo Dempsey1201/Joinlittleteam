@@ -3,7 +3,7 @@ package com.example.javaee.service.question.impl;
 import com.example.javaee.entity.question.Question1;
 import com.example.javaee.mapper.question.QuestionMapper;
 import com.example.javaee.service.question.QuestionService;
-import org.omg.PortableInterceptor.INACTIVE;
+//import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

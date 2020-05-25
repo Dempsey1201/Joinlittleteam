@@ -7,7 +7,6 @@ import com.example.javaee.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.Base64;
@@ -73,10 +72,7 @@ public class UserController {
     public User query(String email) throws Exception{
         return userService.query(email);
     }
-//    @RequestMapping(value = "/queryReport")
-//    public List<Report> queryReport(int id) throws Exception{
-//        return userService.queryReport(id);
-//    }
+
     @RequestMapping(value = "/delete")
     public int delete(@RequestParam(value = "id", required = false)int id) throws Exception{
         return userService.delete(id);
@@ -94,12 +90,14 @@ public class UserController {
     public int pictureupload(@RequestParam(value = "imgStr", required=false)String imgStr,int id)throws Exception{
         if (StringUtils.isEmpty(imgStr)) // 图像数据为空
             return 0;
+        System.out.println("begin");
         Decoder decoder = Base64.getDecoder();
-        //String words_to = "/opt/yfn/upload/user";
-        String words_to = "47.94.210.131://yfn/";
-        String son = id+".jpg";
-        String imgFilePath = words_to +son;
-        String host = "/img/user"+son;
+        String words_to = "/yfn/";
+        //String words_to = "e://yfn/";
+        String son = id+"user"+getRandom()+".jpg";
+        String path = words_to +son;
+        String url = "/img/"+son;
+        System.out.println("user-head-try-catch");
         try {
             // Base64解码
             byte[] b = decoder.decode(imgStr);
@@ -108,22 +106,24 @@ public class UserController {
                     b[i] += 256;
                 }
             }
-            OutputStream out = new FileOutputStream(imgFilePath);
+            System.out.println("path:"+path);
+            System.out.println("url:"+url);
+            OutputStream out = new FileOutputStream(path);
             out.write(b);
             out.flush();
             out.close();
-            userService.uploadHead(id,imgFilePath,host);
+            System.out.println("userService.uploadHead");
+            userService.uploadHead(id,path,url);
             return 1;
         } catch (Exception e) {
             return 0;
         }
     }
-//    @RequestMapping(value = "/addFeelBack")
-//    public int addFeelBack(FeelBack feelBack) throws Exception{
-//        return userService.addFeelBack(feelBack);
-//    }
 
-
+     public static String getRandom() {
+         int rs = (int) ((Math.random() * 9 + 1) * Math.pow(10, 6));
+         return String.valueOf(rs);
+     }
 
 
     public static String getMD5String(String str) {

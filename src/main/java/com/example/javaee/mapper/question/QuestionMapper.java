@@ -3,6 +3,7 @@ package com.example.javaee.mapper.question;
 import com.example.javaee.entity.question.Question1;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * time 2020/4/11
  * description
  */
+@Repository
 @Mapper
 public interface QuestionMapper {
 

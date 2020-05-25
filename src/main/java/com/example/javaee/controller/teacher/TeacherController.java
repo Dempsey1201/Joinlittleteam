@@ -48,10 +48,11 @@ public class TeacherController {
         return teacherService.addTeacher(teacher);
     }
     @RequestMapping(value = "/updatePassword")
-    public int updatePassword(Teacher teacher) throws Exception{
+    public String updatePassword(Teacher teacher) throws Exception{
         String str=teacher.getPassword();
         teacher.setPassword(getMD5String(str));
-        return teacherService.updateTeacherPassword(teacher);
+        teacherService.updateTeacherPassword(teacher);
+        return teacher.getPassword();
     }
 
     @RequestMapping(value = "/updateTeacher")
@@ -70,14 +71,17 @@ public class TeacherController {
     @ResponseBody
     @RequestMapping(value = "/uploadHead",method = RequestMethod.POST)
     public int pictureupload(@RequestParam(value = "imgStr", required=false)String imgStr, int id)throws Exception{
+
         if (StringUtils.isEmpty(imgStr)) // 图像数据为空
             return 0;
+        System.out.println("begin");
         Base64.Decoder decoder = Base64.getDecoder();
-//      String words_to = "/opt/yfn/upload/user";
-        String words_to = "47.47.94.210.131://yfn/";
-        String son = id+".jpg";
-        String imgFilePath = words_to +son;
-        String host = "/img/teacher"+son;
+        //String words_to = "e:/yfn/";
+        String words_to = "/yfn/";
+        String son = id+"tea"+getRandom()+".jpg";
+        String path = words_to +son;
+        String url = "/img/"+son;
+        System.out.println("tea-head-try-catch");
         try {
             // Base64解码
             byte[] b = decoder.decode(imgStr);
@@ -86,16 +90,25 @@ public class TeacherController {
                     b[i] += 256;
                 }
             }
-            OutputStream out = new FileOutputStream(imgFilePath);
+            System.out.println("path:"+path);
+            System.out.println("url:"+url);
+            OutputStream out = new FileOutputStream(path);
             out.write(b);
             out.flush();
             out.close();
-            teacherService.uploadHead(id,imgFilePath,host);
+            System.out.println("teaService.uploadHead");
+            teacherService.uploadHead(id,path,url);
             return 1;
         } catch (Exception e) {
             return 0;
         }
     }
+
+    public static String getRandom() {
+        int rs = (int) ((Math.random() * 9 + 1) * Math.pow(10, 6));
+        return String.valueOf(rs);
+    }
+
     public static String getMD5String(String str) {
         try {
             //利用Java自带的MessageDigest类实现的最简单的MD5加密方法

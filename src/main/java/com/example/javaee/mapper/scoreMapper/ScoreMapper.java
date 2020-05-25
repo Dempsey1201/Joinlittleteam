@@ -3,6 +3,7 @@ package com.example.javaee.mapper.scoreMapper;
 import com.example.javaee.entity.utilClass.UtilClass;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import java.util.Map;
  * time 12/5/2020
  * description
  */
+@Repository
 @Mapper
 public interface ScoreMapper {
 

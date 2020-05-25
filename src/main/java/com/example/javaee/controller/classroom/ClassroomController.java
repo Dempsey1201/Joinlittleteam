@@ -32,12 +32,12 @@ public class ClassroomController {
     UserService userService;
 
     @RequestMapping(value = "/addClassroom")
-    public String addClassroom(Classroom classroom) throws Exception{
+    public Classroom addClassroom(Classroom classroom) throws Exception{
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         //Date date=new Date();
         classroom.setClassno(getMD5String(sdf.format(new Date())));
         classroomService.addClassroom(classroom);
-        return classroom.getClassno();
+        return classroomService.queryClassroom(classroom.getClassno());
     }
 
     @RequestMapping(value = "/list")
