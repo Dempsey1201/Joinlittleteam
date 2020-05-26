@@ -87,10 +87,10 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(value = "/uploadHead",method = RequestMethod.POST)
-    public int pictureupload(@RequestParam(value = "imgStr", required=false)String imgStr,int id)throws Exception{
+    public String pictureupload(@RequestParam(value = "imgStr", required=false)String imgStr,int id)throws Exception{
         if (StringUtils.isEmpty(imgStr)) // 图像数据为空
-            return 0;
-        System.out.println("begin");
+            return "fail";
+        //System.out.println("begin");
         Decoder decoder = Base64.getDecoder();
         String words_to = "/yfn/";
         //String words_to = "e://yfn/";
@@ -106,17 +106,18 @@ public class UserController {
                     b[i] += 256;
                 }
             }
-            System.out.println("path:"+path);
-            System.out.println("url:"+url);
+            //System.out.println("path:"+path);
+            //System.out.println("url:"+url);
             OutputStream out = new FileOutputStream(path);
             out.write(b);
             out.flush();
             out.close();
-            System.out.println("userService.uploadHead");
+            //System.out.println("userService.uploadHead");
+            System.out.println(id+path+url);
             userService.uploadHead(id,path,url);
-            return 1;
+            return url;
         } catch (Exception e) {
-            return 0;
+            return "fail";
         }
     }
 

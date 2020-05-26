@@ -70,18 +70,17 @@ public class TeacherController {
 
     @ResponseBody
     @RequestMapping(value = "/uploadHead",method = RequestMethod.POST)
-    public int pictureupload(@RequestParam(value = "imgStr", required=false)String imgStr, int id)throws Exception{
+    public String pictureupload(@RequestParam(value = "imgStr", required=false)String imgStr, int id)throws Exception{
 
         if (StringUtils.isEmpty(imgStr)) // 图像数据为空
-            return 0;
-        System.out.println("begin");
+            return "fail";
         Base64.Decoder decoder = Base64.getDecoder();
         //String words_to = "e:/yfn/";
         String words_to = "/yfn/";
         String son = id+"tea"+getRandom()+".jpg";
         String path = words_to +son;
         String url = "/img/"+son;
-        System.out.println("tea-head-try-catch");
+        //System.out.println("tea-head-try-catch");
         try {
             // Base64解码
             byte[] b = decoder.decode(imgStr);
@@ -90,17 +89,17 @@ public class TeacherController {
                     b[i] += 256;
                 }
             }
-            System.out.println("path:"+path);
-            System.out.println("url:"+url);
+            //System.out.println("path:"+path);
+            //System.out.println("url:"+url);
             OutputStream out = new FileOutputStream(path);
             out.write(b);
             out.flush();
             out.close();
-            System.out.println("teaService.uploadHead");
+            System.out.println(id+path+url);
             teacherService.uploadHead(id,path,url);
-            return 1;
+            return url;
         } catch (Exception e) {
-            return 0;
+            return "fail";
         }
     }
 

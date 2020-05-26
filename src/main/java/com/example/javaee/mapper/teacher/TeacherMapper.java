@@ -89,7 +89,7 @@ public interface TeacherMapper {
      * @return
      * @throws Exception
      */
-    public int uploadHead(@Param("id")int id,@Param("path")String path,@Param("HeadUrl")String HeadUrl)throws Exception;
+    public int uploadHead(@Param("id")int id,@Param("path")String path,@Param("headUrl")String headUrl)throws Exception;
     /**
      * 增加反馈------再考虑要不要
      * @param feelBack
