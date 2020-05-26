@@ -85,7 +85,8 @@
                             teacherno:info.id,
                             college:info.college
                         }).then(res=>{
-                            this.classno = res.data;
+                            this.classList.push(res.data);
+                            this.classno = res.data.classno;
                             this.$message({
                                 message: '创建成功',
                                 type: 'success'
