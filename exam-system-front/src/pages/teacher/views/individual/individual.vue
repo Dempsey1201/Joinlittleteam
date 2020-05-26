@@ -8,8 +8,8 @@
 
             >
                 <input ref="file" type="file" @change="uploadImg">
-                <img v-if="info.headUrl" :src="imageUrl" class="avatar">
-                <i v-if="!info.headUrl" class="el-icon-plus"></i>
+                <img v-if="info.headUrl" :src="url+info.headUrl" class="avatar">
+                <i v-show="!info.headUrl" class="el-icon-plus"></i>
             </div>
             <div class="info">
                 <p><span class="ti">昵称：</span><span class="con">{{info.teachername}}</span></p>
@@ -49,13 +49,13 @@
 
 <script>
     import {updateOther, updatePwd,updateHeadUrl} from "../../api/individual";
-    import Qs from "qs";
     export default {
         name: "individual",
         data() {
             return {
                 isActive: !this.imageUrl,
-                info: JSON.parse(sessionStorage.getItem("userInfo"))
+                info: JSON.parse(sessionStorage.getItem("userInfo")),
+                url:"http://47.94.210.131:8080"
             }
         },
         created() {
@@ -77,11 +77,11 @@
                         imgStr:data,
                         id:this.info.id
                     }).then(res=>{
-                        console.log(res.data)
+                        this.info.headUrl = res.data;
+                        sessionStorage.setItem("userInfo", JSON.stringify(this.info))
                     }).catch(err=>{
                         throw err;
                     })
-                    // sessionStorage.setItem("userInfo", JSON.stringify(this.info))
                 }
             },
             submitForm(formName) {
@@ -95,7 +95,6 @@
                                     teachername: this.info.teachername,
                                     id: this.info.id
                                 }).then(res => {
-                                    console.log(res.data)
                                     if (res.data == 1) {
                                         this.$message({
                                             message: '修改成功',
@@ -125,16 +124,6 @@
                         return false;
                     }
                 });
-            },
-            getBase64Image(img) {
-                let canvas = document.createElement("canvas");
-                canvas.width = img.width;
-                canvas.height = img.height;
-                let ctx = canvas.getContext("2d");
-                ctx.drawImage(img, 0, 0, img.width, img.height);
-                let ext = img.src.substring(img.src.lastIndexOf(".") + 1).toLowerCase();
-                let dataURL = canvas.toDataURL("image/" + ext);
-                return dataURL;
             }
         }
     }
@@ -195,6 +184,8 @@
             }
 
             .avatar {
+                position: absolute;
+                top: 0;
                 width: 150px;
                 height: 150px;
                 display: block;
