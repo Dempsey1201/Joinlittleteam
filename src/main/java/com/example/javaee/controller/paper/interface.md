@@ -34,15 +34,16 @@
 |/getDone|查看是否完成了试卷|Integer sid,Integer pid|布尔值|
 |/updateUserScore|更新某个同学的某张试卷的成绩（一般由系统自动生成）|Integer sid,Integer pid,Integer score|布尔值|
 |/getScoreByPaper|按照试卷和班级获取所有成绩|Integer pid,Integer classno|成绩数组|
-|/getPaperByClass|按照班级获取所有的试卷|Integer classno|试卷数组|
+|/getPaperByClass|按照班级获取所有的试卷|Integer classno|试卷数组,pname是学生名字，pid是学生的id|
+|/||||
 ### 3 关于试卷类
 #### 接口头 /paper
 |接口地址|作用|输入|输出|
 |---|---|---|---|
 |/getAllPaper|获取所有试卷信息|NONE|paper类|
-|/insertNewPaper|插入新试卷|String pname,Integer share, String teacher, String classno, Date start_time,Date end_time,Double last_time,Integer full_score,String subject|布尔值|
+|/insertNewPaper|插入新试卷|String pname, Integer share, String teacher, String classno, Date start_time, Date end_time, Double last_time, Integer full_score|新建试卷的id|
 |/getPaperQuestion|获取试卷内容|Integer pid|试卷具体内容，question类|
-|/reusePaper直接复用试卷|Integer pid|布尔值|
+|/reusePaper直接复用试卷|Integer pid,Integer pid1,pid是复用的，pid1是新建的试卷|布尔值|
 |/insertNewPaper|写入试卷的内容，考试名称时间等信息，先添加题目再生成试卷|String pname, Integer share, String teacher, String classno, Date start_time, Date end_time,Double last_time, Integer full_score, String subject||
 |/insertQuestionToPaper|在存入试卷信息之后按照顺序存题目与试卷的映射|List<Integer> pid,List<Integer> no,List<Integer> qid,List<Integer> qscore|布尔值|
 |/deletePaper|删除试卷,注意删除错误就是试卷不存在或者没有题目对应|pid|布尔值|

@@ -41,6 +41,14 @@ public class Paper {
 
     }
 
+    public Integer getFull_score() {
+        return full_score;
+    }
+
+    public void setFull_score(Integer full_score) {
+        this.full_score = full_score;
+    }
+
     public Paper(String pname, int share, String teacher, String classno, Date start_time, Date end_time, Double last_time, Integer full_score, String subject) {
         this.pname = pname;
         this.share = share;

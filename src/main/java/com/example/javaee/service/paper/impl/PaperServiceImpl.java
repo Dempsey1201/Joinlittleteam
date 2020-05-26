@@ -1,5 +1,6 @@
 package com.example.javaee.service.paper.impl;
 
+import com.example.javaee.entity.classroom.Classroom;
 import com.example.javaee.entity.paper.Paper;
 import com.example.javaee.entity.question.Question1;
 import com.example.javaee.entity.user.User;
@@ -8,6 +9,7 @@ import com.example.javaee.mapper.answer.AnswerMapper;
 import com.example.javaee.mapper.paper.PaperMapper;
 import com.example.javaee.mapper.question.QuestionMapper;
 import com.example.javaee.mapper.scoreMapper.ScoreMapper;
+import com.example.javaee.service.classroom.ClassroomService;
 import com.example.javaee.service.paper.PaperService;
 import com.example.javaee.service.user.UserService;
 //import org.omg.PortableInterceptor.INACTIVE;
@@ -54,17 +56,16 @@ public class PaperServiceImpl implements PaperService {
     }
 
     @Override
-    public boolean reusePaper(Integer pid){
+    public boolean reusePaper(Integer pid,Integer pid5){
         List<Question1> question = paperMapper.getPaperQuestion(pid);
         List<Integer> no = new ArrayList<>(),qid = new ArrayList<>(),qscore = new ArrayList<>(),pid1 = new ArrayList<>();
-        Integer pid2 = paperMapper.selectMainKey();
         int i = 0;
         if(question.size() == 0){
             return false;
         }
         for (i = 0;i <question.size();i++){
             Question1 question1 = question.get(i);
-            pid1.add(pid2);
+            pid1.add(pid5);
             no.add(i+1);
             qid.add(question1.getQid());
             qscore.add(question1.getQscore());
@@ -80,17 +81,22 @@ public class PaperServiceImpl implements PaperService {
     UserService userService;
 
     @Override
-    public List<Integer> getScoreByPaper(Integer pid,Integer classno) {
+    public List<UtilClass> getScoreByPaper(Integer pid,Integer classno) {
         List<User> sid = new ArrayList<>();
         try {
             sid = userService.queryClass(classno);
         }catch (Exception e){
             e.printStackTrace();
         }
-        List<Integer> score1 = new ArrayList<>();
+        List<UtilClass> score1 = new ArrayList<>();
         int i;
         for(i = 0;i < sid.size();i ++){
-            score1.add(scoreMapper.getScore(sid.get(i).getId(),pid));
+            UtilClass utilClass = new UtilClass();
+            utilClass.setScore(scoreMapper.getScore(sid.get(i).getId(),pid));
+            utilClass.setUid(sid.get(i).getId());
+            utilClass.setPname(sid.get(i).getUsername());
+
+            score1.add(utilClass);
         }
         return score1;
     }
@@ -147,6 +153,36 @@ public class PaperServiceImpl implements PaperService {
         return answerMapper.insertAnswer(sid,qid,answer);
     }
 
+    @Autowired
+    ClassroomService classroomService;
+
+    @Override
+    public List<Paper> getPaperByNo(Integer sid){
+        List<Classroom> classrooms = new ArrayList<>();
+        List<Paper> papers = new ArrayList<>();
+        String sid1 = new String();
+        try{
+            sid1 = userService.queryUser(sid).getClassno();
+        }catch (Exception x){
+            x.printStackTrace();
+        }
+
+        try{
+            classrooms = classroomService.queryUserClassroom(sid1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        int i = 0;
+        for(i =0 ;i<classrooms.size();i++){
+            try {
+                papers.addAll(getPaperByClass(classrooms.get(i).getId()));
+            }catch (Exception f){
+                f.printStackTrace();
+            }
+        }
+        return papers;
+    }
+
     @Override
     public boolean correctByTeacher(Integer pid,Integer qid,Integer sid,Integer getscore){
         Integer score = scoreMapper.getScore(sid,pid);
@@ -159,8 +195,13 @@ public class PaperServiceImpl implements PaperService {
     }
 
     @Override
-    public boolean insertNewPaper(Paper paper){
-        return paperMapper.insertNewPaper(paper);
+    public Integer insertNewPaper(Paper paper){
+        Integer pid = paperMapper.selectMainKey();
+        if(paperMapper.insertNewPaper(paper)){
+            return pid;
+        }else {
+            return -1;
+        }
     }
 
     @Override

@@ -5,9 +5,14 @@ import com.example.javaee.entity.question.Question1;
 import com.example.javaee.entity.utilClass.UtilClass;
 import com.example.javaee.service.paper.PaperService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +25,14 @@ import java.util.List;
 @Controller
 @RequestMapping("/paper")
 public class PaperController {
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder, WebRequest request) {
+        //转换日期
+        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
     @Autowired
     PaperService paperService;
 
@@ -79,8 +92,9 @@ public class PaperController {
 
     @ResponseBody
     @RequestMapping("/insertNewPaper")
-    boolean insertNewPaper(String pname, Integer share, String teacher, String classno, Date start_time, Date end_time,
-                           Double last_time, Integer full_score, String subject) {
+    Integer insertNewPaper(String pname, Integer share, String teacher, String classno, Date start_time, Date end_time,
+                           Double last_time, Integer full_score) {
+        String subject = "";
         Paper paper = new Paper(pname, share, teacher, classno, start_time, end_time, last_time, full_score, subject);
         return paperService.insertNewPaper(paper);
     }
@@ -123,13 +137,19 @@ public class PaperController {
 
     @ResponseBody
     @RequestMapping("/reusePaper")
-    public boolean reusePaper(Integer pid) {
-        return paperService.reusePaper(pid);
+    public boolean reusePaper(Integer pid,Integer pid1) {
+        return paperService.reusePaper(pid,pid1);
     }
 
     @ResponseBody
     @RequestMapping("/getScoreByPaper")
-    public List<Integer> getScoreByPaper(Integer pid,Integer classno){
+    public List<UtilClass> getScoreByPaper(Integer pid,Integer classno){
         return paperService.getScoreByPaper(pid,classno);
+    }
+
+    @ResponseBody
+    @RequestMapping("/getPaperByNo")
+    public List<Paper> getPaperByNo(Integer sid){
+        return paperService.getPaperByNo(sid);
     }
 }

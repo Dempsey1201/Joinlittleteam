@@ -17,7 +17,7 @@ import java.util.List;
 @Mapper
 public interface PaperMapper {
     List<Paper> getAll();
-    boolean insertNewPaper(Paper paper);
+    boolean insertNewPaper(@Param("paper") Paper paper);
     boolean deletePaper(Integer pid);
     boolean deleteAnswer(Integer pid);
     List<Paper> searchPaper(String pname);

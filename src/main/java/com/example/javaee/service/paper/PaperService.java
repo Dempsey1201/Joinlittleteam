@@ -26,7 +26,7 @@ public interface PaperService {
     boolean correctByTeacher(Integer pid,Integer qid,Integer sid,Integer getscore);
     boolean storeAnswer(Integer pid,List<Integer>qid,Integer sid,List<String>answer);
     List<Paper> getAll();
-    boolean insertNewPaper(Paper paper);
+    Integer insertNewPaper(Paper paper);
     boolean deletePaper(Integer pid);
     List<Paper> searchPaper(String pname);
     boolean isDone(Integer sid,Integer pid);
@@ -35,6 +35,7 @@ public interface PaperService {
     boolean updateUserScore(Integer pid,Integer sid,Integer score);
     List<Question1> getPaperQuestion(Integer pid);
     boolean insertQuestionToPaper(List<Integer> pid,List<Integer> no,List<Integer> qid,List<Integer> qscore);
-    boolean reusePaper(Integer pid);
-    public List<Integer> getScoreByPaper(Integer pid,Integer claano);
+    boolean reusePaper(Integer pid,Integer pid1);
+    List<UtilClass>  getScoreByPaper(Integer pid,Integer claano);
+    List<Paper> getPaperByNo(Integer sid);
 }

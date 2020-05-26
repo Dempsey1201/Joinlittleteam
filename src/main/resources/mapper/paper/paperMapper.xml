@@ -19,9 +19,9 @@
         from t_paper
     </select>
 
-    <insert id="insertNewPaper" parameterType="Paper">
-        insert into t_paper(pname,share,teacher,classno,start_time,end_time,qtype,author,subject)
-        values (#{Paper.pname},#{Paper.share},#{Paper.teacher},#{Paper.classno},#{Paper.start_time},#{Paper.end_time},#{Paper.last_time},#{Paper.full_score})
+    <insert id="insertNewPaper" parameterType="com.example.javaee.entity.paper.Paper">
+        insert into t_paper(pname,share,teacher,classno,start_time,end_time,last_time,full_score)
+        values (#{paper.pname},#{paper.share},#{paper.teacher},#{paper.classno},#{paper.start_time},#{paper.end_time},#{paper.last_time},#{paper.full_score})
     </insert>
 
     <delete id="deletePaper">
