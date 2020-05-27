@@ -89,42 +89,46 @@
                     full_score:score
                 }
                 // console.log(data,no)
-                newPaper(data).then(res=>{
-                    let paperId = res.data
-                    this.questionList.forEach((item,index)=>{
-                        addQuestion({
-                            question: item.question,
-                            oa: item.oa,
-                            ob: item.ob,
-                            oc: item.oc,
-                            od: item.od,
-                            subject: item.subject,
-                            qtype: item.type,
-                            author: item.author,
-                            answer:item.answer
-                        }).then(res=>{
-                            qid.push(res.data.data)
-                            pid.push(paperId);
-                            console.log(index)
-                            if(index = this.questionList.length-1){
-                                // questionToPaper({
-                                //     pid:pid,
-                                //     qid:qid,
-                                //     no:no,
-                                //     qscore:qscore
-                                // }).then(res=>{
-                                //     console.log("成功！！",res.data)
-                                // }).catch(err=>{
-                                //     throw err;
-                                // })
-                                console.log(pid,no,qid,qscore)
-                            }
-                        }).catch(err=>{
-                            throw err;
-                        })
+
+                this.questionList.forEach((item,index)=>{
+                    addQuestion({
+                        question: item.question,
+                        oa: item.oa,
+                        ob: item.ob,
+                        oc: item.oc,
+                        od: item.od,
+                        subject: item.subject,
+                        qtype: item.type,
+                        author: item.author,
+                        answer:item.answer
+                    }).then(res=>{
+                        // qid.push(res.data.data)
+                        console.log(res.data)
+                        // if(index === this.questionList.length-1){
+                        //     newPaper(data).then(res=>{
+                        //         let paperId = res.data
+                        //         for (let i = 0; i < this.questionList.length; i++) {
+                        //             pid.push(paperId);
+                        //         }
+                        //         console.log(pid,qid,no,qscore)
+                        //         questionToPaper({
+                        //             pid:pid,
+                        //             qid:qid,
+                        //             no:no,
+                        //             qscore:qscore
+                        //         }).then(res=>{
+                        //             console.log("成功！！",res.data)
+                        //         }).catch(err=>{
+                        //             throw err;
+                        //         })
+                        //     }).catch(err=>{
+                        //         throw err;
+                        //     })
+                        //
+                        // }
+                    }).catch(err=>{
+                        throw err;
                     })
-                }).catch(err=>{
-                    throw err;
                 })
 
 		        this.$message({

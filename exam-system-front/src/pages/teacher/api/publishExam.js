@@ -1,5 +1,6 @@
 // 获取所有公开的试卷
 import axios from "axios"
+import Qs from "qs"
 // 获取所有公开的试卷
 export const getPublicPaper  = ()=>{
     return axios.get("/paper/searchPaper",{
@@ -28,9 +29,7 @@ export const newPaper  = (info)=>{
 }
 // 建立试卷和试题的映射
 export const questionToPaper  = (info)=>{
-    return axios.get("/paper/insertQuestionToPaper",{
-        params: info
-    })
+    return axios.post("/paper/insertQuestionToPaper",Qs.stringify(info))
 }
 // 复用试卷
 export const reusePaper  = (info)=>{
