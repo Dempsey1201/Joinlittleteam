@@ -1,10 +1,9 @@
 <template>
     <div class="step4">
         <p>
-            <el-button style="display: block" type="primary" size="mini" @click="prevStep">上一步</el-button>
             试题预览
         </p>
-        <exam :examDetail="newExamDetail"></exam>
+        <exam :questionList="questionList" @back="prevStep"></exam>
         <el-button type="primary"
                    @click="complete"
         >完成
@@ -14,13 +13,15 @@
 
 <script>
     import {mapMutations,mapGetters,mapActions} from "vuex";
+    import {addQuestion,newPaper,questionToPaper} from "../../api/publishExam";
     import exam from "../exam";
 	export default {
 		name: "b_newExam_step4",
         data(){
 			return{
 				questionList:[],
-				labelPosition:"left"
+				labelPosition:"left",
+                examInfo:{}
             }
         },
         components:{
@@ -33,7 +34,13 @@
         },
         created() {
             // 先将题目都添加进去
-
+            this.examInfo = JSON.parse(sessionStorage.getItem("newExamInfo"))
+            this.questionList = this.examInfo.questionList
+            this.questionList.forEach(item=>{
+                if(item.type===2){
+                    item.answer = item.answer.join('');
+                }
+            })
         },
         methods:{
 			...mapMutations({
@@ -43,12 +50,88 @@
             	"stepFour"
             ]),
 	        complete(){
+			    // 创建试卷
+                let reg = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/g;
+                let score = 0;
+                let pid = [],no = [],qid=[],qscore=[];
+                this.questionList.forEach((item,index)=>{
+                    no.push(index);
+                    switch (item.type) {
+                        case 1:
+                            qscore.push(3);
+                            score+=3;
+                            break;
+                        case 2:
+                            qscore.push(3)
+                            score+=3;
+                            break;
+                        case 3:
+                            qscore.push(2)
+                            score+=2;
+                            break;
+                        case 4:
+                            qscore.push(5)
+                            score+=5;
+                            break;
+                        case 5:
+                            qscore.push(2)
+                            score+=2;
+                            break;
+                    }
+                })
+                let data = {
+                    pname: this.examInfo.pname,//试卷名称
+                    start_time: JSON.stringify(this.examInfo.start_time).split('"')[1].match(reg)[0].split("T").join(" "),//开始日期时间
+                    classno:this.examInfo.classno,
+                    share:this.examInfo.share,
+                    end_time: JSON.stringify(this.examInfo.end_time).split('"')[1].match(reg)[0].split("T").join(" "),//截至时间
+                    last_time:this.examInfo.check=="无限制"?0:this.examInfo.last_time,// 考试时间/分钟
+                    full_score:score
+                }
+                // console.log(data,no)
+                newPaper(data).then(res=>{
+                    let paperId = res.data
+                    this.questionList.forEach((item,index)=>{
+                        addQuestion({
+                            question: item.question,
+                            oa: item.oa,
+                            ob: item.ob,
+                            oc: item.oc,
+                            od: item.od,
+                            subject: item.subject,
+                            qtype: item.type,
+                            author: item.author,
+                            answer:item.answer
+                        }).then(res=>{
+                            qid.push(res.data.data)
+                            pid.push(paperId);
+                            console.log(index)
+                            if(index = this.questionList.length-1){
+                                // questionToPaper({
+                                //     pid:pid,
+                                //     qid:qid,
+                                //     no:no,
+                                //     qscore:qscore
+                                // }).then(res=>{
+                                //     console.log("成功！！",res.data)
+                                // }).catch(err=>{
+                                //     throw err;
+                                // })
+                                console.log(pid,no,qid,qscore)
+                            }
+                        }).catch(err=>{
+                            throw err;
+                        })
+                    })
+                }).catch(err=>{
+                    throw err;
+                })
+
 		        this.$message({
 			        message: '新建试卷成功',
 			        type: 'success'
 		        });
-		        this.stepFour();// 清空数据，初始化
-		        this.setStep(1);// 返回到第一步
+		        //this.setStep(1);// 返回到第一步
             },
 	        prevStep(){// 点击上一步
 		        this.setStep(3);

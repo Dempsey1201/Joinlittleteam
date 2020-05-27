@@ -14,10 +14,10 @@
                     <p class="question">{{index+1}}、{{item.question}}</p>
                     <el-form-item>
                         <el-radio-group v-model="item.answer">
-                            <el-radio :label="'A:'+item.oa"></el-radio>
-                            <el-radio :label="'B:'+item.ob"></el-radio>
-                            <el-radio :label="'C:'+item.oc"></el-radio>
-                            <el-radio v-show="item.od" :label="'D:'+item.od"></el-radio>
+                            <el-radio :label="'A'">A:{{item.oa}}</el-radio>
+                            <el-radio :label="'B'">B:{{item.ob}}</el-radio>
+                            <el-radio :label="'C'">C:{{item.oc}}</el-radio>
+                            <el-radio v-show="item.od" :label="'D'">D:{{item.od}}</el-radio>
                         </el-radio-group>
                     </el-form-item>
                 </el-form>
@@ -34,10 +34,10 @@
                     <p class="question">{{index+1}}、{{item.question}}</p>
                     <el-form-item>
                         <el-checkbox-group v-model="item.answer.split('')">
-                            <el-checkbox :label="'A'">:{{item.oa}}</el-checkbox>
-                            <el-checkbox :label="'B'">:{{item.ob}}</el-checkbox>
-                            <el-checkbox :label="'C'">:{{item.ob}}</el-checkbox>
-                            <el-checkbox v-show="item.od" :label="'D'">:{{item.ob}}</el-checkbox>
+                            <el-checkbox :label="'A'">A:{{item.oa}}</el-checkbox>
+                            <el-checkbox :label="'B'">B:{{item.ob}}</el-checkbox>
+                            <el-checkbox :label="'C'">C:{{item.oc}}</el-checkbox>
+                            <el-checkbox v-show="item.od" :label="'D'">D:{{item.od}}</el-checkbox>
                         </el-checkbox-group>
                     </el-form-item>
                 </el-form>
@@ -54,8 +54,8 @@
                     <p class="question">{{index+1}}、{{item.question}}</p>
                     <el-form-item prop="rightAnswer">
                         <el-radio-group v-model="item.answer">
-                            <el-radio label="正确"></el-radio>
-                            <el-radio label="错误"></el-radio>
+                            <el-radio label="1">正确</el-radio>
+                            <el-radio label="0">错误</el-radio>
                         </el-radio-group>
                     </el-form-item>
                 </el-form>
