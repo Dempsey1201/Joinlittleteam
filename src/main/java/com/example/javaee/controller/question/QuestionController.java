@@ -38,11 +38,8 @@ public class QuestionController {
     @RequestMapping("/insertNewQuestion")
     public Object insertNewQuestion(String question, String oa, String ob, String oc, String od, String answer, Integer qtype, String author, String subject, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Question1 question1 = new Question1(question, oa, ob, oc, od, answer, qtype, author, subject);
-        if (questionService.insertNewQuestion(question1)) {
-            return new ResponseBean(true, CommonErrorEnum.SUCCESS_REQUEST);
-        } else {
-            return new ResponseBean(false, CommonErrorEnum.DATABASE_ERROR);
-        }
+        return new ResponseBean(true, questionService.insertNewQuestion(question1));
+
     }
 
     @ResponseBody

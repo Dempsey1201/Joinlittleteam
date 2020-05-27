@@ -32,4 +32,6 @@ public interface QuestionMapper {
     List<Question1> searchQuestion(String question);
 
     List<Question1> searchQuestionBySubject(String subject,String question);
+
+    Integer selectMainKeyInQuestion();
 }

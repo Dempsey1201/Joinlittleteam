@@ -26,8 +26,13 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public boolean insertNewQuestion(Question1 question) throws Exception{
-        return questionMapper.insertNewQuestion(question);
+    public Integer insertNewQuestion(Question1 question) throws Exception{
+        Integer id = questionMapper.selectMainKeyInQuestion();
+        if(questionMapper.insertNewQuestion(question)){
+            return id;
+        }else {
+            return -1;
+        }
     }
 
     @Override

@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface QuestionService {
     List<Question1> getAll() throws Exception;
-    boolean insertNewQuestion(Question1 question) throws Exception;
+    Integer insertNewQuestion(Question1 question) throws Exception;
     String getAnswer(Integer qid);
     boolean firstJudge(String answer,Integer id);
     List<String> secondJudge(String answer,Integer qid);

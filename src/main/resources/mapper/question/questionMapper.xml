@@ -67,4 +67,10 @@
         from t_question
         where subject like concat('%',#{subject},'%')
     </select>
+
+    <select id="selectMainKeyInQuestion" resultType="Integer">
+        select auto_increment
+        from information_schema.`TABLES`
+        where table_name='t_paper'
+    </select>
 </mapper>

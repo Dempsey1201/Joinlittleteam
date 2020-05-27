@@ -27,6 +27,9 @@ import java.util.List;
 @Service
 public class PaperServiceImpl implements PaperService {
     @Autowired
+    UserService userService;
+
+    @Autowired
     PaperMapper paperMapper;
 
     @Autowired
@@ -37,6 +40,36 @@ public class PaperServiceImpl implements PaperService {
 
     @Autowired
     QuestionMapper questionMapper;
+
+    @Autowired
+    ClassroomService classroomService;
+
+    @Override
+    public List<Paper> getPaperByNo(Integer sid){
+        List<Classroom> classrooms = new ArrayList<>();
+        List<Paper> papers = new ArrayList<>();
+        String sid1 = new String();
+        try{
+            sid1 = userService.queryUser(sid).getClassno();
+        }catch (Exception x){
+            x.printStackTrace();
+        }
+
+        try{
+            classrooms = classroomService.queryUserClassroom(sid1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        int i = 0;
+        for(i =0 ;i<classrooms.size();i++){
+            try {
+                papers.addAll(getPaperByClass(classrooms.get(i).getId()));
+            }catch (Exception f){
+                f.printStackTrace();
+            }
+        }
+        return papers;
+    }
 
     @Override
     public boolean insertQuestionToPaper(List<Integer> pid,List<Integer> no,List<Integer> qid,List<Integer> qscore){
@@ -77,9 +110,6 @@ public class PaperServiceImpl implements PaperService {
         }
     }
 
-    @Autowired
-    UserService userService;
-
     @Override
     public List<UtilClass> getScoreByPaper(Integer pid,Integer classno) {
         List<User> sid = new ArrayList<>();
@@ -95,7 +125,7 @@ public class PaperServiceImpl implements PaperService {
             utilClass.setScore(scoreMapper.getScore(sid.get(i).getId(),pid));
             utilClass.setUid(sid.get(i).getId());
             utilClass.setPname(sid.get(i).getUsername());
-
+            utilClass.setQuestion(sid.get(i).getEmail());
             score1.add(utilClass);
         }
         return score1;
@@ -151,36 +181,6 @@ public class PaperServiceImpl implements PaperService {
             return false;
         }
         return answerMapper.insertAnswer(sid,qid,answer);
-    }
-
-    @Autowired
-    ClassroomService classroomService;
-
-    @Override
-    public List<Paper> getPaperByNo(Integer sid){
-        List<Classroom> classrooms = new ArrayList<>();
-        List<Paper> papers = new ArrayList<>();
-        String sid1 = new String();
-        try{
-            sid1 = userService.queryUser(sid).getClassno();
-        }catch (Exception x){
-            x.printStackTrace();
-        }
-
-        try{
-            classrooms = classroomService.queryUserClassroom(sid1);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        int i = 0;
-        for(i =0 ;i<classrooms.size();i++){
-            try {
-                papers.addAll(getPaperByClass(classrooms.get(i).getId()));
-            }catch (Exception f){
-                f.printStackTrace();
-            }
-        }
-        return papers;
     }
 
     @Override
