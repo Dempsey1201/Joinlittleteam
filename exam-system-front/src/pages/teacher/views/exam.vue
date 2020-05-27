@@ -1,58 +1,59 @@
 <template>
     <div class="exam">
+        <el-button style="display: block;margin-bottom: 10px" type="primary" size="mini" @click="prevStep">返回</el-button>
         <div class="formList">
             <el-row class="choiceOne">
-                <p v-show="examDetail.choiceOne">一、单选题</p>
+                <p class="title" v-show="questionList.filter(item=>item.type===1).length">单选题</p>
                 <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type==='choiceOne')" :key="index"
+                        v-for="(item,index) in questionList.filter(it=>it.type===1)" :key="index"
                         :ref="'choiceOne'+index"
                         :model="item"
                         label-width="80px"
                         :label-position="labelPosition"
                 >
-                    <p class="question">{{item.question}}</p>
+                    <p class="question">{{index+1}}、{{item.question}}</p>
                     <el-form-item>
-                        <el-radio-group v-model="item.rightAnswer">
-                            <el-radio :label="'A:'+item.answerA"></el-radio>
-                            <el-radio :label="'B:'+item.answerB"></el-radio>
-                            <el-radio :label="'C:'+item.answerC"></el-radio>
-                            <el-radio v-show="item.answerD" :label="'D:'+item.answerD"></el-radio>
+                        <el-radio-group v-model="item.answer">
+                            <el-radio :label="'A:'+item.oa"></el-radio>
+                            <el-radio :label="'B:'+item.ob"></el-radio>
+                            <el-radio :label="'C:'+item.oc"></el-radio>
+                            <el-radio v-show="item.od" :label="'D:'+item.od"></el-radio>
                         </el-radio-group>
                     </el-form-item>
                 </el-form>
             </el-row>
             <el-row class="choiceMany">
-                <p v-show="examDetail.choiceMany">二、多选题</p>
+                <p  class="title" v-show="questionList.filter(item=>item.type===2).length">多选题</p>
                 <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type==='choiceMany')" :key="index"
+                        v-for="(item,index) in questionList.filter(it=>it.type===2)" :key="index"
                         :ref="'choiceMany'+index"
                         :model="item"
                         label-width="80px"
                         :label-position="labelPosition"
                 >
-                    <p class="question">{{item.question}}</p>
+                    <p class="question">{{index+1}}、{{item.question}}</p>
                     <el-form-item>
-                        <el-checkbox-group v-model="item.rightAnswer">
-                            <el-checkbox :label="'A:'+item.answerA"></el-checkbox>
-                            <el-checkbox :label="'B:'+item.answerB"></el-checkbox>
-                            <el-checkbox :label="'C:'+item.answerC"></el-checkbox>
-                            <el-checkbox v-show="item.answerD" :label="'D:'+item.answerD"></el-checkbox>
+                        <el-checkbox-group v-model="item.answer.split('')">
+                            <el-checkbox :label="'A'">:{{item.oa}}</el-checkbox>
+                            <el-checkbox :label="'B'">:{{item.ob}}</el-checkbox>
+                            <el-checkbox :label="'C'">:{{item.ob}}</el-checkbox>
+                            <el-checkbox v-show="item.od" :label="'D'">:{{item.ob}}</el-checkbox>
                         </el-checkbox-group>
                     </el-form-item>
                 </el-form>
             </el-row>
             <el-row class="judgeTest">
-                <p v-show="examDetail.judgeTest">三、判断题</p>
+                <p class="title" v-show="questionList.filter(item=>item.type===3).length">判断题</p>
                 <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type==='judgeTest')" :key="index"
+                        v-for="(item,index) in questionList.filter(it=>it.type===3)" :key="index"
                         :ref="'judgeTest'+index"
                         :model="item"
                         label-width="80px"
                         :label-position="labelPosition"
                 >
-                    <p class="question">{{item.question}}</p>
-                    <el-form-item label="填写答案" prop="rightAnswer">
-                        <el-radio-group v-model="item.rightAnswer">
+                    <p class="question">{{index+1}}、{{item.question}}</p>
+                    <el-form-item prop="rightAnswer">
+                        <el-radio-group v-model="item.answer">
                             <el-radio label="正确"></el-radio>
                             <el-radio label="错误"></el-radio>
                         </el-radio-group>
@@ -60,17 +61,17 @@
                 </el-form>
             </el-row>
             <el-row class="feedFull">
-                <p v-show="examDetail.feedFull">四、填空题</p>
+                <p class="title" v-show="questionList.filter(item=>item.type===5).length">填空题</p>
                 <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type==='feedFull')" :key="index"
+                        v-for="(item,index) in questionList.filter(it=>it.type===5)" :key="index"
                         :ref="'feedFull'+index"
                         :model="item"
                         label-width="80px"
                         :label-position="labelPosition"
                 >
-                    <p class="question">{{item.question}}</p>
+                    <p class="question">{{index+1}}、{{item.question}}</p>
                     <el-form-item prop="rightAnswer">
-                        <el-col class="line" :span="6" v-model="item.rightAnswer">
+                        <el-col class="line" :span="6" v-model="item.answer">
                             <el-input placeholder="答案内容，多个答案用空格分隔" v-model="item.question"
                             ></el-input>
                         </el-col>
@@ -78,9 +79,9 @@
                 </el-form>
             </el-row>
             <el-row class="shortAnswer">
-                <p v-show="examDetail.shortAnswer">五、简答题</p>
+                <p class="title" v-show="questionList.filter(item=>item.type===4).length">简答题</p>
                 <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type==='shortAnswer')" :key="index"
+                        v-for="(item,index) in questionList.filter(it=>it.type===4)" :key="index"
                         :ref="'shortAnswer'+index"
                         :model="item"
                         label-width="80px"
@@ -88,9 +89,9 @@
                         :rules="rules"
                         size="mini"
                 >
-                    <p class="question">{{item.question}}</p>
-                    <el-form-item label="填写答案" prop="rightAnswer">
-                        <el-col class="line" :span="6" v-model="item.rightAnswer">
+                    <p class="question">{{index+1}}、{{item.question}}</p>
+                    <el-form-item prop="rightAnswer">
+                        <el-col class="line" :span="6" v-model="item.answer">
                             <el-input
                                     type="textarea"
                                     :rows="2"
@@ -110,22 +111,29 @@
         name: "exam",
         data(){
             return{
-                questionList:[],
                 labelPosition:"left"
             }
         },
         props:{
-            examDetail:{
-                type:Object,
+            questionList:{
+                type:Array,
                 require:true
             }
         },
         created() {
-            this.questionList = JSON.parse(this.examDetail.questionList);
+            console.log(this.questionList[0].answer.split(''));
+        },
+        methods:{
+            prevStep(){
+                this.$emit("back")
+            }
         }
     }
 </script>
 
 <style scoped>
-
+.title{
+    font-weight: bold;
+    color: #409EFF;
+}
 </style>

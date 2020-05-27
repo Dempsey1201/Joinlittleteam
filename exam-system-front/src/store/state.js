@@ -19,7 +19,7 @@ const state = {
 		
 		// {
 			// 	ExamId:1,// 所属试卷id
-			// 	type:"",// 题目类型
+			// 	type:0,// 题目类型
 				// question:"",// 题目问题
 				// answerA:"",// 选项A
 				// answerB:"",// 选项B
@@ -28,20 +28,7 @@ const state = {
 				// rightAnswer:""// 正确答案
 			// }
 	},
-	classInfo:[// 班级信息
-		{
-			id:1,
-			name:"班级1"
-		},
-		{
-			id:2,
-			name:"班级2"
-		},
-		{
-			id:3,
-			name:"班级3"
-		}
-	],
+	classInfo:[],// 班级信息
 	userInfo:sessionStorage.getItem("userInfo")
 }
 export default state;

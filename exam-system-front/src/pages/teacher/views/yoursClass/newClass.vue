@@ -31,6 +31,7 @@
 
 <script>
     import {createClass} from "../../api/yourClass";
+    import {mapMutations} from "vuex";
 
     export default {
         name: "newClass",
@@ -91,12 +92,16 @@
                                 message: '创建成功',
                                 type: 'success'
                             });
+                            sessionStorage.setItem("classInfo",JSON.stringify(this.classList))
                         }).catch(err=>{
                             throw err;
                         })
                     }
                 })
-            }
+            },
+            ...mapMutations({
+                setClassInfo: "SET_CLASSINFO"
+            })
         }
     }
 </script>

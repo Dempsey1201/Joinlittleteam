@@ -21,17 +21,11 @@
             </el-form-item>
             <el-form-item label="选择班级" prop="selectClass">
                 <el-col :span="6">
-                    <el-select
-                            v-model="form.class"
-                            multiple
-                            filterable
-                            allow-create
-                            default-first-option
-                            placeholder="请选择班级">
+                    <el-select v-model="form.class" placeholder="请选择班级">
                         <el-option
                                 v-for="item in classInfo"
                                 :key="item.id"
-                                :label="item.name"
+                                :label="item.classname"
                                 :value="item.id">
                         </el-option>
                     </el-select>
@@ -58,7 +52,6 @@
 	export default {
 		name: "step1",
 		data() {
-			
 			let validateClass = (rule, value, callback) => {
 				if (!this.form.class.length) {
 					callback(new Error('请选择班级'));

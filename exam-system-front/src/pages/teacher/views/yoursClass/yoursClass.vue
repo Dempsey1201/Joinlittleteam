@@ -66,7 +66,7 @@
 
 <script>
     import checkClass from "./checkClass";
-    import {allClass,deleteClass} from "../../api/yourClass";
+    import {deleteClass} from "../../api/yourClass";
     import newClass from "./newClass";
     export default {
         name: "yoursClass",
@@ -79,13 +79,9 @@
             }
         },
         created() {
-            allClass({
-                id:JSON.parse(sessionStorage.getItem("userInfo")).id
-            }).then(res=>{
-                this.classList = res.data
-            }).catch(err=>{
-                throw err;
-            })
+            this.classList = JSON.parse(sessionStorage.getItem("classInfo"))
+        },
+        computed:{
         },
         methods:{
             handleEdit(index, row){
@@ -102,12 +98,13 @@
                         if(res.data){
                             this.classList.splice(index,1);
                         }
+                        sessionStorage.setItem("classInfo",JSON.stringify(this.classList.splice(index,1)))
                     }).catch(err=>{
                         throw err;
                     })
                 }
 
-            }
+            },
         },
         components:{
             checkClass,

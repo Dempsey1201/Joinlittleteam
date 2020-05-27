@@ -9,16 +9,6 @@
                 :rules="rules"
                 style="margin-top: 15px"
         >
-            <el-form-item label="测试说明" prop="description">
-                <el-col class="line" :span="6">
-                    <el-input
-                            type="textarea"
-                            :rows="2"
-                            placeholder="请输入测试说明"
-                            v-model="form.description">
-                    </el-input>
-                </el-col>
-            </el-form-item>
             <el-form-item label="截止时间" prop="endTime">
                 <el-date-picker
                         v-model="form.endTime"
@@ -73,11 +63,6 @@
                     </el-col>
                 </el-row>
             </el-form-item>
-            <el-form-item label="尝试次数">
-                <el-col class="line" :span="5">
-                    <el-input-number v-model="form.tryTimes" :min="1" :max="5" label="描述文字"></el-input-number>
-                </el-col>
-            </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submitForm('form')">下一步</el-button>
             </el-form-item>
@@ -101,7 +86,6 @@
 			};
 			return {
 				form: {//表单数据内容
-					description:"",//试卷描述
 					endTime: "",//截至时间
 					check: "无限制",//试卷时候限制时间
 					testDuringTime:10,// 考试时间/分钟
@@ -110,19 +94,11 @@
 					judgeTest:0,// 判断题
 					feedFull:0,// 填空题
                     shortAnswer:0,// 简答题
-                    tryTimes:1,//尝试次数
 				},
                 num:1,
 				labelPosition: "right",
 				rules: {
 					//表单基础验证内容
-					description: [
-						{
-							required: true,
-							message: '请输入测试说明',
-							trigger: 'blur'
-						}
-					],
 					endTime: [
 						{type: 'date', required: true, message: '请选择日期时间', trigger: 'blur'}
 					],
@@ -145,7 +121,6 @@
             ])
         },
 		created() {
-			this.form.description = this.newExamDetail.description;//试卷描述
 			this.form.endTime = this.newExamDetail.endTime ? new Date(this.newExamDetail.endTime):"";//截至时间
 			this.form.check = this.newExamDetail.check;//试卷时候限制时间
 			this.form.testDuringTime = this.newExamDetail.testDuringTime;// 考试时间/分钟
@@ -154,7 +129,6 @@
 			this.form.judgeTest = this.newExamDetail.judgeTest;// 判断题
 			this.form.feedFull = this.newExamDetail.feedFull;// 填空题
 			this.form.shortAnswer = this.newExamDetail.shortAnswer;// 简答题
-			this.form.tryTimes = this.newExamDetail.tryTimes;//尝试次数
 		},
         methods:{
 			...mapMutations({

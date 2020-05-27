@@ -49,6 +49,7 @@
 
 <script>
     import {updateOther, updatePwd,updateHeadUrl} from "../../api/individual";
+    import {allClass} from "../../api/yourClass";
     export default {
         name: "individual",
         data() {
@@ -60,7 +61,13 @@
         },
         created() {
             // 获取 数据以及图片路径等信息
-
+            allClass({
+                id:JSON.parse(sessionStorage.getItem("userInfo")).id
+            }).then(res=>{
+                sessionStorage.setItem("classInfo",JSON.stringify(res.data));
+            }).catch(err=>{
+                throw err;
+            })
         },
         computed: {},
         methods: {
@@ -70,9 +77,7 @@
                 let reader = new FileReader(file);
                 reader.readAsDataURL(file);
                 reader.onload = (e)=>{
-                    console.log(e);
                     let data = e.currentTarget.result.split("base64,")[1];
-                    console.log(data)
                     updateHeadUrl({
                         imgStr:data,
                         id:this.info.id
@@ -124,7 +129,7 @@
                         return false;
                     }
                 });
-            }
+            },
         }
     }
 </script>

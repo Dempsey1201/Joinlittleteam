@@ -1,6 +1,6 @@
 <template>
     <div id="searchExam">
-        <div v-if="!pid" class="list">
+        <div v-if="!paper&&!questionList.length" class="list">
             <el-col :span="8" style="position: relative">
                 <el-input
                         placeholder="搜索试卷"
@@ -51,20 +51,23 @@
                 </el-table-column>
             </el-table>
         </div>
-        <d_reuse v-if="pid" :pid1="pid"></d_reuse>
+        <d_reuse v-if="paper" @back="back" :paper="paper"></d_reuse>
+        <exam v-if="questionList.length" :questionList="questionList" @back="back"></exam>
     </div>
 </template>
 
 <script>
-    import {getPublicPaper,searchPublicPaper} from "../../api/publishExam";
+    import {getPublicPaper,searchPublicPaper,getPaperInfo} from "../../api/publishExam";
     import d_reuse from "./d_reuse";
+    import exam from "../exam";
     export default {
 		name: "searchExam",
         data(){
 		    return{
                 paperList:[],
                 search:"",
-                pid:null
+                paper:null,
+                questionList:[]
             }
         },
         created() {
@@ -85,12 +88,28 @@
                 })
             },
             handlePublish(index,row){
-                // console.log(row)
-                this.pid = row.pid;
+                this.paper = row;
+            },
+            handleCheck(index,row){
+                getPaperInfo({
+                    pid:row.pid
+                }).then(res=>{
+                    this.questionList = res.data;
+                    if(!res.data){
+                        this.$message.error('当前没有内容');
+                    }
+                }).catch(err=>{
+                    throw err;
+                })
+            },
+            back(){
+                this.paper = null;
+                this.questionList = [];
             }
         },
         components:{
-            d_reuse
+            d_reuse,
+            exam
         }
     }
 </script>

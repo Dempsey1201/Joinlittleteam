@@ -32,3 +32,16 @@ export const questionToPaper  = (info)=>{
         params: info
     })
 }
+// 复用试卷
+export const reusePaper  = (info)=>{
+    return axios.get("/paper/reusePaper",{
+        params: info
+    })
+}
+
+// 获取试卷全部信息
+export const getPaperInfo  = (info)=>{
+    return axios.get("/paper/getPaperQuestion",{
+        params: info
+    })
+}
