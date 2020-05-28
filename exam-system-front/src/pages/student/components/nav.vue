@@ -10,11 +10,14 @@
         <div class="right">
           <el-dropdown trigger="click">
             <span class="el-dropdown-link">
-                下拉菜单
+                <span style="margin-right:5px">{{student.username}}</span>
+                <img :src="url+student.headUrl" alt="" width="50px" height="50px" style="border-radius:100%;vertical-align:middle"/>
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item icon="el-icon-s-home"><router-link tag="span" to="/student.html/personal">个人中心</router-link></el-dropdown-item>
-              <el-dropdown-item icon="el-icon-switch-button">登出</el-dropdown-item>
+              <el-dropdown-item icon="el-icon-switch-button">
+                <a href="http://localhost:8080/student.html">登出</a>
+              </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -24,8 +27,20 @@
 </template>
 
 <script>
+import axios from "axios"
 export default {
-  name: "navBar"
+  name: "navBar",
+  data() {
+    return {
+      url: axios.defaults.baseURL,
+    }
+  },
+  props:{
+    student:Object
+  },
+  created() {
+    console.log(this.student)
+  },
 };
 </script>
 

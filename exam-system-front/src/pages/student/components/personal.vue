@@ -6,7 +6,7 @@
         <Slidebar></Slidebar>
       </el-aside>
       <el-main>
-        <Main></Main>
+        <Main @fromChild="getImg"></Main>
       </el-main>
     </el-container>
   </div>
@@ -25,6 +25,7 @@ export default {
   },
   data() {
     return {
+      imgUrl:'',
       ball_color: {
         //小球颜色
         r: 64,
@@ -37,7 +38,15 @@ export default {
     };
   },
   computed: {},
-  created() {}
+  created() {
+
+  },
+  methods: {
+    getImg(value){
+      this.imgUrl=value;
+      consloe.log('imgUrl----------------'+this.imgUrl)
+    }
+  },
 };
 </script>
 

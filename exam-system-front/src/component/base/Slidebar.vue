@@ -23,12 +23,13 @@
 export default {
   data() {
     return {
-      routers: this.$root._router.options.routes[3].children,
+      routers: this.$root._router.options.routes[2].children[1].children,
     };
   },
   methods: {},
   created() {
-    // console.log(this.routers);
+    console.log(this.$root._router.options.routes[2].children[1].children);
+    this.$root._router.options.routes[2].children[1].children.pop();
   },
   computed: {
     slidechange() {

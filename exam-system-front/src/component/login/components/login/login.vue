@@ -38,7 +38,8 @@
         data(){
 	        let validatePass = (rule, value, callback) => {
 		        let reg1 = /[0-9]+/ //数字字母下划线
-		        let reg2 = /[,\.?~`!@#$%^&*(){}\[\]\-+/|\\]+///特殊字符
+                let reg2 = /[,\.?~`!@#$%^&*(){}\[\]\-+/|\\]+/
+                //特殊字符
 		        let reg3 = /[A-z]+/
                 let reg4 = /.{6,16}/
 		        let bool = reg4.test(this.form.password)&&reg1.test(this.form.password)&&reg2.test(this.form.password)&&reg3.test(this.form.password);
@@ -69,7 +70,7 @@
 		                    message: '请输入密码',
 		                    trigger: 'blur'
 	                    },
-                        { validator:validatePass,trigger: 'blur'}
+                        // { validator:validatePass,trigger: 'blur'}
                     ],
                     card:[
                         {
@@ -111,7 +112,7 @@
 			        //进行下一步，向后端发送请求
                     if(this.form.radio=='1'){
                         studentLogin({
-                            email:"test",
+                            email:"aaa",
                             password:"test"
                         }).then(res=>{
                             sessionStorage.setItem("userInfo",JSON.stringify(res.data))

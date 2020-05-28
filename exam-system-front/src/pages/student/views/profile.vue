@@ -19,7 +19,7 @@
           <label>{{student.college}}</label>
         </el-form-item>
         <el-form-item label="头像">
-          <img :src="student.headUrl" alt />
+          <img :src="url+imgUrl" alt width="80px" height="80px"/>
           <el-button
             type="primary"
             @click="upload"
@@ -105,15 +105,15 @@
 
 <script>
 import axios from "axios";
+import qs from "qs";
 export default {
   name: "prifole",
   data() {
     return {
-      userInfo:{},
+      url: axios.defaults.baseURL,
+      imgUrl:"",
+      student: JSON.parse(sessionStorage.getItem("userInfo")),
       //从后端请求的学生信息
-      student: {
-       
-      },
       nickname: "",
       isShow: true,
       isShow2: true,
@@ -133,18 +133,21 @@ export default {
     };
   },
   created() {
-    // this.data.userInfo=this.$store.state.userInfo;
-    // console.log(this.data.userInfo)
-    //获取用户的id，通过id获取用户的信息
-    //  axios.post("http://47.94.210.131:8080/user/queryUser").then(function(res) {
-    //     res = res.data;
-    //     console.log(res);
-    //     this.data.student=res
-    //   });
+    console.log(this.student);
+    axios
+      .get(this.url + "/user/queryUser", {
+        params: {
+          id: this.student.id
+        }
+      })
+      .then(res => {
+        console.log(res);
+        this.student = res.data;
+        this.imgUrl = res.data.headUrl;
+      });
+    console.log(this.student + this.url);
   },
-  computed: {
-    
-  },
+  computed: {},
   methods: {
     //点击上传
     upload() {
@@ -156,14 +159,26 @@ export default {
       this.isShow = !this.isShow;
     },
     changeNick() {
+      console.log("click");
       this.isShow = !this.isShow;
       //像后端传送数据
-      axios.post("http://47.94.210.131:8080/user/list").then(function(res) {
-        res = res.data;
-      });
+      axios
+        .get(this.url + "/user/updateUser", {
+          params: {
+            id: this.student.id,
+            email: this.student.email,
+            username: this.nickname
+          }
+        })
+        .then(res => {
+          console.log(res);
+          this.student.username = this.nickname;
+          this.nickname = "";
+        });
     },
     //修改邮箱
     change2() {
+      var that = this;
       this.$prompt("请输入邮箱", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -176,6 +191,18 @@ export default {
             message: "你的邮箱是: " + value
             //像后端传输邮箱
           });
+          axios
+            .get(this.url + "/user/updateUser", {
+              params: {
+                id: that.student.id,
+                email: value,
+                username: that.student.username
+              }
+            })
+            .then(res => {
+              console.log(res);
+              that.student.email = value;
+            });
         })
         .catch(() => {
           this.$message({
@@ -202,6 +229,16 @@ export default {
         });
         this.dialogVisible = false;
         //像后端传送数据
+        axios
+          .get(this.url + "/user/updatePassword", {
+            params: {
+              id: this.student.id,
+              password: this.ruleForm.pass
+            }
+          })
+          .then(res => {
+            console.log(res);
+          });
       }
       this.ruleForm.pass = "";
       this.ruleForm.checkPass = "";
@@ -215,10 +252,21 @@ export default {
         });
       } else {
         //像后端传送数据
-        this.acceptNum = "";
-        this.$message({
-          message: "传送成功",
-          type: "success"
+        console.log(this.acceptNum);
+        axios
+        .get(this.url + "/class/joinClassRoom", {
+          params: {
+            id: this.student.id,
+            classno: this.acceptNum
+          }
+        })
+        .then(res => {
+          console.log(res);
+          this.acceptNum = "";
+          this.$message({
+            message: "传送成功",
+            type: "success"
+          });
         });
       }
     },
@@ -242,40 +290,37 @@ export default {
       return isSize;
     },
     httpRequest(params) {
+      var that = this;
       let fd = new FormData();
       console.log(params);
-      fd.append("picture", params.file);
-      // fd.append("url", this.input1);
-      fd.forEach((value, key) => {
-        console.log(key, typeof value, value);
-      });
-      console.log(fd);
-      let config = {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      };
-      axios
-        .post("后端地址", fd, config)
-        .then(res => {
-          if (res.data == true) {
-            this.$message({
-              type: "success",
-              message: "添加成功"
+      var file = params.file;
+      //声明js的文件流
+      var reader = new FileReader();
+      if (file) {
+        //通过文件流将文件转换成Base64字符串
+        reader.readAsDataURL(file);
+        //转换成功后
+        reader.onloadend = function() {
+          //将转换结果赋值给img标签
+          that.student.headUrl = reader.result;
+          var base64=reader.result.split(',')[1];
+          console.log(base64);
+          //像后端传送base64格式的图片
+          var img={id: that.student.id,imgStr: base64}
+          axios
+            .post(that.url + "/user/uploadHead", qs.stringify(img),{headers:{'Content-Type':'application/x-www-form-urlencoded'}})
+            .then(res => {
+              console.log(res);
+              that.imgUrl=res.data;
+              console.log(that.imgUrl);
+              //清除缓存
+              that.$refs.upload.clearFiles();
+              that.$emit('imgUrl', that.imgUrl);
             });
-            this.$refs.upload.clearFiles();
-            this.$refs.uploadForm.resetFields();
-          } else {
-            console.log(res);
-            this.$message({
-              type: "error",
-              message: res.data
-            });
-          }
-        })
-        .catch(res => {
-          console.log(res);
-        });
+          //输出结果
+          console.log(reader.result);
+        };
+      }
       return true;
     },
     //点击修改上传图片

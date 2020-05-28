@@ -1,13 +1,13 @@
 <template>
   <div class="main">
     <!-- <div class="main-box"> -->
-    <router-view class="main-content"></router-view>
+    <router-view class="main-content" @fromChild="getImg"></router-view>
     <!-- </div> -->
   </div>
 </template>
 <style lang="less">
 .main {
-  padding: 2px !important;
+  padding: 10px !important;
   .main-content {
     box-sizing: border-box;
     min-height: 100%;
@@ -17,5 +17,20 @@
 }
 </style>
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      imgUrl:''
+    }
+  },
+  created() {
+    console.log(this.imgUrl);
+  },
+  methods: {
+    getImg(value){
+      this.imgUrl=value;
+      consloe.log('imgUrl----------------'+this.imgUrl)
+    }
+  },
+};
 </script>

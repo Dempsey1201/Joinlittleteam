@@ -1,0 +1,76 @@
+<template>
+  <div class="paper" style="padding:10px;">
+    <div class="showPaper">
+      <el-button style="display: block;margin-left:10px;margin-top:4px" type="primary" size="mini" @click="prevStep">上一步</el-button>
+      <el-table :data="paperList" style="width: 100%">
+        <el-table-column type="index" min-width="50"></el-table-column>
+        <el-table-column prop="pname" class="name" label="试卷名称" min-width="180"></el-table-column>
+        <el-table-column prop="teacher" label="老师" min-width="180"></el-table-column>
+        <el-table-column prop="end_time" label="结束时间" min-width="180"></el-table-column>
+        <el-table-column align="center" min-width="210">
+          <template slot="header" slot-scope="scope">
+            <el-button style="float: right;display: inline-block" size="mini">Search</el-button>
+            <el-input
+              style="float: right;width: 143px"
+              v-model="search"
+              size="mini"
+              placeholder="搜索"
+            />
+          </template>
+          <template slot-scope="scope">
+            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看</el-button>
+            <!-- <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button> -->
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+export default {
+  name: "showPaper",
+  data() {
+    return {
+      url: axios.defaults.baseURL,
+      student: JSON.parse(sessionStorage.getItem("userInfo")),
+      paperList: [],
+      search: ""
+    };
+  },
+  created() {
+      //获取试卷信息
+    axios
+      .get(this.url + "/paper/getPaperByClass", {
+        params: {
+          classno: this.$route.params.row.id
+        }
+      })
+      .then(res => {
+        console.log(res);
+        this.paperList = res.data;
+      });
+  },
+  methods: {
+    prevStep() {
+      this.$router.go(-1);
+    },
+    handleEdit(index, row) {
+      this.$router.push({
+        name: "showStudent",
+        params: {
+          row: row
+        }
+      });
+    },
+    handleDelete(index, row) {}
+  }
+};
+</script>
+
+<style scoped>
+.paper {
+  color: red;
+}
+</style>
