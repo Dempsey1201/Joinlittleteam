@@ -31,6 +31,7 @@ public class Question1 {
 
     Integer qscore;
 
+
     public Integer getQscore() {
         return qscore;
     }

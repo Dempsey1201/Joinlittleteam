@@ -35,6 +35,14 @@ public class Paper {
 
     Integer full_score;
 
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
     String subject;
 
     public Paper(){

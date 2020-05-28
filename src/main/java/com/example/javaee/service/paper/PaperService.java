@@ -2,9 +2,11 @@ package com.example.javaee.service.paper;
 
 import com.example.javaee.entity.paper.Paper;
 import com.example.javaee.entity.question.Question1;
+import com.example.javaee.entity.utilClass.StorePaper;
 import com.example.javaee.entity.utilClass.UtilClass;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -24,7 +26,7 @@ public interface PaperService {
     List<Paper> getPaperByClass(Integer classno);
     boolean insertAnswer(Integer sid,Integer qid,String answer);
     boolean correctByTeacher(Integer pid,Integer qid,Integer sid,Integer getscore);
-    boolean storeAnswer(Integer pid,List<Integer>qid,Integer sid,List<String>answer);
+    boolean storeAnswer(StorePaper[] storePaper);
     List<Paper> getAll();
     Integer insertNewPaper(Paper paper);
     boolean deletePaper(Integer pid);

@@ -4,6 +4,7 @@ import com.example.javaee.entity.classroom.Classroom;
 import com.example.javaee.entity.paper.Paper;
 import com.example.javaee.entity.question.Question1;
 import com.example.javaee.entity.user.User;
+import com.example.javaee.entity.utilClass.StorePaper;
 import com.example.javaee.entity.utilClass.UtilClass;
 import com.example.javaee.mapper.answer.AnswerMapper;
 import com.example.javaee.mapper.paper.PaperMapper;
@@ -15,8 +16,12 @@ import com.example.javaee.service.user.UserService;
 //import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -67,6 +72,10 @@ public class PaperServiceImpl implements PaperService {
             }catch (Exception f){
                 f.printStackTrace();
             }
+        }
+        for(int j =0;j<papers.size();j++){
+            long time = papers.get(j).getEnd_time().getTime();
+            papers.get(j).setSubject(String.valueOf(time - System.currentTimeMillis()));
         }
         return papers;
     }
@@ -132,12 +141,14 @@ public class PaperServiceImpl implements PaperService {
     }
 
     @Override
-    public boolean storeAnswer(Integer pid,List<Integer>qid,Integer sid,List<String> answer){
+    public boolean storeAnswer(StorePaper[] storePaper){
+        Integer pid = storePaper[0].getPid();
+        Integer sid = storePaper[0].getSid();
         int i;
         Integer all = 0;
-        for(i = 0;i < qid.size();i++){
-            Integer integer = qid.get(i);
-            String string = answer.get(i);
+        for(i = 0;i < storePaper.length;i++){
+            Integer integer = storePaper[i].getQid();
+            String string = storePaper[i].getAnswer();
             answerMapper.insertAnswer(sid,integer,string);
             if(questionMapper.getAnswer(integer).equals(string) ){
                 Integer integer1 = scoreMapper.getQscore(integer,pid);
@@ -147,11 +158,29 @@ public class PaperServiceImpl implements PaperService {
                 answerMapper.correctByTeacher(integer,sid,0);
             }
         }
-        if(i == qid.size()){
+        if(i == storePaper.length){
             scoreMapper.insertUserScore(pid,sid,all);
             return true;
         }else {
             return false;
+        }
+    }
+
+    private static void method1(Date date) {
+        // 获取系统年月日
+        SimpleDateFormat myFmt = new SimpleDateFormat("yyyy-MM-dd ");
+        Date now = new Date();
+        String time = myFmt.format(now);
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            date = sdf.parse(time);
+            // 获取指定时间的毫秒值
+            long longDate = date.getTime();
+            System.out.println("系统时间：" + System.currentTimeMillis());
+            System.out.println("指定时间：" + longDate);
+            System.out.println("差值：" + (longDate - System.currentTimeMillis()));
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 

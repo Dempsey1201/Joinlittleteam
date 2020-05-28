@@ -6,12 +6,11 @@ import com.example.javaee.utils.resultHander.CommonErrorEnum;
 import com.example.javaee.utils.resultHander.ResponseBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,6 +31,20 @@ public class QuestionController {
     public Object getAll() throws Exception {
 
         return questionService.getAll();
+    }
+
+    @ResponseBody
+    @RequestMapping("/insertQuestion")
+    public List<Integer> insertQuestion(@RequestBody Question1[] question1s){
+        List<Integer> list = new ArrayList<>();
+        for(int i = 0;i < question1s.length;i++) {
+            try {
+                list.add(questionService.insertNewQuestion(question1s[i]));
+            }catch (Exception e){
+                list.add(-1);
+            }
+        }
+        return list;
     }
 
     @ResponseBody

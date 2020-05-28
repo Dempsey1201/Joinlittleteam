@@ -2,6 +2,8 @@ package com.example.javaee.controller.paper;
 
 import com.example.javaee.entity.paper.Paper;
 import com.example.javaee.entity.question.Question1;
+import com.example.javaee.entity.utilClass.PaperToQuestion;
+import com.example.javaee.entity.utilClass.StorePaper;
 import com.example.javaee.entity.utilClass.UtilClass;
 import com.example.javaee.service.paper.PaperService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -80,8 +84,8 @@ public class PaperController {
 
     @ResponseBody
     @RequestMapping("/storeAnswerAndJudge")
-    boolean storeAnswerAndJudge(Integer pid, @RequestParam(value = "", required = true) List<Integer> qid, Integer sid, @RequestParam(value = "", required = true) List<String> answer) {
-        return paperService.storeAnswer(pid, qid, sid, answer) && paperService.isDone(sid, pid);
+    boolean storeAnswerAndJudge(@RequestBody StorePaper[] storePaper) {
+        return paperService.storeAnswer(storePaper) && paperService.isDone(storePaper[0].getSid(), storePaper[0].getPid());
     }
 
     @ResponseBody
@@ -131,7 +135,20 @@ public class PaperController {
 
     @ResponseBody
     @RequestMapping("/insertQuestionToPaper")
-    public boolean insertQuestionToPaper(List<Integer> pid,List<Integer> no,List<Integer> qid,List<Integer> qscore){
+    public boolean insertQuestionToPaper(@RequestBody PaperToQuestion[] paperToQuestions){
+        List<Integer> pid = new ArrayList<>();
+        List<Integer> no = new ArrayList<>();
+        List<Integer> qid = new ArrayList<>();
+        List<Integer> qscore = new ArrayList<>();
+        for(int i = 0;i < paperToQuestions.length;i++){
+            pid.add(paperToQuestions[i].getPid());
+            no.add(paperToQuestions[i].getNo());
+            qscore.add(paperToQuestions[i].getQscore());
+            qid.add(paperToQuestions[i].getQid());
+            System.out.println(qscore);
+            System.out.println("-----------------");
+            System.out.println(qid);
+        }
         return paperService.insertQuestionToPaper(pid,no,qid,qscore);
     }
 

@@ -71,6 +71,6 @@
     <select id="selectMainKeyInQuestion" resultType="Integer">
         select auto_increment
         from information_schema.`TABLES`
-        where table_name='t_paper'
+        where table_name='t_question'
     </select>
 </mapper>
