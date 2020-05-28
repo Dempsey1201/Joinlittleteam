@@ -154,7 +154,7 @@
                         let question = [];
                         for (let i = 0; i < num; i++) {
                             let data = {
-                                type: '1',
+                                type: 1,
                                 question: "",// 题目问题
                                 oa: "",// 选项A
                                 ob: "",// 选项B
@@ -172,16 +172,16 @@
                                     + this.form.feedFull;
                             let n = 0
                             if (0<=i&&i < a) {
-                                data.type = '1';
+                                data.type = 1;
                             } else if (a<=i&&i < b) {
-                                data.type = '2';
+                                data.type = 2;
                                 data.answer = [];
                             } else if (b<=i&&i < c) {
-                                data.type = '3';
+                                data.type = 3;
                             } else if (c<=i&&i < d) {
-                                data.type = '5';
+                                data.type = 5;
                             } else {
-                                data.type = '4';
+                                data.type = 4;
                             }
                             question.push(data);
                             this.form.questionList = question;

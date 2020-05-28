@@ -2,7 +2,7 @@
     <div class="checkClass">
         <el-button style="display: block" type="primary" size="mini" @click="back">返回</el-button>
         <el-table
-                :data="stuList"
+                :data="currentList"
                 style="width: 100%">
             <el-table-column
                     type="index"
@@ -49,12 +49,13 @@
                 </template>
             </el-table-column>
         </el-table>
+        <pageTool :step="step" :list="stuList" @check="changeList"></pageTool>
     </div>
 </template>
 
 <script>
     import {getStudent} from "../../api/yourClass";
-
+    import pageTool from "../pageTool";
     export default {
         name: "checkClass",
         props:{
@@ -66,15 +67,20 @@
         data(){
             return{
                 stuList:[],
-                url:"http://47.94.210.131:8080/"
+                url:"http://47.94.210.131:8080/",
+                currentList:[],
+                step:2
             }
         },
+        components:{
+            pageTool
+        },
         created() {
-            console.log(this.currentClass)
             getStudent({
                 id:this.currentClass.id
             }).then(res=>{
                 this.stuList = res.data;
+                this.currentList = this.stuList.slice(0,this.step);
             }).catch(err=>{
                 throw err;
             })
@@ -82,6 +88,9 @@
         methods:{
             back(){
                 this.$emit("back");
+            },
+            changeList(list){
+                this.currentList = list;
             }
         }
     }

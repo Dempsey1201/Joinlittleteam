@@ -1,7 +1,7 @@
 <template>
     <div class="showClass">
         <el-table
-                :data="classList"
+                :data="currentList"
                 style="width: 100%">
             <el-table-column
                     type="index"
@@ -36,25 +36,32 @@
                 </template>
             </el-table-column>
         </el-table>
+        <pageTool :step="step" :list="classList" @check="changeList"></pageTool>
     </div>
 </template>
 
 <script>
     import {allClass} from "../../api/yourClass";
-
+    import pageTool from "../pageTool";
     export default {
         name: "showClass",
         data(){
             return{
                 classList:[],
-                search:""
+                search:"",
+                currentList:[],
+                step:6
             }
+        },
+        components:{
+            pageTool
         },
         created() {
             allClass({
                 id:JSON.parse(sessionStorage.getItem("userInfo")).id
             }).then(res=>{
                 this.classList = res.data
+                this.currentList = this.classList.slice(0,this.step);
             }).catch(err=>{
                 throw err;
             })
@@ -70,6 +77,9 @@
                         row: row
                     }
                 })
+            },
+            changeList(list){
+                this.currentList = list;
             }
         },
 

@@ -3,9 +3,9 @@
         <el-button style="display: block;margin-bottom: 10px" type="primary" size="mini" @click="prevStep">返回</el-button>
         <div class="formList">
             <el-row class="choiceOne">
-                <p class="title" v-show="questionList.filter(item=>item.type==='1').length">单选题</p>
+                <p class="title" v-show="questionList.filter(item=>item.type===1).length">单选题</p>
                 <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type==='1')" :key="index"
+                        v-for="(item,index) in questionList.filter(it=>it.type===1)" :key="index"
                         :ref="'choiceOne'+index"
                         :model="item"
                         label-width="80px"
@@ -23,9 +23,9 @@
                 </el-form>
             </el-row>
             <el-row class="choiceMany">
-                <p  class="title" v-show="questionList.filter(item=>item.type==='2').length">多选题</p>
+                <p  class="title" v-show="questionList.filter(item=>item.type===2).length">多选题</p>
                 <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type==='2')" :key="index"
+                        v-for="(item,index) in questionList.filter(it=>it.type===2)" :key="index"
                         :ref="'choiceMany'+index"
                         :model="item"
                         label-width="80px"
@@ -33,7 +33,7 @@
                 >
                     <p class="question">{{index+1}}、{{item.question}}</p>
                     <el-form-item>
-                        <el-checkbox-group v-model="item.answer">
+                        <el-checkbox-group v-model="item.answer.split('')">
                             <el-checkbox :label="'A'">A:{{item.oa}}</el-checkbox>
                             <el-checkbox :label="'B'">B:{{item.ob}}</el-checkbox>
                             <el-checkbox :label="'C'">C:{{item.oc}}</el-checkbox>
@@ -43,9 +43,9 @@
                 </el-form>
             </el-row>
             <el-row class="judgeTest">
-                <p class="title" v-show="questionList.filter(item=>item.type==='3').length">判断题</p>
+                <p class="title" v-show="questionList.filter(item=>item.type===3).length">判断题</p>
                 <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type==='3')" :key="index"
+                        v-for="(item,index) in questionList.filter(it=>it.type===3)" :key="index"
                         :ref="'judgeTest'+index"
                         :model="item"
                         label-width="80px"
@@ -61,9 +61,9 @@
                 </el-form>
             </el-row>
             <el-row class="feedFull">
-                <p class="title" v-show="questionList.filter(item=>item.type==='5').length">填空题</p>
+                <p class="title" v-show="questionList.filter(item=>item.type===5).length">填空题</p>
                 <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type==='5')" :key="index"
+                        v-for="(item,index) in questionList.filter(it=>it.type===5)" :key="index"
                         :ref="'feedFull'+index"
                         :model="item"
                         label-width="80px"
@@ -79,14 +79,13 @@
                 </el-form>
             </el-row>
             <el-row class="shortAnswer">
-                <p class="title" v-show="questionList.filter(item=>item.type==='4').length">简答题</p>
+                <p class="title" v-show="questionList.filter(item=>item.type===4).length">简答题</p>
                 <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type==='4')" :key="index"
+                        v-for="(item,index) in questionList.filter(it=>it.type===4)" :key="index"
                         :ref="'shortAnswer'+index"
                         :model="item"
                         label-width="80px"
                         :label-position="labelPosition"
-                        :rules="rules"
                         size="mini"
                 >
                     <p class="question">{{index+1}}、{{item.question}}</p>
@@ -111,7 +110,7 @@
         name: "exam",
         data(){
             return{
-                labelPosition:"left"
+                labelPosition:"left",
             }
         },
         props:{
@@ -121,6 +120,11 @@
             }
         },
         created() {
+            this.questionList.forEach(item=>{
+                if(item.type==='2'){
+                    item.answer = item.answer.join('')
+                }
+            })
         },
         methods:{
             prevStep(){

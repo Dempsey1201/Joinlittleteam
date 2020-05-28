@@ -100,31 +100,31 @@
                         this.questionList.forEach((item,index)=>{
                             let data = {};
                             switch (item.type) {
-                                case '1':
+                                case 1:
                                     data.pid = res.data
                                     data.no = index
                                     data.qid = qid[index]
                                     data.qscore = 2
                                     break;
-                                case '2':
+                                case 2:
                                     data.pid = res.data
                                     data.no = index
                                     data.qid = qid[index]
                                     data.qscore = 3
                                     break;
-                                case '3':
+                                case 3:
                                     data.pid = res.data
                                     data.no = index
                                     data.qid = qid[index]
                                     data.qscore = 2
                                     break;
-                                case '4':
+                                case 4:
                                     data.pid = res.data
                                     data.no = index
                                     data.qid = qid[index]
                                     data.qscore = 5
                                     break;
-                                case '5':
+                                case 5:
                                     data.pid = res.data
                                     data.no = index
                                     data.qid = qid[index]
