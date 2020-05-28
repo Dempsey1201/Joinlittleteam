@@ -17,9 +17,7 @@ export const searchPublicPaper  = (info)=>{
 
 // 添加试题
 export const addQuestion  = (info)=>{
-    return axios.get("/question/insertNewQuestion",{
-        params: info
-    })
+    return axios.post("/question/insertQuestion",info)
 }
 // 新建试卷
 export const newPaper  = (info)=>{
@@ -29,7 +27,7 @@ export const newPaper  = (info)=>{
 }
 // 建立试卷和试题的映射
 export const questionToPaper  = (info)=>{
-    return axios.post("/paper/insertQuestionToPaper",Qs.stringify(info))
+    return axios.post("/paper/insertQuestionToPaper",info)
 }
 // 复用试卷
 export const reusePaper  = (info)=>{

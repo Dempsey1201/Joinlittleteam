@@ -147,7 +147,8 @@
                             share:this.form.share,
                             end_time: JSON.stringify(this.form.end_time).split('"')[1].match(reg)[0].split("T").join(" "),//截至时间
                             last_time:this.form.check=="无限制"?0:this.form.last_time,// 考试时间/分钟
-                            full_score:this.paper.full_score
+                            full_score:this.paper.full_score,
+                            teacher:JSON.parse(sessionStorage.getItem("userInfo")).teachername
                         }
                         newPaper(data).then(res=>{
                             reusePaper({

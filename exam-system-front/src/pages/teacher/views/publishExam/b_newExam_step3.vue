@@ -4,7 +4,7 @@
         <div class="formList">
             <el-row class="choiceOne">
                 <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type===1)" :key="index"
+                        v-for="(item,index) in questionList.filter(it=>it.type==='1')" :key="index"
                         :ref="'choiceOne'+index"
                         :model="item"
                         label-width="80px"
@@ -66,7 +66,7 @@
             </el-row>
             <el-row class="choiceMany">
                 <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type===2)" :key="index"
+                        v-for="(item,index) in questionList.filter(it=>it.type==='2')" :key="index"
                         :ref="'choiceMany'+index"
                         :model="item"
                         label-width="80px"
@@ -128,7 +128,7 @@
             </el-row>
             <el-row class="judgeTest">
                 <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type===3)" :key="index"
+                        v-for="(item,index) in questionList.filter(it=>it.type==='3')" :key="index"
                         :ref="'judgeTest'+index"
                         :model="item"
                         label-width="80px"
@@ -160,7 +160,7 @@
             </el-row>
             <el-row class="feedFull">
                 <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type===5)" :key="index"
+                        v-for="(item,index) in questionList.filter(it=>it.type==='5')" :key="index"
                         :ref="'feedFull'+index"
                         :model="item"
                         label-width="80px"
@@ -192,7 +192,7 @@
             </el-row>
             <el-row class="shortAnswer">
                 <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type===4)" :key="index"
+                        v-for="(item,index) in questionList.filter(it=>it.type==='4')" :key="index"
                         :ref="'shortAnswer'+index"
                         :model="item"
                         label-width="80px"

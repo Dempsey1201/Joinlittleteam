@@ -64,7 +64,7 @@
 					pname: "",//试卷名称
 					start_time: "",//开始日期时间
                     classno:"",
-                    share:0,
+                    share:1,
 				},
                 classInfo:[],
 				labelPosition: "left",

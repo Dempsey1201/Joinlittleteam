@@ -53,28 +53,33 @@
 			    // 创建试卷
                 let reg = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/g;
                 let score = 0;
-                let pid = [],no = [],qid=[],qscore=[];
+                let list = this.questionList.map(item=>({
+                    question: item.question,
+                    oa: item.oa,
+                    ob: item.ob,
+                    oc: item.oc,
+                    od: item.od,
+                    subject: item.subject,
+                    qtype: item.type,
+                    author: item.author,
+                    answer:item.type==='2'?item.answer.join(""):item.answer
+                }))
+                let list2 = [];
                 this.questionList.forEach((item,index)=>{
-                    no.push(index);
                     switch (item.type) {
-                        case 1:
-                            qscore.push(3);
+                        case '1':
                             score+=3;
                             break;
-                        case 2:
-                            qscore.push(3)
+                        case '2':
                             score+=3;
                             break;
-                        case 3:
-                            qscore.push(2)
+                        case '3':
                             score+=2;
                             break;
-                        case 4:
-                            qscore.push(5)
+                        case '4':
                             score+=5;
                             break;
-                        case 5:
-                            qscore.push(2)
+                        case '5':
                             score+=2;
                             break;
                     }
@@ -86,56 +91,65 @@
                     share:this.examInfo.share,
                     end_time: JSON.stringify(this.examInfo.end_time).split('"')[1].match(reg)[0].split("T").join(" "),//截至时间
                     last_time:this.examInfo.check=="无限制"?0:this.examInfo.last_time,// 考试时间/分钟
-                    full_score:score
-                }
-                // console.log(data,no)
-
-                this.questionList.forEach((item,index)=>{
-                    addQuestion({
-                        question: item.question,
-                        oa: item.oa,
-                        ob: item.ob,
-                        oc: item.oc,
-                        od: item.od,
-                        subject: item.subject,
-                        qtype: item.type,
-                        author: item.author,
-                        answer:item.answer
-                    }).then(res=>{
-                        // qid.push(res.data.data)
-                        console.log(res.data)
-                        // if(index === this.questionList.length-1){
-                        //     newPaper(data).then(res=>{
-                        //         let paperId = res.data
-                        //         for (let i = 0; i < this.questionList.length; i++) {
-                        //             pid.push(paperId);
-                        //         }
-                        //         console.log(pid,qid,no,qscore)
-                        //         questionToPaper({
-                        //             pid:pid,
-                        //             qid:qid,
-                        //             no:no,
-                        //             qscore:qscore
-                        //         }).then(res=>{
-                        //             console.log("成功！！",res.data)
-                        //         }).catch(err=>{
-                        //             throw err;
-                        //         })
-                        //     }).catch(err=>{
-                        //         throw err;
-                        //     })
-                        //
-                        // }
-                    }).catch(err=>{
-                        throw err;
+                    full_score:score,
+                    teacher:JSON.parse(sessionStorage.getItem("userInfo")).teachername
+                };
+                addQuestion(list).then(res=>{
+                    let qid = res.data
+                    newPaper(data).then(res=>{
+                        this.questionList.forEach((item,index)=>{
+                            let data = {};
+                            switch (item.type) {
+                                case '1':
+                                    data.pid = res.data
+                                    data.no = index
+                                    data.qid = qid[index]
+                                    data.qscore = 2
+                                    break;
+                                case '2':
+                                    data.pid = res.data
+                                    data.no = index
+                                    data.qid = qid[index]
+                                    data.qscore = 3
+                                    break;
+                                case '3':
+                                    data.pid = res.data
+                                    data.no = index
+                                    data.qid = qid[index]
+                                    data.qscore = 2
+                                    break;
+                                case '4':
+                                    data.pid = res.data
+                                    data.no = index
+                                    data.qid = qid[index]
+                                    data.qscore = 5
+                                    break;
+                                case '5':
+                                    data.pid = res.data
+                                    data.no = index
+                                    data.qid = qid[index]
+                                    data.qscore = 2
+                                    break;
+                            }
+                            list2.push(data)
+                        })
+                        questionToPaper(list2).then(res=>{
+                            if(res.data){
+                                this.$message({
+                                    message: '新建试卷成功',
+                                    type: 'success'
+                                });
+                                sessionStorage.removeItem("newExamInfo")
+                                this.setStep(1);// 返回到第一步
+                            }
+                        }).catch(err=>{
+                            throw err;
+                        })
                     })
+                }).catch(err=>{
+                    throw err;
                 })
 
-		        this.$message({
-			        message: '新建试卷成功',
-			        type: 'success'
-		        });
-		        //this.setStep(1);// 返回到第一步
             },
 	        prevStep(){// 点击上一步
 		        this.setStep(3);
