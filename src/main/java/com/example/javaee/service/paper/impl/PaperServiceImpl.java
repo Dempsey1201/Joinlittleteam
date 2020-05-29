@@ -150,8 +150,10 @@ public class PaperServiceImpl implements PaperService {
             Integer integer = storePaper[i].getQid();
             String string = storePaper[i].getAnswer();
             answerMapper.insertAnswer(sid,integer,string);
-            if(questionMapper.getAnswer(integer).equals(string) ){
+            String ans = questionMapper.getAnswer(integer);
+            if(ans != null && ans.equals(string) ){
                 Integer integer1 = scoreMapper.getQscore(integer,pid);
+                System.out.println(integer1);
                 all += integer1;
                 answerMapper.correctByTeacher(integer,sid,integer1);
             }else {
