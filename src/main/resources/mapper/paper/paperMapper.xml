@@ -48,7 +48,7 @@
     <select id="getDone" resultType="Integer">
         select done
         from t_done
-        where pid = #{pid},sid = #{sid}
+        where pid = #{pid} and sid = #{sid}
     </select>
 
     <select id="getPaperQuestion" resultType="com.example.javaee.entity.question.Question1">

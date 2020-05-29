@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * author dongml
@@ -166,7 +167,7 @@ public class PaperController {
 
     @ResponseBody
     @RequestMapping("/getPaperByNo")
-    public List<Paper> getPaperByNo(Integer sid){
+    public Map<String,Object> getPaperByNo(Integer sid){
         return paperService.getPaperByNo(sid);
     }
 }

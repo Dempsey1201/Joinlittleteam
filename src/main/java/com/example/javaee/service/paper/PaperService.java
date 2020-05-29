@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * author dongml
@@ -39,5 +40,5 @@ public interface PaperService {
     boolean insertQuestionToPaper(List<Integer> pid,List<Integer> no,List<Integer> qid,List<Integer> qscore);
     boolean reusePaper(Integer pid,Integer pid1);
     List<UtilClass>  getScoreByPaper(Integer pid,Integer claano);
-    List<Paper> getPaperByNo(Integer sid);
+    Map<String,Object> getPaperByNo(Integer sid);
 }

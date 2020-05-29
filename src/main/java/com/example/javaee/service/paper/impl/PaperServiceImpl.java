@@ -20,9 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * author dongml
@@ -50,16 +48,16 @@ public class PaperServiceImpl implements PaperService {
     ClassroomService classroomService;
 
     @Override
-    public List<Paper> getPaperByNo(Integer sid){
+    public Map<String,Object> getPaperByNo(Integer sid){
         List<Classroom> classrooms = new ArrayList<>();
         List<Paper> papers = new ArrayList<>();
         String sid1 = new String();
+        Map<String,Object> map = new HashMap<>();
         try{
             sid1 = userService.queryUser(sid).getClassno();
         }catch (Exception x){
             x.printStackTrace();
         }
-
         try{
             classrooms = classroomService.queryUserClassroom(sid1);
         }catch (Exception e){
@@ -69,15 +67,24 @@ public class PaperServiceImpl implements PaperService {
         for(i =0 ;i<classrooms.size();i++){
             try {
                 papers.addAll(getPaperByClass(classrooms.get(i).getId()));
-            }catch (Exception f){
+            }catch (NullPointerException f){
+                map.put("msg",new String("不存在你所指的班级"));
                 f.printStackTrace();
             }
         }
         for(int j =0;j<papers.size();j++){
             long time = papers.get(j).getEnd_time().getTime();
             papers.get(j).setSubject(String.valueOf(time - System.currentTimeMillis()));
+            Integer x = papers.get(j).getPid();
+            System.out.println(papers.get(j).getPid()+" "+j+" "+sid);
+            try{
+                papers.get(j).setDone(getDone(sid,x));
+            }catch (NullPointerException e){
+                papers.get(j).setDone(false);
+            }
         }
-        return papers;
+        map.put("试卷信息",papers);
+        return map;
     }
 
     @Override
@@ -151,13 +158,19 @@ public class PaperServiceImpl implements PaperService {
             String string = storePaper[i].getAnswer();
             answerMapper.insertAnswer(sid,integer,string);
             String ans = questionMapper.getAnswer(integer);
-            if(ans != null && ans.equals(string) ){
+            if(ans != null && ans.equals(string) && ans.length()!=0 && !ans.equals(" ")){
                 Integer integer1 = scoreMapper.getQscore(integer,pid);
                 System.out.println(integer1);
-                all += integer1;
+                if(integer1 != -1){
+                    all += integer1;
+                }
                 answerMapper.correctByTeacher(integer,sid,integer1);
             }else {
-                answerMapper.correctByTeacher(integer,sid,0);
+                if(ans.equals(" ")||ans.length() == 0){
+                    answerMapper.correctByTeacher(integer,sid,-1);
+                }else {
+                    answerMapper.correctByTeacher(integer,sid,0);
+                }
             }
         }
         if(i == storePaper.length){

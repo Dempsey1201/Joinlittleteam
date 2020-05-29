@@ -22,4 +22,5 @@ public interface AnswerMapper {
     boolean insertAnswer(@Param("sid") Integer sid,@Param("qid") Integer qid,@Param("answer") String answer);
     String getUserAnswer(Integer sid,Integer qid);
     boolean correctByTeacher(Integer qid,Integer sid,Integer getscore);
+    List<Paper> getPaperByClass2(Integer classno);
 }
