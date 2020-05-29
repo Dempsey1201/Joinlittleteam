@@ -1,5 +1,7 @@
 package com.example.javaee.controller.teacher;
 
+import com.example.javaee.controller.classroom.ClassroomController;
+import com.example.javaee.entity.classroom.Classroom;
 import com.example.javaee.entity.teacher.Teacher;
 import com.example.javaee.entity.user.User;
 import com.example.javaee.service.teacher.TeacherService;
@@ -29,24 +31,34 @@ public class TeacherController {
     @Autowired
     TeacherService teacherService;
 
+    @Autowired
+    ClassroomController  classroomController;
+
     @RequestMapping(value = "/list")
     public List<Teacher> list() throws Exception{
         return teacherService.list();
     }
     @RequestMapping(value = "/delete")
     public int delete(int id) throws Exception{
+        List<Classroom> list=classroomController.queryTeaClassRoom(id);
+
+        for(Classroom classroom:list){
+            classroomController.deleteClassroom(classroom.getId());
+        }
         return teacherService.delete(id);
     }
 
     @RequestMapping(value = "/query")
     public List<Teacher> query(String card) throws Exception{
-        List list=new ArrayList();
-        list.add(teacherService.queryTeacher(card));
-        return list;
+        return teacherService.queryTeacher(card);
     }
 
     @RequestMapping(value = "/addTeacher")
     public int addTeacher(Teacher teacher) throws Exception{
+        List<Teacher> list=teacherService.queryTeacher(teacher.getCard());
+        if(list!=null&&list.size()>0){
+            return 0;
+        }
         String str=teacher.getPassword();
         System.out.println("teacher"+sendEmail(teacher.getEmail(),teacher.getCard(),str));
         teacher.setPassword(getMD5String(str));

@@ -76,7 +76,7 @@ public interface TeacherMapper {
      * @return
      * @throws Exception
      */
-    public Teacher queryTeacher(@Param("card")String card)throws Exception;
+    public List<Teacher> queryTeacher(@Param("card")String card)throws Exception;
     /**
      * 查询------------------------有问题
      * @return

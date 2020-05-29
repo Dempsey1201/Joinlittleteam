@@ -31,7 +31,7 @@ public class TeacherTest {
     @Test
     public void testAddTeacher()throws Exception{
         Teacher teacher=new Teacher();
-        teacher.setCard("test");
+        teacher.setCard("2018010900");
         teacher.setTeachername("name");
         teacher.setEmail("1240208775@qq.com");
         teacher.setPassword("000000");
@@ -56,7 +56,7 @@ public class TeacherTest {
     }
     @Test
     public void testDelete()throws Exception{
-        System.out.println(teacherController.delete(2));
+        System.out.println(teacherController.delete(38));
     }
     @Test
     public void testQuery()throws Exception{

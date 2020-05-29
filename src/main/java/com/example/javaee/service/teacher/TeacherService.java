@@ -24,7 +24,7 @@ public interface TeacherService {
 
     public List<Teacher> list()throws Exception;
 
-    public Teacher queryTeacher(String card)throws Exception;
+    public List<Teacher> queryTeacher(String card)throws Exception;
 
     public int delete(int id)throws Exception;
 

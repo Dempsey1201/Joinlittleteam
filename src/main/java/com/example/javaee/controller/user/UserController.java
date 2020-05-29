@@ -1,8 +1,11 @@
 package com.example.javaee.controller.user;
 
+import com.example.javaee.controller.classroom.ClassroomController;
+import com.example.javaee.entity.classroom.Classroom;
 import com.example.javaee.entity.feelback.FeelBack;
 import com.example.javaee.entity.report.Report;
 import com.example.javaee.entity.user.User;
+import com.example.javaee.service.classroom.ClassroomService;
 import com.example.javaee.service.user.UserService;
 import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    ClassroomController classroomController;
 
     @RequestMapping(value = "/login")
     public User login(String email,String password) throws Exception{
@@ -89,6 +95,11 @@ public class UserController {
     }
     @RequestMapping(value = "/delete")
     public int delete(@RequestParam(value = "id", required = false)int id) throws Exception{
+        String[] arr=userService.queryUser(id).getClassno().split(",");
+        for(String x:arr){
+            int n=Integer.parseInt(x);
+            classroomController.outClassRoom(id,n);
+        }
         return userService.delete(id);
     }
     @RequestMapping(value = "/updatePassword")

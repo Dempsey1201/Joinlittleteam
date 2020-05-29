@@ -55,7 +55,7 @@ public class UserTest {
     }
     @Test
     public void testDeleteUser()throws Exception{
-        System.out.println(userController.delete(3));
+        System.out.println(userController.delete(2));
     }
     @Test
     public void testUpdateUser()throws Exception{

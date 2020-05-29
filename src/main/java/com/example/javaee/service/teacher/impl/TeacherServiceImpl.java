@@ -78,7 +78,7 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherMapper.listTeacher();
     }
     @Override
-    public Teacher queryTeacher(String card)throws Exception{
+    public List<Teacher> queryTeacher(String card)throws Exception{
         return teacherMapper.queryTeacher(card);
     }
     @Override

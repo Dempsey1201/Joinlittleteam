@@ -78,19 +78,14 @@ public class ClassroomServiceImpl implements ClassroomService {
         List<String> list= Arrays.asList(arr);
         List<String> arrList = new ArrayList<String>(list);
         arrList.remove(String.valueOf(cid));
-        //String[]cidStr = (String[])arrList.ToArray(typeof(String)) ;
-        //String.Join(",",(String[])list.ToArray(typeof( string)));
-        //String cidStr=String.valueOf(arrList);
         String cidStr=String.join(",", arrList);
 
         Classroom classroom=classroomMapper.queryClassroom(cid);
         String idStr=classroom.getSid();
-        //System.out.println(idStr);
         String[] idS=idStr.split(",");
         List<String> list1=Arrays.asList(idS);
         arrList=new ArrayList<String>(list1);
         arrList.remove(String.valueOf(id));
-        //idStr=String.valueOf(arrList);
         idStr=String.join(",", arrList);
 
         System.out.println(cidStr+idStr);
