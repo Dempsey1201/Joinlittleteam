@@ -147,11 +147,8 @@ public class TeacherController {
             email.setSslSmtpPort("465");
             email.setCharset("UTF-8");
             email.addTo(emailaddress);// 收件地址
-
             email.setFrom("1240208775@qq.com", "成才考试系统");//此处填邮箱地址和用户名,用户名可以任意填写
-
             email.setAuthentication("1240208775@qq.com", "tgkzxmtylhengbdi");//此处填写邮箱地址和客户端授权码
-
             email.setSubject("成才考试系统-教师账户信息");//此处填写邮件名，邮件名可任意填写
             email.setMsg("尊敬的用户您好,您在本系统的教师账户信息如下<br>" + "教师账户工号：" + card + "<br>教师账户初始密码:" + password+"<br>登录后请尽快修改密码");//此处填写邮件内容
 

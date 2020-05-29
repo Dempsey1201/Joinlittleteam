@@ -79,7 +79,15 @@ public class ClassroomController {
     @RequestMapping(value = "/queryUserClassroom")
     public List<Classroom> queryUserClassRoom(int id) throws Exception{
         User user=userService.queryUser(id);
-        return classroomService.queryUserClassroom(user.getClassno());
+        if (user==null){
+            return null;
+        }
+        List<Classroom> list=classroomService.queryUserClassroom(user.getClassno());
+        if (list.size()==0){
+            return null;
+        }
+        else {return classroomService.queryUserClassroom(user.getClassno());}
+
     }
     @RequestMapping(value = "/queryTeaClassroom")
     public List<Classroom> queryTeaClassRoom(int id) throws Exception{
