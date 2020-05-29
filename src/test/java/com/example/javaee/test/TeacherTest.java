@@ -60,6 +60,6 @@ public class TeacherTest {
     }
     @Test
     public void testQuery()throws Exception{
-        System.out.println(teacherController.query("201800"));
+        System.out.println(teacherController.query("test1"));
     }
 }

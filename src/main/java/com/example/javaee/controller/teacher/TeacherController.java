@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -38,14 +39,16 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "/query")
-    public Teacher query(String card) throws Exception{
-        return teacherService.queryTeacher(card);
+    public List<Teacher> query(String card) throws Exception{
+        List list=new ArrayList();
+        list.add(teacherService.queryTeacher(card));
+        return list;
     }
 
     @RequestMapping(value = "/addTeacher")
     public int addTeacher(Teacher teacher) throws Exception{
         String str=teacher.getPassword();
-        sendEmail(teacher.getEmail(),teacher.getCard(),str);
+        System.out.println("teacher"+sendEmail(teacher.getEmail(),teacher.getCard(),str));
         teacher.setPassword(getMD5String(str));
         return teacherService.addTeacher(teacher);
     }
@@ -127,7 +130,9 @@ public class TeacherController {
     public static boolean sendEmail(String emailaddress,String card,String password) {
         try {
             HtmlEmail email = new HtmlEmail();//不用更改
-            email.setHostName("smtp.qq.com");//需要修改，126邮箱为smtp.126.com,163邮箱为163.smtp.com，QQ为smtp.qq.com
+            email.setHostName("120.241.25.80");//需要修改，126邮箱为smtp.126.com,163邮箱为163.smtp.com，QQ为smtp.qq.com
+            email.setSSLOnConnect(true);
+            email.setSslSmtpPort("465");
             email.setCharset("UTF-8");
             email.addTo(emailaddress);// 收件地址
 
