@@ -45,7 +45,10 @@ public class UserTest {
     public void testQuery()throws Exception{
         System.out.println(userController.query("test"));
     }
-
+    @Test
+    public void testEmail()throws Exception{
+        System.out.println(userController.email("1240208775@qq.com"));
+    }
     @Test
     public void testQueryClass()throws Exception{
         System.out.println(userController.queryClass(1));

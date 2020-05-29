@@ -4,12 +4,15 @@ import com.example.javaee.entity.feelback.FeelBack;
 import com.example.javaee.entity.report.Report;
 import com.example.javaee.entity.user.User;
 import com.example.javaee.service.user.UserService;
+import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -73,6 +76,15 @@ public class UserController {
         return userService.query(email);
     }
 
+    @RequestMapping(value = "/email")
+    public String email(String email) throws Exception{
+        String code=getRandom();
+        Boolean b=sendEmail(email,code);
+        if(b==true){
+            return code;
+        }
+        else{return "fail!!";}
+    }
     @RequestMapping(value = "/delete")
     public int delete(@RequestParam(value = "id", required = false)int id) throws Exception{
         return userService.delete(id);
@@ -138,6 +150,51 @@ public class UserController {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+    //邮箱验证码
+    public static boolean sendEmail(String emailaddress,String code){
+        try {
+            HtmlEmail email = new HtmlEmail();//不用更改
+            email.setHostName("smtp.qq.com");//需要修改，126邮箱为smtp.126.com,163邮箱为163.smtp.com，QQ为smtp.qq.com
+            email.setCharset("UTF-8");
+            email.addTo(emailaddress);// 收件地址
+
+            email.setFrom("1240208775@qq.com", "成才考试系统");//此处填邮箱地址和用户名,用户名可以任意填写
+
+            email.setAuthentication("1240208775@qq.com", "tgkzxmtylhengbdi");//此处填写邮箱地址和客户端授权码
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            email.setSubject("成才考试系统-用户注册邮箱验证");//此处填写邮件名，邮件名可任意填写
+            email.setMsg("尊敬的用户您好,您于"+sdf.format(new Date())+"在本系统进行注册操作，本次注册的验证码是:" + code+"<br>如非本人操作请勿理睬");//此处填写邮件内容
+
+            email.send();
+            return true;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+    //邮箱验证码
+    public static boolean sendEmail(String emailaddress,String card,String password) {
+        try {
+            HtmlEmail email = new HtmlEmail();//不用更改
+            email.setHostName("smtp.qq.com");//需要修改，126邮箱为smtp.126.com,163邮箱为163.smtp.com，QQ为smtp.qq.com
+            email.setCharset("UTF-8");
+            email.addTo(emailaddress);// 收件地址
+
+            email.setFrom("1240208775@qq.com", "成才考试系统");//此处填邮箱地址和用户名,用户名可以任意填写
+
+            email.setAuthentication("1240208775@qq.com", "tgkzxmtylhengbdi");//此处填写邮箱地址和客户端授权码
+
+            email.setSubject("成才考试系统-教师账户信息");//此处填写邮件名，邮件名可任意填写
+            email.setMsg("尊敬的用户您好,您在本系统的教师账户信息如下<br>" + "教师账户工号：" + card + "<br>教师账户初始密码:" + password+"<br>登录后请尽快修改密码");//此处填写邮件内容
+
+            email.send();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

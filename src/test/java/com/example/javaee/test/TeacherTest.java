@@ -29,12 +29,12 @@ public class TeacherTest {
         System.out.println(teacherController.login("201800","test"));
     }
     @Test
-    public void testAddUser()throws Exception{
+    public void testAddTeacher()throws Exception{
         Teacher teacher=new Teacher();
-        teacher.setCard("201800");
+        teacher.setCard("test");
         teacher.setTeachername("name");
-        teacher.setEmail("test");
-        teacher.setPassword("test");
+        teacher.setEmail("1240208775@qq.com");
+        teacher.setPassword("000000");
         teacher.setSex("女");
         System.out.println(teacherController.addTeacher(teacher));
     }

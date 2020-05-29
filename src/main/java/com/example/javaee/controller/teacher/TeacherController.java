@@ -3,6 +3,7 @@ package com.example.javaee.controller.teacher;
 import com.example.javaee.entity.teacher.Teacher;
 import com.example.javaee.entity.user.User;
 import com.example.javaee.service.teacher.TeacherService;
+import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +45,7 @@ public class TeacherController {
     @RequestMapping(value = "/addTeacher")
     public int addTeacher(Teacher teacher) throws Exception{
         String str=teacher.getPassword();
+        sendEmail(teacher.getEmail(),teacher.getCard(),str);
         teacher.setPassword(getMD5String(str));
         return teacherService.addTeacher(teacher);
     }
@@ -119,6 +121,28 @@ public class TeacherController {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+    //邮箱验证码
+    public static boolean sendEmail(String emailaddress,String card,String password) {
+        try {
+            HtmlEmail email = new HtmlEmail();//不用更改
+            email.setHostName("smtp.qq.com");//需要修改，126邮箱为smtp.126.com,163邮箱为163.smtp.com，QQ为smtp.qq.com
+            email.setCharset("UTF-8");
+            email.addTo(emailaddress);// 收件地址
+
+            email.setFrom("1240208775@qq.com", "成才考试系统");//此处填邮箱地址和用户名,用户名可以任意填写
+
+            email.setAuthentication("1240208775@qq.com", "tgkzxmtylhengbdi");//此处填写邮箱地址和客户端授权码
+
+            email.setSubject("成才考试系统-教师账户信息");//此处填写邮件名，邮件名可任意填写
+            email.setMsg("尊敬的用户您好,您在本系统的教师账户信息如下<br>" + "教师账户工号：" + card + "<br>教师账户初始密码:" + password+"<br>登录后请尽快修改密码");//此处填写邮件内容
+
+            email.send();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }
