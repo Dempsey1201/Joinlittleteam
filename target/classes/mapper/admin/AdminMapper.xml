@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.javaee.mapper.admin.AdminMapper">
+    <resultMap id="admin" type="com.example.javaee.entity.admin.Admin">
+        <id property="id" column="id"/>
+        <result property="adminname" column="adminname"/>
+        <result property="password" column="password"/>
+        <result property="card" column="card"/>
+    </resultMap>
+    <!--<resultMap id="feelBack" type="com.example.javaee.entity.feelback.FeelBack">-->
+        <!--<id property="id" column="id"/>-->
+        <!--<result property="stu_id" column="stu_id"/>-->
+        <!--<result property="message" column="message"/>-->
+        <!--<result property="join_time" column="join_time"/>-->
+    <!--</resultMap>-->
+
+    <select id="login" resultType="admin">
+        SELECT *
+        FROM t_admin
+        WHERE card=#{admin.card} and password=#{admin.password}
+    </select>
+
+    <select id="queryAdmin" resultType="admin">
+        SELECT *
+        FROM t_admin
+        WHERE id=#{id}
+    </select>
+
+    <!--<select id="listFeelBack" resultType="feelBack">-->
+        <!--SELECT *-->
+        <!--FROM t_feelback-->
+    <!--</select>-->
+
+    <!--<update id="updateFeelBack">-->
+        <!--UPDATE t_feelback-->
+        <!--SET status=#{feelback.status}-->
+        <!--WHERE id=#{feelback.id}-->
+    <!--</update>-->
+
+    <!--<delete id="deleteFeelBack">-->
+       <!--DELETE FROM t_feelback-->
+        <!--WHERE id=#{id}-->
+    <!--</delete>-->
+
+    <update id="updateAdmin">
+        UPDATE t_admin
+        SET adminname=#{admin.adminname},password=#{admin.password}
+        WHERE id=#{admin.id}
+    </update>
+
+    <!--<update id="updateUser">-->
+        <!--UPDATE t_user-->
+        <!--SET major=#{user.major},college=#{user.college}-->
+        <!--WHERE id=#{user.id}-->
+    <!--</update>-->
+
+    <!--<update id="updateReport">-->
+        <!--UPDATE t_report-->
+        <!--SET score=#{report.score},point=#{report.point}-->
+        <!--WHERE id=#{report.id}-->
+    <!--</update>-->
+
+    <!--<insert id="addReport">-->
+        <!--INSERT INTO t_report-->
+        <!--(class_name,teacher,stu_id,score,point,credit)-->
+        <!--VALUES (#{report.class_name},#{report.teacher},-->
+        <!--#{report.stu_id},#{report.score},#{report.point},#{report.credit})-->
+    <!--</insert>-->
+</mapper>
