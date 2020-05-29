@@ -83,6 +83,8 @@
                             if(res.data){
                                 sessionStorage.setItem("userInfo",JSON.stringify(res.data))
                                 window.location = window.location.href.split("manager")[0]+"/manager.html"
+                            }else {
+                                this.$message.error('账号或密码错误');
                             }
                         })
 			        } else {
