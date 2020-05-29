@@ -128,14 +128,11 @@ const router = new VueRouter({
 
 import store from "../../../store/index"
 router.beforeEach((to, from, next) =>{
-	console.log(to)
 	if(to.meta.needLogin){// 需要登录
 		if(!store.getters.userInfo){
 			// 没有登陆
-			console.log("请登录");
 			next({
 				path:'/teacher.html/login'
-
 			})
 		}else {
 			next();

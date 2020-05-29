@@ -157,10 +157,10 @@ export default {
         font-size: 14px;
         color: #1b75dc;
       }
-      button {
-        // flex: 1;
-        background-color: rgb(153, 153, 153.8);
-        border-color: rgb(153, 153, 153, 0.8);
+      button{
+        // // flex: 1;
+        // background-color: rgb(153, 153, 153.8);
+        // border-color: rgb(153, 153, 153, 0.8);
         padding: 3px 5px;
         font-size: 12px;
       }

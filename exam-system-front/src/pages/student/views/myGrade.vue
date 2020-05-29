@@ -9,7 +9,7 @@
         <el-table-column prop="major" label="科目" min-width="170"></el-table-column>
         <el-table-column align="right" min-width="230">
           <template slot="header" slot-scope="scope">
-            <el-button style="float: right;display: inline-block" size="mini">Search</el-button>
+            <el-button style="float: right;display: inline-block" size="mini" @click="searchClass">Search</el-button>
             <el-input
               style="float: right;width: 143px"
               v-model="search"
@@ -52,6 +52,7 @@ export default {
       });
   },
   methods: {
+    // 退出班级
     handleDelete(index, row) {
       console.log(row);
       axios
@@ -75,6 +76,7 @@ export default {
             });
         });
     },
+    // 进入班级
     handleEdit(index, row) {
       this.$router.push({
         name: "paper",
@@ -82,6 +84,18 @@ export default {
           row: row
         }
       });
+    },
+    //按照班级名称所有班级
+    searchClass(){
+       axios
+        .get(this.url + "/class/queryLike", {
+          params: {
+            name:this.search
+          }
+        })
+        .then(res => {
+          console.log(res);
+        })
     }
   }
 };

@@ -1,125 +1,31 @@
 <template>
     <div class="step4">
         <p>
-            <el-button style="display: block" type="primary" size="mini" @click="prevStep">上一步</el-button>
-            试题预览</p>
-        <div class="formList">
-            <el-row class="choiceOne">
-                <p v-show="newExamDetail.choiceOne">一、单选题</p>
-                <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type==='choiceOne')" :key="index"
-                        :ref="'choiceOne'+index"
-                        :model="item"
-                        label-width="80px"
-                        :label-position="labelPosition"
-                >
-                    <p class="question">{{item.question}}</p>
-                    <el-form-item>
-                        <el-radio-group v-model="item.rightAnswer">
-                            <el-radio :label="'A:'+item.answerA"></el-radio>
-                            <el-radio :label="'B:'+item.answerB"></el-radio>
-                            <el-radio :label="'C:'+item.answerC"></el-radio>
-                            <el-radio v-show="item.answerD" :label="'D:'+item.answerD"></el-radio>
-                        </el-radio-group>
-                    </el-form-item>
-                </el-form>
-            </el-row>
-            <el-row class="choiceMany">
-                <p v-show="newExamDetail.choiceMany">二、多选题</p>
-                <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type==='choiceMany')" :key="index"
-                        :ref="'choiceMany'+index"
-                        :model="item"
-                        label-width="80px"
-                        :label-position="labelPosition"
-                >
-                    <p class="question">{{item.question}}</p>
-                    <el-form-item>
-                        <el-checkbox-group v-model="item.rightAnswer">
-                            <el-checkbox :label="'A:'+item.answerA"></el-checkbox>
-                            <el-checkbox :label="'B:'+item.answerB"></el-checkbox>
-                            <el-checkbox :label="'C:'+item.answerC"></el-checkbox>
-                            <el-checkbox v-show="item.answerD" :label="'D:'+item.answerD"></el-checkbox>
-                        </el-checkbox-group>
-                    </el-form-item>
-                </el-form>
-            </el-row>
-            <el-row class="judgeTest">
-                <p v-show="newExamDetail.judgeTest">三、判断题</p>
-                <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type==='judgeTest')" :key="index"
-                        :ref="'judgeTest'+index"
-                        :model="item"
-                        label-width="80px"
-                        :label-position="labelPosition"
-                >
-                    <p class="question">{{item.question}}</p>
-                    <el-form-item label="填写答案" prop="rightAnswer">
-                        <el-radio-group v-model="item.rightAnswer">
-                            <el-radio label="正确"></el-radio>
-                            <el-radio label="错误"></el-radio>
-                        </el-radio-group>
-                    </el-form-item>
-                </el-form>
-            </el-row>
-            <el-row class="feedFull">
-                <p v-show="newExamDetail.feedFull">四、填空题</p>
-                <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type==='feedFull')" :key="index"
-                        :ref="'feedFull'+index"
-                        :model="item"
-                        label-width="80px"
-                        :label-position="labelPosition"
-                >
-                    <p class="question">{{item.question}}</p>
-                    <el-form-item prop="rightAnswer">
-                        <el-col class="line" :span="6" v-model="item.rightAnswer">
-                            <el-input placeholder="答案内容，多个答案用空格分隔" v-model="item.question"
-                            ></el-input>
-                        </el-col>
-                    </el-form-item>
-                </el-form>
-            </el-row>
-            <el-row class="shortAnswer">
-                <p v-show="newExamDetail.shortAnswer">五、简答题</p>
-                <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type==='shortAnswer')" :key="index"
-                        :ref="'shortAnswer'+index"
-                        :model="item"
-                        label-width="80px"
-                        :label-position="labelPosition"
-                        :rules="rules"
-                        size="mini"
-                >
-                    <p class="question">{{item.question}}</p>
-                    <el-form-item label="填写答案" prop="rightAnswer">
-                        <el-col class="line" :span="6" v-model="item.rightAnswer">
-                            <el-input
-                                    type="textarea"
-                                    :rows="2"
-                                    placeholder="答案内容" v-model="item.question"
-                            ></el-input>
-                        </el-col>
-                    </el-form-item>
-                </el-form>
-            </el-row>
-            <el-button type="primary"
-                       @click="complete"
-            >完成
-            </el-button>
-        </div>
+            试题预览
+        </p>
+        <exam :questionList="questionList" @back="prevStep"></exam>
+        <el-button type="primary"
+                   @click="complete"
+        >完成
+        </el-button>
     </div>
 </template>
 
 <script>
     import {mapMutations,mapGetters,mapActions} from "vuex";
+    import {addQuestion,newPaper,questionToPaper} from "../../api/publishExam";
+    import exam from "../exam";
 	export default {
 		name: "b_newExam_step4",
         data(){
 			return{
 				questionList:[],
-				labelPosition:"left"
+				labelPosition:"left",
+                examInfo:{}
             }
+        },
+        components:{
+		   exam
         },
         computed:{
 			...mapGetters([
@@ -127,7 +33,14 @@
             ])
         },
         created() {
-			this.questionList = JSON.parse(this.newExamDetail.questionList);
+            // 先将题目都添加进去
+            this.examInfo = JSON.parse(sessionStorage.getItem("newExamInfo"))
+            this.questionList = this.examInfo.questionList
+            this.questionList.forEach(item=>{
+                if(item.type===2){
+                    item.answer = item.answer.join('');
+                }
+            })
         },
         methods:{
 			...mapMutations({
@@ -137,12 +50,106 @@
             	"stepFour"
             ]),
 	        complete(){
-		        this.$message({
-			        message: '新建试卷成功',
-			        type: 'success'
-		        });
-		        this.stepFour();// 清空数据，初始化
-		        this.setStep(1);// 返回到第一步
+			    // 创建试卷
+                let reg = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/g;
+                let score = 0;
+                let list = this.questionList.map(item=>({
+                    question: item.question,
+                    oa: item.oa,
+                    ob: item.ob,
+                    oc: item.oc,
+                    od: item.od,
+                    subject: item.subject,
+                    qtype: item.type,
+                    author: item.author,
+                    answer:item.type==='2'?item.answer.join(""):item.answer
+                }))
+                let list2 = [];
+                this.questionList.forEach((item,index)=>{
+                    switch (item.type) {
+                        case '1':
+                            score+=3;
+                            break;
+                        case '2':
+                            score+=3;
+                            break;
+                        case '3':
+                            score+=2;
+                            break;
+                        case '4':
+                            score+=5;
+                            break;
+                        case '5':
+                            score+=2;
+                            break;
+                    }
+                })
+                let data = {
+                    pname: this.examInfo.pname,//试卷名称
+                    start_time: JSON.stringify(this.examInfo.start_time).split('"')[1].match(reg)[0].split("T").join(" "),//开始日期时间
+                    classno:this.examInfo.classno,
+                    share:this.examInfo.share,
+                    end_time: JSON.stringify(this.examInfo.end_time).split('"')[1].match(reg)[0].split("T").join(" "),//截至时间
+                    last_time:this.examInfo.check=="无限制"?0:this.examInfo.last_time,// 考试时间/分钟
+                    full_score:score,
+                    teacher:JSON.parse(sessionStorage.getItem("userInfo")).teachername
+                };
+                addQuestion(list).then(res=>{
+                    let qid = res.data
+                    newPaper(data).then(res=>{
+                        this.questionList.forEach((item,index)=>{
+                            let data = {};
+                            switch (item.type) {
+                                case 1:
+                                    data.pid = res.data
+                                    data.no = index
+                                    data.qid = qid[index]
+                                    data.qscore = 2
+                                    break;
+                                case 2:
+                                    data.pid = res.data
+                                    data.no = index
+                                    data.qid = qid[index]
+                                    data.qscore = 3
+                                    break;
+                                case 3:
+                                    data.pid = res.data
+                                    data.no = index
+                                    data.qid = qid[index]
+                                    data.qscore = 2
+                                    break;
+                                case 4:
+                                    data.pid = res.data
+                                    data.no = index
+                                    data.qid = qid[index]
+                                    data.qscore = 5
+                                    break;
+                                case 5:
+                                    data.pid = res.data
+                                    data.no = index
+                                    data.qid = qid[index]
+                                    data.qscore = 2
+                                    break;
+                            }
+                            list2.push(data)
+                        })
+                        questionToPaper(list2).then(res=>{
+                            if(res.data){
+                                this.$message({
+                                    message: '新建试卷成功',
+                                    type: 'success'
+                                });
+                                sessionStorage.removeItem("newExamInfo")
+                                this.setStep(1);// 返回到第一步
+                            }
+                        }).catch(err=>{
+                            throw err;
+                        })
+                    })
+                }).catch(err=>{
+                    throw err;
+                })
+
             },
 	        prevStep(){// 点击上一步
 		        this.setStep(3);

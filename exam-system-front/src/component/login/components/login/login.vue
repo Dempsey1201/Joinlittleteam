@@ -115,18 +115,22 @@
                             email:"aaa",
                             password:"test"
                         }).then(res=>{
-                            sessionStorage.setItem("userInfo",JSON.stringify(res.data))
-                            this.setUserInfo(JSON.stringify(res.data))
-                            this.$router.push({
-                                path:this.$root._router.options.routes[2].path
-                            })
+                            if(!res.data){
+                                this.$message.error('密码或用户名不正确');
+                            }else {
+                                sessionStorage.setItem("userInfo",JSON.stringify(res.data))
+                                this.setUserInfo(JSON.stringify(res.data))
+                                this.$router.push({
+                                    path:this.$root._router.options.routes[2].path
+                                })
+                            }
                         }).catch(err=>{
                             throw err;
                         })
                     }else if(this.form.radio=='2'){
                         teacherLogin({
                             card:"201800",
-                            password:"test"
+                            password:"1234"
                         }).then(res=>{
                             sessionStorage.setItem("userInfo",JSON.stringify(res.data))
                             this.setUserInfo(JSON.stringify(res.data))

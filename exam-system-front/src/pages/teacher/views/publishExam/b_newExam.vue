@@ -13,7 +13,6 @@
     import step2 from "./b_newExam_step2";
     import step3 from "./b_newExam_step3";
     import step4 from "./b_newExam_step4";
-    // import step3 from "./step3";
     import {mapGetters} from "vuex"
 	export default {
 		name: "newExam",

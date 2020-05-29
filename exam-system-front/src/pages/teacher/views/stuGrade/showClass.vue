@@ -1,7 +1,7 @@
 <template>
     <div class="showClass">
         <el-table
-                :data="classList"
+                :data="currentList"
                 style="width: 100%">
             <el-table-column
                     type="index"
@@ -26,66 +26,45 @@
             </el-table-column>
             <el-table-column
                     align="right"
-                    min-width="210"
+                    min-width="50"
+                    label="操作"
             >
-                <template slot="header" slot-scope="scope">
-                    <el-button
-                            style="float: right;display: inline-block"
-                            size="mini"
-                    >Search</el-button>
-                    <el-input
-                            style="float: right;width: 143px"
-                            v-model="search"
-                            size="mini"
-                            placeholder="搜索"/>
-
-                </template>
                 <template slot-scope="scope">
                     <el-button
                             size="mini"
                             @click="handleEdit(scope.$index, scope.row)">查看</el-button>
-                    <el-button
-                            size="mini"
-                            type="danger"
-                            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
+        <pageTool :step="step" :list="classList" @check="changeList"></pageTool>
     </div>
 </template>
 
 <script>
+    import {allClass} from "../../api/yourClass";
+    import pageTool from "../pageTool";
     export default {
         name: "showClass",
         data(){
             return{
-                classList:[
-                    {
-                        id:1,
-                        classname:"软件工程",
-                        college:"东北师范大学",
-                        major:"信息科学与技术"
-                    },
-                    {
-                        id:2,
-                        classname:"软件工程",
-                        college:"东北师范大学",
-                        major:"信息科学与技术"
-                    },
-                    {
-                        id:3,
-                        classname:"软件工程",
-                        college:"东北师范大学",
-                        major:"信息科学与技术"
-                    },
-                    {
-                        id:4,
-                        classname:"软件工程",
-                        college:"东北师范大学",
-                        major:"信息科学与技术"
-                    }],
-                search:""
+                classList:[],
+                search:"",
+                currentList:[],
+                step:6
             }
+        },
+        components:{
+            pageTool
+        },
+        created() {
+            allClass({
+                id:JSON.parse(sessionStorage.getItem("userInfo")).id
+            }).then(res=>{
+                this.classList = res.data
+                this.currentList = this.classList.slice(0,this.step);
+            }).catch(err=>{
+                throw err;
+            })
         },
         methods:{
             handleDelete(index,row){
@@ -98,8 +77,12 @@
                         row: row
                     }
                 })
+            },
+            changeList(list){
+                this.currentList = list;
             }
-        }
+        },
+
     }
 </script>
 

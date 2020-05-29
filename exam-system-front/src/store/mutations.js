@@ -54,15 +54,6 @@ const mutations = {
 	[types.SET_STEP](state,step){//设置id
 		state.step = step;
 	},
-	
-	// 班级
-	[types.SET_CLASSINFO](state,data){// 可能会添加班级或是删除班级
-		if(data.operation==="添加"){// 如果是添加就传info
-			state.classInfo.push(data.info);
-		}else {//如果是删除就传index
-			state.classInfo.splice(data.info,1);
-		}
-	},
 
 	// 用户信息
 	[types.SET_USERINFO](state,data){

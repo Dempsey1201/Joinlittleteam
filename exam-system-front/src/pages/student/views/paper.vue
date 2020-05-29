@@ -9,13 +9,14 @@
         <el-table-column prop="end_time" label="结束时间" min-width="180"></el-table-column>
         <el-table-column align="center" min-width="210">
           <template slot="header" slot-scope="scope">
-            <el-button style="float: right;display: inline-block" size="mini">Search</el-button>
+            操作
+            <!-- <el-button style="float: right;display: inline-block" size="mini">Search</el-button>
             <el-input
               style="float: right;width: 143px"
               v-model="search"
               size="mini"
               placeholder="搜索"
-            />
+            /> -->
           </template>
           <template slot-scope="scope">
             <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看</el-button>

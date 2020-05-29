@@ -1,109 +1,91 @@
 <template>
     <div id="yoursClass">
-        <template>
-            <el-tabs v-model="activeName">
-                <el-tab-pane label="班级信息" name="first">
-                    <div v-show="!currentClass.classname" class="table">
-                        <el-table
-                                :data="classList"
-                                style="width: 100%">
-                            <el-table-column
-                                    type="index"
-                                    min-width="50">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="classname"
-                                    class="name"
-                                    label="班级名称"
-                                    min-width="180">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="college"
-                                    label="学校"
-                                    min-width="180">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="major"
-                                    label="科目"
-                                    min-width="180"
-                            >
-                            </el-table-column>
-                            <el-table-column
-                                    align="right"
-                                    min-width="210"
-                            >
-                                <template slot="header" slot-scope="scope">
-                                    <el-button
-                                            style="float: right;display: inline-block"
-                                            size="mini"
-                                    >Search</el-button>
-                                    <el-input
-                                            style="float: right;width: 143px"
-                                            v-model="search"
-                                            size="mini"
-                                            placeholder="搜索"/>
-
-                                </template>
-                                <template slot-scope="scope">
-                                    <el-button
-                                            size="mini"
-                                            type="danger"
-                                            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-                                    <el-button
-                                            size="mini"
-                                            @click="handleEdit(scope.$index, scope.row)">查看</el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </div>
-                    <checkClass v-if="currentClass.classname" :currentClass="currentClass"
-                                @back="back"
-                    ></checkClass>
-                </el-tab-pane>
-                <el-tab-pane label="新建班级" name="third">
-
-                </el-tab-pane>
-            </el-tabs>
-        </template>
-
+        <el-tabs v-model="activeName">
+            <el-tab-pane label="班级信息" name="first">
+                <div v-show="!currentClass.classname" class="table">
+                    <el-table
+                            :data="currentList"
+                            style="width: 100%">
+                        <el-table-column
+                                type="index"
+                                min-width="50">
+                        </el-table-column>
+                        <el-table-column
+                                prop="classname"
+                                class="name"
+                                label="班级名称"
+                                min-width="180">
+                        </el-table-column>
+                        <el-table-column
+                                prop="college"
+                                label="学校"
+                                min-width="180">
+                        </el-table-column>
+                        <el-table-column
+                                prop="major"
+                                label="科目"
+                                min-width="180"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                                prop="classno"
+                                label="邀请码"
+                                min-width="180"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                                align="right"
+                                min-width="180"
+                                label="操作"
+                        >
+                            <template slot-scope="scope">
+                                <el-button
+                                        size="mini"
+                                        type="danger"
+                                        @click="handleDelete(scope.$index, scope.row)">删除
+                                </el-button>
+                                <el-button
+                                        size="mini"
+                                        @click="handleEdit(scope.$index, scope.row)">查看
+                                </el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <pageTool :step="step" :list="classList" @check="changeList"></pageTool>
+                </div>
+                <checkClass v-if="currentClass.classname" :currentClass="currentClass"
+                            @back="back"
+                ></checkClass>
+            </el-tab-pane>
+            <el-tab-pane label="新建班级" name="third">
+                <newClass :classList="classList"></newClass>
+            </el-tab-pane>
+        </el-tabs>
     </div>
 </template>
 
 <script>
     import checkClass from "./checkClass";
+    import {deleteClass} from "../../api/yourClass";
+    import newClass from "./newClass";
+    import pageTool from "../pageTool";
     export default {
         name: "yoursClass",
         data(){
             return{
-                classList:[
-                    {
-                        id:1,
-                        classname:"软件工程",
-                        college:"东北师范大学",
-                        major:"信息科学与技术"
-                    },
-                    {
-                        id:2,
-                        classname:"软件工程",
-                        college:"东北师范大学",
-                        major:"信息科学与技术"
-                    },
-                    {
-                        id:3,
-                        classname:"软件工程",
-                        college:"东北师范大学",
-                        major:"信息科学与技术"
-                    },
-                    {
-                        id:4,
-                        classname:"软件工程",
-                        college:"东北师范大学",
-                        major:"信息科学与技术"
-                    }],
+                classList:[],
                 currentClass:{},
                 search:"",
-                activeName:"first"
+                activeName:"first",
+                currentList:[],
+                step:7
             }
+        },
+        created() {
+            this.classList = JSON.parse(sessionStorage.getItem("classInfo"))
+            this.currentList = this.classList.slice(0,this.step);
+        },
+        computed:{
         },
         methods:{
             handleEdit(index, row){
@@ -113,12 +95,28 @@
                 this.currentClass = {};
             },
             handleDelete(index, row){
-                console.log(row);
+                if(confirm("确定要删除该班级吗？")){
+                    deleteClass({
+                        id:row.id
+                    }).then(res=>{
+                        if(res.data){
+                            this.classList.splice(index,1);
+                        }
+                        sessionStorage.setItem("classInfo",JSON.stringify(this.classList.splice(index,1)))
+                    }).catch(err=>{
+                        throw err;
+                    })
+                }
+            },
+            changeList(list){
+                this.currentList = list;
             }
         },
         components:{
-            checkClass
-        }
+            checkClass,
+            newClass,
+            pageTool
+        },
     }
 </script>
 
