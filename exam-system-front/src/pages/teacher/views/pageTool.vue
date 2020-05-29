@@ -9,7 +9,7 @@
                 :current-page="current"
                 :page-size="step"
                 :total="list.length"
-                layout="prev, pager, next">
+                layout="total,prev, pager, next">
         </el-pagination>
     </div>
 </template>

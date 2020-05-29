@@ -1,6 +1,10 @@
 // 获取所有公开的试卷
 import axios from "axios"
 import Qs from "qs"
+
+// 获取该老师的所有试卷
+
+
 // 获取所有公开的试卷
 export const getPublicPaper  = ()=>{
     return axios.get("/paper/searchPaper",{

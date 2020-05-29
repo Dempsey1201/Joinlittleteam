@@ -2,7 +2,7 @@
     <div class="showPaper">
         <el-button style="display: block" type="primary" size="mini" @click="prevStep">上一步</el-button>
         <el-table
-                :data="paperList"
+                :data="currentList"
                 style="width: 100%">
             <el-table-column
                     type="index"
@@ -41,17 +41,21 @@
                 </template>
             </el-table-column>
         </el-table>
+        <pageTool :step="step" :list="paperList" @check="changeList"></pageTool>
     </div>
 </template>
 
 <script>
-    import {getPaper} from "../../api/stuGrade";
-
+    import {getPaper,delPaper} from "../../api/stuGrade";
+    import {getPaperInfo} from "../../api/publishExam";
+    import pageTool from "../pageTool";
     export default {
         name: "showPaper",
         data(){
           return{
               paperList:[],
+              currentList:[],
+              step:9
           }
         },
         created() {
@@ -59,6 +63,7 @@
                 classno:this.$route.params.row.id
             }).then(res=>{
                 this.paperList = res.data;
+                this.currentList = this.paperList.slice(0,this.step);
             }).catch(err=>{
                 throw err;
             })
@@ -70,6 +75,13 @@
                 })
             },
             handleEdit(index,row){
+                getPaperInfo({
+                    pid:row.pid
+                }).then(res=>{
+                    sessionStorage.setItem("paperInfo",JSON.stringify(res.data))
+                }).catch(err=>{
+                    throw err;
+                })
                 this.$router.push({
                     name: 'showStudent',
                     params: {
@@ -79,8 +91,23 @@
                 })
             },
             handleDelete(index,row){
-
+                if(confirm("确定要删除试卷吗？")){
+                    delPaper({
+                        pid:row.pid
+                    }).then(res=>{
+                        if(res.data){
+                            this.paperList.splice(index,1);
+                            this.currentList = this.paperList.slice(0,this.step);
+                        }
+                    })
+                }
+            },
+            changeList(list){
+                this.currentList = list;
             }
+        },
+        components:{
+            pageTool
         }
     }
 </script>

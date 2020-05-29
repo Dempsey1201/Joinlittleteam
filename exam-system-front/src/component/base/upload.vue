@@ -27,8 +27,7 @@
 
 <script>
 	import XLSX from "xlsx";
-    import {uploadUrl} from "../api/index";
-	
+
 	export default {
 		name: "upload",
 		data() {

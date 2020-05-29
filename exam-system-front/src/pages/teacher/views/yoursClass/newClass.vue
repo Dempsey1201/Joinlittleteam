@@ -93,6 +93,7 @@
                                 type: 'success'
                             });
                             sessionStorage.setItem("classInfo",JSON.stringify(this.classList))
+                            this.$emit("add")
                         }).catch(err=>{
                             throw err;
                         })

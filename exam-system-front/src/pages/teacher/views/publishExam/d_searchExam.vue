@@ -5,14 +5,17 @@
                 <el-input
                         placeholder="搜索试卷"
                         v-model="search"
-                        clearable>
+                        >
                 </el-input>
                 <i class="el-icon-search"
                    @click="searchPaper"
                 ></i>
             </el-col>
+            <el-col :span="2">
+                <el-button style="display: inline-block;margin-top: 6px;margin-left: 10px" type="primary" size="mini" @click="reset">重置</el-button>
+            </el-col>
             <el-table
-                    :data="paperList"
+                    :data="currentList"
                     style="width: 100%">
                 <el-table-column
                         type="index"
@@ -37,7 +40,7 @@
                 </el-table-column>
                 <el-table-column
                         align="right"
-                        min-width="210"
+                        min-width="150"
                         label="操作"
                 >
                     <template slot-scope="scope">
@@ -50,6 +53,7 @@
                     </template>
                 </el-table-column>
             </el-table>
+            <pageTool :step="step" :list="list" v-model="list" @check="changeList"></pageTool>
         </div>
         <d_reuse v-if="paper" @back="back" :paper="paper"></d_reuse>
         <exam v-if="questionList.length" :questionList="questionList" @back="back"></exam>
@@ -60,6 +64,7 @@
     import {getPublicPaper,searchPublicPaper,getPaperInfo} from "../../api/publishExam";
     import d_reuse from "./d_reuse";
     import exam from "../exam";
+    import pageTool from "../pageTool";
     export default {
 		name: "searchExam",
         data(){
@@ -67,22 +72,35 @@
                 paperList:[],
                 search:"",
                 paper:null,
-                questionList:[]
+                questionList:[],
+                currentList:[],
+                step:8,
+                searchList:[],
+                list:[]
             }
         },
         created() {
 		    getPublicPaper().then(res=>{
-		        this.paperList = res.data
+		        this.paperList = res.data;
+		        this.list = this.paperList;
+                this.currentList = this.list.slice(0,this.step);
             }).catch(err=>{
                 throw err;
             })
         },
         methods:{
+            reset(){
+                console.log(111)
+                this.list = this.paperList;
+                this.currentList = this.list.slice(0,this.step);
+            },
             searchPaper(){
                 searchPublicPaper({
                     pname:this.search
                 }).then(res=>{
-                    this.paperList = res.data;
+                    this.searchList = res.data;
+                    this.list = this.searchList;
+                    this.currentList = this.list.slice(0,this.step);
                 }).catch(err=>{
                     throw err;
                 })
@@ -105,11 +123,15 @@
             back(){
                 this.paper = null;
                 this.questionList = [];
+            },
+            changeList(list){
+                this.currentList = list;
             }
         },
         components:{
             d_reuse,
-            exam
+            exam,
+            pageTool
         }
     }
 </script>

@@ -128,14 +128,19 @@
                         })
                     }else if(this.form.radio=='2'){
                         teacherLogin({
-                            card:"201800",
-                            password:"1234"
+                            card:"2018010993",
+                            password:"000000"
                         }).then(res=>{
-                            sessionStorage.setItem("userInfo",JSON.stringify(res.data))
-                            this.setUserInfo(JSON.stringify(res.data))
-                            this.$router.push({
-                                path:this.$root._router.options.routes[2].path
-                            })
+                            if(res.data){
+                                sessionStorage.setItem("userInfo",JSON.stringify(res.data))
+                                this.setUserInfo(JSON.stringify(res.data))
+                                this.$router.push({
+                                    path:this.$root._router.options.routes[2].path
+                                })
+                            }else {
+                                this.$message.error('用户名或密码错误');
+                            }
+
                         }).catch(err=>{
                             throw err;
                         })
