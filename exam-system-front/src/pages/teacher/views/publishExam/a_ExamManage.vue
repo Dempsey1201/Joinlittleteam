@@ -26,7 +26,7 @@
         },
         components:{
             newExam,
-            searchExam
+            searchExam,
         }
 	}
 </script>

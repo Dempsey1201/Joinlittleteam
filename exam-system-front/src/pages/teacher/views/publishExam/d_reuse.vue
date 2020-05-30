@@ -15,12 +15,6 @@
                     ></el-input>
                 </el-col>
             </el-form-item>
-            <el-form-item label="是否共享" required>
-                <el-radio-group v-model="form.share">
-                    <el-radio :label="1">是</el-radio>
-                    <el-radio :label="0">否</el-radio>
-                </el-radio-group>
-            </el-form-item>
             <el-form-item label="选择班级" prop="classno">
                 <el-col :span="6">
                     <el-select v-model="form.classno" placeholder="请选择班级">
@@ -85,7 +79,6 @@
                     pname: "",//试卷名称
                     start_time: "",//开始日期时间
                     classno:"",
-                    share:1,
                     end_time: "",//截至时间
                     check: "无限制",//试卷时候限制时间
                     last_time:10,// 考试时间/分钟
@@ -144,7 +137,7 @@
                             pname: this.form.pname,//试卷名称
                             start_time: JSON.stringify(this.form.start_time).split('"')[1].match(reg)[0].split("T").join(" "),//开始日期时间
                             classno:this.form.classno,
-                            share:this.form.share,
+                            share:0,
                             end_time: JSON.stringify(this.form.end_time).split('"')[1].match(reg)[0].split("T").join(" "),//截至时间
                             last_time:this.form.check=="无限制"?0:this.form.last_time,// 考试时间/分钟
                             full_score:this.paper.full_score,

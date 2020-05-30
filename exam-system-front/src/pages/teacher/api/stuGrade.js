@@ -13,3 +13,17 @@ export const getGrades  = (info)=>{
         params:info
     })
 }
+
+// 通过学生 id 试卷 id 获取学生成绩
+export const getStuPaper  = (info)=>{
+    return axios.get("/paper/getClassAnswer",{
+        params:info
+    })
+}
+
+// 删除试卷
+export const delPaper  = (info)=>{
+    return axios.get("/paper/deletePaper",{
+        params:info
+    })
+}

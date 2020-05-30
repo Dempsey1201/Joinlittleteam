@@ -22,7 +22,13 @@
           :label-position="labelPosition"
         >
           <el-form-item style="margin-bottom:1px !important">
-            <el-radio-group v-model="studentAns[index].answer">
+            <el-radio-group v-model="studentAns[index].answer" v-if="studentAns.length!=0"> 
+              <el-radio :label="'A'">A:{{son.oa}}</el-radio>
+              <el-radio :label="'B'">B:{{son.ob}}</el-radio>
+              <el-radio :label="'C'">C:{{son.oc}}</el-radio>
+              <el-radio v-show="son.od" :label="'D'">D:{{son.od}}</el-radio>
+            </el-radio-group>
+            <el-radio-group v-else>
               <el-radio :label="'A'">A:{{son.oa}}</el-radio>
               <el-radio :label="'B'">B:{{son.ob}}</el-radio>
               <el-radio :label="'C'">C:{{son.oc}}</el-radio>
@@ -44,7 +50,13 @@
           :label-position="labelPosition"
         >
           <el-form-item style="margin-bottom:1px !important">
-            <el-checkbox-group v-model="studentAns[index].answer.split('')">
+            <el-checkbox-group v-model="studentAns[index].answer.split('')" v-if="studentAns.length!=0">
+              <el-checkbox :label="'A'">A:{{son.oa}}</el-checkbox>
+              <el-checkbox :label="'B'">B:{{son.ob}}</el-checkbox>
+              <el-checkbox :label="'C'">C:{{son.oc}}</el-checkbox>
+              <el-checkbox v-show="son.od" :label="'D'">D:{{son.od}}</el-checkbox>
+            </el-checkbox-group>
+            <el-checkbox-group v-else v-model="a">
               <el-checkbox :label="'A'">A:{{son.oa}}</el-checkbox>
               <el-checkbox :label="'B'">B:{{son.ob}}</el-checkbox>
               <el-checkbox :label="'C'">C:{{son.oc}}</el-checkbox>
@@ -66,7 +78,11 @@
           :label-position="labelPosition"
         >
           <el-form-item style="margin-bottom:1px !important">
-            <el-radio-group v-model="studentAns[index].answer">
+            <el-radio-group v-model="studentAns[index].answer" v-if="studentAns.length!=0">
+              <el-radio :label="'1'">对</el-radio>
+              <el-radio :label="'0'">错</el-radio>
+            </el-radio-group>
+             <el-radio-group v-else>
               <el-radio :label="'1'">对</el-radio>
               <el-radio :label="'0'">错</el-radio>
             </el-radio-group>
@@ -85,12 +101,19 @@
               type="text"
               :name="son.name"
               v-model="studentAns[index].answer"
+              v-if="studentAns.length!=0"
+              style="width: 240px;height: 25px;line-height: 25px;padding: 5px;font-size: 12px;border: none;overflow-y: auto;overflow-x: hidden;resize: none;border:1px solid grey;outline:none"
+            ></textarea>
+            <textarea
+              type="text"
+              :name="son.name"
+              v-else
               style="width: 240px;height: 25px;line-height: 25px;padding: 5px;font-size: 12px;border: none;overflow-y: auto;overflow-x: hidden;resize: none;border:1px solid grey;outline:none"
             ></textarea>
           </li>
         </ul>
-         <div class="adjust">
-             <span v-if="progress">你的答案的是<span style="color:red;" v-if="son.answer==studentAns[index].answer">正确</span><span style="color:red" v-else>错误</span>的,</span>
+          <div class="adjust">
+             <span v-if="progress">你的答案的是<span style="color:red;" v-if="studentAns[index].answer.indexOf(son.answer)!=-1">正确</span><span style="color:red" v-else>错误</span>的,</span>
             正确的答案是<span style="color:green">{{son.answer}}</span>
         </div>
       </div>
@@ -100,12 +123,17 @@
           <li style="margin: 8px 0px 8px 20px;">
             <textarea
               v-model="studentAns[index].answer"
+              v-if="studentAns.length!=0"
+              style="width: 600px;height: 50px;line-height: 25px;padding: 5px;font-size: 12px;border: none;overflow-y: auto;overflow-x: hidden;resize: none;border:1px solid grey;outline:none"
+            ></textarea>
+            <textarea
+              v-else
               style="width: 600px;height: 50px;line-height: 25px;padding: 5px;font-size: 12px;border: none;overflow-y: auto;overflow-x: hidden;resize: none;border:1px solid grey;outline:none"
             ></textarea>
           </li>
         </ul>
          <div class="adjust">
-             <span v-if="progress">你的答案的是<span style="color:red;" v-if="son.answer==studentAns[index].answer">正确</span><span style="color:red" v-else>错误</span>的,</span>
+             <!-- <span v-if="progress">你的答案的是<span style="color:red;" v-if="son.answer==studentAns[index].answer">正确</span><span style="color:red" v-else>错误</span>的,</span> -->
             正确的答案是<span style="color:green">{{son.answer}}</span>
         </div>
       </div>
@@ -119,6 +147,7 @@ export default {
   name: "exam",
   data() {
     return {
+    a:[],
       url: axios.defaults.baseURL,
       labelPosition: "left",
       student: JSON.parse(sessionStorage.getItem("userInfo")), //学生的信息
@@ -152,7 +181,19 @@ export default {
        }
    }).then(res => {
        console.log(res);
-       this.studentAns=res.data
+       this.studentAns=res.data;
+       for(var i=0;i<this.question.length;i++){
+        console.log(this.question[i]);
+        if(this.question[i].qtype==3){
+
+            if(this.question[i].answer==0){
+                this.question[i].answer='对'
+            }
+            else{
+                this.question[i].answer='错'
+            }
+        }
+    }
    })
   },
   methods: {}
@@ -168,6 +209,8 @@ export default {
     margin-left:20px !important;
 }
 .adjust{
-    margin-bottom:10px;margin-left:30px;font-size:12px;color:#373a3c;font-weight:bolder
+    margin-top:5px;
+    margin-bottom:20px;
+    margin-left:30px;font-size:14px;color:#373a3c;font-weight:bolder
 }
 </style>

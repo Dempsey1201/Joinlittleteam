@@ -113,6 +113,14 @@ const routes = [
 						component:()=>import("../views/stuGrade/showStudent"),
 						name:"showStudent"
 					},
+					{
+						path:"/teacher.html/home/stuGrade/showStuPaper",
+						meta:{
+							needLogin:true,
+						},
+						component:()=>import("../views/stuGrade/showStuPaper"),
+						name:"showStuPaper"
+					},
 				]
 			}
 		]

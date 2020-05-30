@@ -79,7 +79,8 @@
                 :label-position="labelPosition"
               >
                 <el-form-item>
-                  <el-checkbox-group v-model="much" :click="many(index)">
+                  <el-checkbox-group v-model="answer[index]">
+                    <!-- <el-checkbox-group v-model="son.answer.split('')" @click="many(index)"> -->
                     <el-checkbox :label="'A'">A:{{son.oa}}</el-checkbox>
                     <el-checkbox :label="'B'">B:{{son.ob}}</el-checkbox>
                     <el-checkbox :label="'C'">C:{{son.oc}}</el-checkbox>
@@ -163,32 +164,36 @@ export default {
       much: [],
       last_time: 0,
       min: 0,
-      sec: 0
+      sec: 0,
+      shortAnswer:'',
+      fullScore:0,
     };
   },
   created() {
     this.item = this.$route.query.item;
     this.progress = this.$route.query.progress;
-    console.log(this.item);
+    console.log(this.item+this.progress);
     this.endtime = this.item.end_time;
     this.last_time = this.item.last_time;
     var that = this;
+    // 倒计时
     if (this.last_time != 0) {
       that.min = that.last_time - 1;
       that.sec = 59;
       setInterval(function() {
         that.sec--;
         if (that.sec == 0) {
-          that.sec=59;
+          that.sec = 59;
           that.min--;
         }
         if (that.sec == 0 && that.min == 0) {
           this.$router.push({
-            path: "/student.html/home",
+            path: "/student.html/home"
           });
         }
       }, 1000);
     }
+    //请求问题
     axios
       .get(this.url + "/paper/getPaperQuestion", {
         params: {
@@ -198,6 +203,13 @@ export default {
       .then(res => {
         console.log(res);
         this.question = res.data;
+        for (var i = 0; i < this.question.length; i++) {
+          if (this.question[i].qtype == 2) {
+            this.answer[i] = [];
+          }
+          this.fullScore=this.question[i].qscore+this.fullScore;
+          console.log('总分'+this.fullScore);
+        }
       });
   },
   mounted() {
@@ -239,7 +251,10 @@ export default {
     },
     //多选的转换
     many(e) {
-      this.answer[e] = this.much.join("");
+      // this.answer[e] = this.much.join("");
+      this.answer[e] = [];
+      console.log(this.answer[e]);
+      // this.answer[e]=this.answer[e].join("");
     },
     submit() {
       for (var x = 0; x < this.question.length; x++) {
@@ -252,10 +267,15 @@ export default {
         }
       }
       for (var i = 0; i < this.question.length; i++) {
+        if (this.question[i].qtype == 2) {
+          this.answer[i]=this.answer[i].join("");
+        }
+        if(this.question[i].qtype == 4){
+          this.shortAnswer='请耐心等待老师批改你简答题呀'
+        }
         let pid = this.item.pid;
         let sid = this.student.id;
         let qid = this.question[i].qid;
-        console.log(this.question[i]);
         let answer = this.answer[i];
         this.storePaper[i] = { pid, qid, sid, answer };
       }
@@ -274,8 +294,8 @@ export default {
             .then(res => {
               console.log(res);
               this.$alert(
-                res.data + "分，请继续加油鸭",
-                "恭喜你，你选择于填空的的成绩为",
+                '你选择和填空的的成绩为'+res.data+'/'+this.fullScore + "分,"+this.shortAnswer+'继续加油',
+                "恭喜你",
                 {
                   confirmButtonText: "确定",
                   callback: action => {
@@ -333,6 +353,7 @@ input {
   border: 1px solid #bfdfff;
 }
 .detailPaper {
+  height: 800px;
   margin-top: 4px;
   padding: 4px;
   box-sizing: border-box;

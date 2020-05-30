@@ -26,7 +26,7 @@
             </el-table-column>
             <el-table-column
                     align="right"
-                    min-width="50"
+                    min-width="80"
                     label="操作"
             >
                 <template slot-scope="scope">
@@ -50,7 +50,7 @@
                 classList:[],
                 search:"",
                 currentList:[],
-                step:6
+                step:9
             }
         },
         components:{

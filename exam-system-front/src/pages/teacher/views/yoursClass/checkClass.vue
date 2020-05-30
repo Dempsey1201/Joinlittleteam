@@ -69,7 +69,7 @@
                 stuList:[],
                 url:"http://47.94.210.131:8080/",
                 currentList:[],
-                step:2
+                step:5
             }
         },
         components:{

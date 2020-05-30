@@ -45,7 +45,8 @@ export default {
       examList: [],
       over: false, // 获取当前时间
       timer: "", //定时器，
-      progress:false
+      progress:false,
+      msg:'你的简答题老师已经批改了'//简答题老师是否批改
     };
   },
   created() {
@@ -97,6 +98,23 @@ export default {
     },
     //已完成界面的成绩显示
     getScore(e){
+      //看看他的简答题是否被批
+       axios.get(this.url + "/paper/getClassAnswer",{
+        params:{
+          sid:this.student.id,
+          pid:e,
+          qid:1
+        }
+      }).then(res => {
+        console.log(res);
+        var grade=res.data;
+        for(var i=0;i<grade.length;i++){
+          console.log(grade[i].getscore);
+          if(grade[i].getscore==-1){
+            this.msg="你的简答题老师还没有批改呀"
+          }
+        }
+        });
       axios.get(this.url + "/paper/getScore",{
         params:{
           sid:this.student.id,
@@ -104,10 +122,10 @@ export default {
         }
       }).then(res => {
         console.log(res.data)
-         this.$alert('你这次考试的成绩为'+res.data+'分', '考试成绩', {
+         this.$alert('你这次考试的成绩为'+res.data+'分,'+this.msg, '考试成绩', {
           confirmButtonText: '确定',
           callback: action => {
-            
+            this.msg='你的简答题老师已经批改了'
           }
         });
       })

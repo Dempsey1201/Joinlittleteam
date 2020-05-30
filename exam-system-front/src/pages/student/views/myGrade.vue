@@ -1,6 +1,6 @@
 <template>
   <div class="myGrade">
-    <div class="showClass">
+    <div class="showClass" style="height:500px;">
       <el-table :data="currentList" style="width: 100%">
         <el-table-column type="index" min-width="50"></el-table-column>
         <el-table-column prop="classname" class="name" label="班级名称" min-width="170"></el-table-column>
@@ -87,6 +87,9 @@ export default {
         }
       });
     },
+    changeList(list){
+                this.currentList = list;
+            }
   }
 };
 </script>

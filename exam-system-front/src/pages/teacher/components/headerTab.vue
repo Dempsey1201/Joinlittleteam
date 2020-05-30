@@ -1,8 +1,8 @@
 <template>
     <div id="headerTab">
         <div class="left">
-            <img :src="managerInfo.url" alt="">
-            <span>{{managerInfo.name}}</span>
+            <img :src="url+info.headUrl" alt="">
+            <span>{{info.teachername}}</span>
         </div>
         
         <div class="head">成才考试系统教师管理</div>
@@ -11,18 +11,31 @@
 
 <script>
     import tab from "./tab";
+    import {mapGetters} from "vuex"
 	export default {
 		name: "headerTab"
         ,data(){
 			return{
-				managerInfo:{
-					url:"../../common/images/1.jpg",
-					name:"sdvav"
-                }
+				info: {},
+                url:"http://47.94.210.131:8080"
             }
         }
         ,components:{
 			tab
+        },
+        computed:{
+            ...mapGetters([
+                "userInfo"
+            ])
+        },
+        watch:{
+		    userInfo(newValue,old){
+		        console.log(newValue,old)
+                this.info = newValue
+            }
+        },
+        created() {
+		    this.info = this.userInfo;
         },
         methods:{
 	        showTab(){
@@ -53,6 +66,7 @@
                 border-radius: 50%;
                 margin-top: 20px;
                 vertical-align: top;
+                border: 1px solid #ddd;
             }
             > span{
                 margin: 0 15px 0 8px;

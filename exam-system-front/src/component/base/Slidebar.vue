@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
     <el-menu
-      default-active="/informationentry"
+      default-active="/student.html/personal/profile"
       class="el-menu-vertical-demo"
       background-color="rgba(255,255,255,0.75)"
       text-color="rgb(191, 203, 217)"

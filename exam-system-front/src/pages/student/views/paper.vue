@@ -1,7 +1,12 @@
 <template>
-  <div class="paper" style="padding:10px;">
+  <div class="paper" style="padding:10px;height:500px">
     <div class="showPaper">
-      <el-button style="display: block;margin-left:10px;margin-top:4px" type="primary" size="mini" @click="prevStep">上一步</el-button>
+      <el-button
+        style="display: block;margin-left:10px;margin-top:4px"
+        type="primary"
+        size="mini"
+        @click="prevStep"
+      >上一步</el-button>
       <el-table :data="currentList" style="width: 100%">
         <el-table-column type="index" min-width="50"></el-table-column>
         <el-table-column prop="pname" class="name" label="试卷名称" min-width="180"></el-table-column>
@@ -16,7 +21,7 @@
               v-model="search"
               size="mini"
               placeholder="搜索"
-            /> -->
+            />-->
           </template>
           <template slot-scope="scope">
             <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看</el-button>
@@ -31,7 +36,7 @@
 
 <script>
 import axios from "axios";
-import pageTool from "../components/pageTool"
+import pageTool from "../components/pageTool";
 export default {
   name: "showPaper",
   components: {
@@ -39,16 +44,17 @@ export default {
   },
   data() {
     return {
-       currentList: [],
-       step:8,
+      currentList: [],
+      step: 8,
       url: axios.defaults.baseURL,
       student: JSON.parse(sessionStorage.getItem("userInfo")),
       paperList: [],
-      search: ""
+      search: "",
+      progress:''
     };
   },
   created() {
-      //获取试卷信息
+    //获取试卷信息
     axios
       .get(this.url + "/paper/getPaperByClass", {
         params: {
@@ -62,19 +68,36 @@ export default {
       });
   },
   methods: {
+    //分页
+    changeList(list) {
+      this.currentList = list;
+    },
     prevStep() {
       this.$router.go(-1);
     },
     //进入试卷页面
     handleEdit(index, row) {
+      console.log("uauauauauaua"+row.done);
+      this.progress=row.done;
       this.$router.push({
-        name: "showStudent",
-        params: {
-          row: row
+        path: "/student.html/detailPaper",
+        query: {
+          item: row,
+          progress: this.progress
         }
       });
     },
-    handleDelete(index, row) {}
+    //点击进入试卷
+    goPaper(item, progress) {
+      // console.log(pid);
+      this.$router.push({
+        path: "/student.html/detailPaper",
+        query: {
+          item: item,
+          progress: progress
+        }
+      });
+    }
   }
 };
 </script>

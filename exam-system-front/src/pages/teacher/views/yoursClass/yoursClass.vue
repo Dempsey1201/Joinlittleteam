@@ -14,28 +14,28 @@
                                 prop="classname"
                                 class="name"
                                 label="班级名称"
-                                min-width="180">
+                                min-width="150">
                         </el-table-column>
                         <el-table-column
                                 prop="college"
                                 label="学校"
-                                min-width="180">
+                                min-width="150">
                         </el-table-column>
                         <el-table-column
                                 prop="major"
                                 label="科目"
-                                min-width="180"
+                                min-width="150"
                         >
                         </el-table-column>
                         <el-table-column
                                 prop="classno"
                                 label="邀请码"
-                                min-width="180"
+                                min-width="150"
                         >
                         </el-table-column>
                         <el-table-column
                                 align="right"
-                                min-width="180"
+                                min-width="150"
                                 label="操作"
                         >
                             <template slot-scope="scope">
@@ -58,7 +58,7 @@
                 ></checkClass>
             </el-tab-pane>
             <el-tab-pane label="新建班级" name="third">
-                <newClass :classList="classList"></newClass>
+                <newClass :classList="classList" @add="add"></newClass>
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -102,7 +102,8 @@
                         if(res.data){
                             this.classList.splice(index,1);
                         }
-                        sessionStorage.setItem("classInfo",JSON.stringify(this.classList.splice(index,1)))
+                        this.currentList = this.classList.slice(0,this.step);
+                        sessionStorage.setItem("classInfo",JSON.stringify(this.classList))
                     }).catch(err=>{
                         throw err;
                     })
@@ -110,6 +111,11 @@
             },
             changeList(list){
                 this.currentList = list;
+            },
+            add(){
+                console.log(111)
+                this.classList = JSON.parse(sessionStorage.getItem("classInfo"))
+                this.currentList = this.classList.slice(0,this.step);
             }
         },
         components:{

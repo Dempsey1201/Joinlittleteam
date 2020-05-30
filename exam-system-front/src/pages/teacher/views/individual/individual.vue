@@ -50,6 +50,7 @@
 <script>
     import {updateOther, updatePwd,updateHeadUrl} from "../../api/individual";
     import {allClass} from "../../api/yourClass";
+    import {mapMutations} from "vuex";
     export default {
         name: "individual",
         data() {
@@ -72,7 +73,6 @@
         computed: {},
         methods: {
             uploadImg() {
-                console.log(this.$refs.file.files[0]);
                 let file = this.$refs.file.files[0];
                 let reader = new FileReader(file);
                 reader.readAsDataURL(file);
@@ -84,6 +84,7 @@
                     }).then(res=>{
                         this.info.headUrl = res.data;
                         sessionStorage.setItem("userInfo", JSON.stringify(this.info))
+                        this.setUserInfo(this.info)
                     }).catch(err=>{
                         throw err;
                     })
@@ -105,6 +106,8 @@
                                             message: '修改成功',
                                             type: 'success'
                                         });
+                                        sessionStorage.setItem("userInfo", JSON.stringify(this.info))
+                                        this.setUserInfo(this.info)
                                     }
                                 })
                             }
@@ -120,16 +123,21 @@
                                             message: '修改密码成功',
                                             type: 'success'
                                         });
+                                        sessionStorage.setItem("userInfo", JSON.stringify(this.info))
+                                        this.setUserInfo(this.info)
                                     }
                                 })
                             }
                         }
-                        sessionStorage.setItem("userInfo", JSON.stringify(this.info))
+
                     } else {
                         return false;
                     }
                 });
             },
+            ...mapMutations({
+                setUserInfo:"SET_USERINFO"
+            })
         }
     }
 </script>
