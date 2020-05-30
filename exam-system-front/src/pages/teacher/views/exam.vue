@@ -13,7 +13,7 @@
                 >
                     <p class="question">{{index+1}}、{{item.question}}</p>
                     <el-form-item>
-                        <el-radio-group v-model="item.answer">
+                        <el-radio-group v-model="item.answer" :disabled="true">
                             <el-radio :label="'A'">A:{{item.oa}}</el-radio>
                             <el-radio :label="'B'">B:{{item.ob}}</el-radio>
                             <el-radio :label="'C'">C:{{item.oc}}</el-radio>
@@ -33,7 +33,7 @@
                 >
                     <p class="question">{{index+1}}、{{item.question}}</p>
                     <el-form-item>
-                        <el-checkbox-group v-model="item.answer.split('')">
+                        <el-checkbox-group v-model="item.answer.split('')" :disabled="true">
                             <el-checkbox :label="'A'">A:{{item.oa}}</el-checkbox>
                             <el-checkbox :label="'B'">B:{{item.ob}}</el-checkbox>
                             <el-checkbox :label="'C'">C:{{item.oc}}</el-checkbox>
@@ -53,7 +53,7 @@
                 >
                     <p class="question">{{index+1}}、{{item.question}}</p>
                     <el-form-item prop="rightAnswer">
-                        <el-radio-group v-model="item.answer">
+                        <el-radio-group v-model="item.answer" :disabled="true">
                             <el-radio label="1">正确</el-radio>
                             <el-radio label="0">错误</el-radio>
                         </el-radio-group>
@@ -71,8 +71,10 @@
                 >
                     <p class="question">{{index+1}}、{{item.question}}</p>
                     <el-form-item prop="rightAnswer">
-                        <el-col class="line" :span="6" v-model="item.answer">
-                            <el-input placeholder="答案内容，多个答案用空格分隔" v-model="item.question"
+                        <el-col class="line" :span="6">
+                            <el-input placeholder="答案内容，多个答案用空格分隔"
+                                      :readonly="true"
+                                      v-model="item.answer"
                             ></el-input>
                         </el-col>
                     </el-form-item>
@@ -90,11 +92,12 @@
                 >
                     <p class="question">{{index+1}}、{{item.question}}</p>
                     <el-form-item prop="rightAnswer">
-                        <el-col class="line" :span="6" v-model="item.answer">
+                        <el-col class="line" :span="6">
                             <el-input
                                     type="textarea"
                                     :rows="2"
-                                    placeholder="答案内容" v-model="item.question"
+                                    placeholder="答案内容" v-model="item.answer"
+                                    :readonly="true"
                             ></el-input>
                         </el-col>
                     </el-form-item>
@@ -134,9 +137,10 @@
     }
 </script>
 
-<style scoped>
+<style lang="less">
 .title{
     font-weight: bold;
     color: #409EFF;
 }
+
 </style>

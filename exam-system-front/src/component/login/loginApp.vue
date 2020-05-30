@@ -26,12 +26,11 @@
                         :router="bool"
                 >
                     <el-menu-item :index="router[1].path" class="nav">
-                        <router-link class="tag" tag="div" to="">
-                        登陆
-                    </router-link>
+                            登陆
                     </el-menu-item>
-                    <el-menu-item :index="router[2].path" class="nav">
+                    <el-menu-item v-if="bool" :index="router[2].path" class="nav">
                         注册
+<!--                        只有学生才注册-->
                     </el-menu-item>
                 </el-menu>
                 <router-view></router-view>
@@ -53,7 +52,8 @@
                 },
 				bg_color:"rgba(236, 245, 255,0.3)",//背景颜色
                 bool:true,
-                router:this.$root._router.options.routes[1].children
+                router:this.$root._router.options.routes[1].children,
+                bool:false
 		    }
 		},
         components:{
@@ -62,6 +62,7 @@
             register
         },
         created() {
+		    this.bool = /student/.test(window.location.href)
         }
 	}
 </script>

@@ -1,6 +1,6 @@
 <template>
     <div id="searchExam">
-        <div v-if="!paper&&!questionList.length" class="list">
+        <div v-show="!paper&&!questionList.length" class="list">
             <el-col :span="8" style="position: relative">
                 <el-input
                         placeholder="搜索试卷"
