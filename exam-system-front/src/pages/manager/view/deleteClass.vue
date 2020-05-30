@@ -1,11 +1,12 @@
 <template>
-  <div class="teacher">
+  <div class="class">
     <el-table :data="currentList" style="width: 100%">
       <el-table-column type="index" min-width="50"></el-table-column>
-      <el-table-column prop="teachername" class="name" label="老师姓名" min-width="170"></el-table-column>
-      <el-table-column prop="card" label="老师工号" min-width="170"></el-table-column>
-      <el-table-column prop="college" label="学校" min-width="170"></el-table-column>
-      <el-table-column prop="email" label="邮箱" min-width="170"></el-table-column>
+      <el-table-column prop="classname" class="name" label="班级名称" min-width="140"></el-table-column>
+      <el-table-column prop="classno" label="班级号" min-width="140"></el-table-column>
+      <el-table-column prop="college" label="学校" min-width="140"></el-table-column>
+      <el-table-column prop="major" label="专业" min-width="140"></el-table-column>
+      <el-table-column prop="teachername" label="老师" min-width="140"></el-table-column>
       <el-table-column align="center" min-width="240">
         <template slot="header" slot-scope="scope">
           <el-button
@@ -26,7 +27,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <pageTool :step="step" :list="teacherList" @check="changeList"></pageTool>
+    <pageTool :step="step" :list="classList" @check="changeList"></pageTool>
   </div>
 </template>
 
@@ -34,7 +35,7 @@
 import axios from "axios";
 import pageTool from "../components/pageTool";
 export default {
-  name: "teacher",
+  name: "class",
   components: {
     pageTool
   },
@@ -43,48 +44,51 @@ export default {
       currentList: [],
       url: axios.defaults.baseURL,
       search: "",
-      teacherList: [],
+      classList: [],
       step: 6
     };
   },
   created() {
-    axios.get(this.url + "/teacher/list").then(res => {
+    axios.get(this.url + "/class/list").then(res => {
       console.log(res);
-      this.teacherList = res.data;
-      this.currentList = this.teacherList.slice(0, this.step);
+      this.classList = res.data;
+      this.currentList = this.classList.slice(0, this.step);
     });
   },
   methods: {
-    // 删除老师
+    // 删除班级
     handleDelete(index, row) {
       console.log(row);
       axios
-        .get(this.url + "/teacher/delete", {
+        .get(this.url + "/class/delete", {
           params: {
             id: row.id
           }
         })
         .then(res => {
           console.log(res);
-          axios.get(this.url + "/teacher/list").then(res => {
+          axios.get(this.url + "/class/list").then(res => {
             console.log(res);
-            this.teacherList = res.data;
-            this.currentList = this.teacherList.slice(0, this.step);
+            this.classList = res.data;
+            this.currentList = this.classList.slice(0, this.step);
           });
         });
     },
-    //按照老师的card搜索
+    //按照班级的classno搜索
     searchClass() {
+        // class/queryClassroom?classno=45437fd391bc797cabf953b898a58
+
       axios
-        .get(this.url + "/teacher/query", {
+        .get(this.url + "/class/queryClassroom", {
           params: {
-            card: this.search
+            classno: this.search
           }
         })
         .then(res => {
           console.log(res);
-          this.teacherList = res.data;
-          this.currentList = this.teacherList.slice(0, this.step);
+          this.classList =[];
+          this.classList.push(res.data);
+          this.currentList = this.classList.slice(0, this.step);
           this.search=''
         });
     },

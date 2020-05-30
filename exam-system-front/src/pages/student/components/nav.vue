@@ -10,8 +10,9 @@
         <div class="right">
           <el-dropdown trigger="click">
             <span class="el-dropdown-link">
-                <span style="margin-right:5px">{{student.username}}</span>
-                <img :src="url+student.headUrl" alt="" width="50px" height="50px" style="border-radius:100%;vertical-align:middle"/>
+              <span>我的信息</span>
+                <!-- <span style="margin-right:5px">{{student.username}}</span>
+                <img :src="url+student.headUrl" alt="" width="50px" height="50px" style="border-radius:100%;vertical-align:middle"/> -->
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item icon="el-icon-s-home"><router-link tag="span" to="/student.html/personal">个人中心</router-link></el-dropdown-item>

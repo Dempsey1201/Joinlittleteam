@@ -15,5 +15,10 @@ module.exports = {
 			template:"./public/index.html",
 			filename:"teacher.html"
 		},
+		managerLogin:{
+			entry:"./src/pages/managerLogin/main.js",
+			template:"./public/index.html",
+			filename:"managerLogin.html"
+		}
 	}
 }

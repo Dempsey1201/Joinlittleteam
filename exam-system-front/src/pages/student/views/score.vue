@@ -6,21 +6,7 @@
       <el-table-column prop="college" label="学校" min-width="170"></el-table-column>
       <el-table-column prop="teachername" label="老师" min-width="170"></el-table-column>
       <el-table-column prop="major" label="科目" min-width="170"></el-table-column>
-      <el-table-column align="right" min-width="230">
-        <template slot="header" slot-scope="scope">
-          <el-button style="float: right;display: inline-block" size="mini">Search</el-button>
-          <el-input
-            style="float: center;width: 143px"
-            v-model="search"
-            size="mini"
-            placeholder="搜索"
-          />
-        </template>
-        <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看</el-button>
-          <!-- <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">退出</el-button> -->
-        </template>
-      </el-table-column>
+      <el-table-column prop="score" label="成绩" min-width="170"></el-table-column>
     </el-table>
   </div>
 </template>

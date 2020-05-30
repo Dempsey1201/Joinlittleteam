@@ -1,21 +1,15 @@
 <template>
   <div class="myGrade">
     <div class="showClass">
-      <el-table :data="classList" style="width: 100%">
+      <el-table :data="currentList" style="width: 100%">
         <el-table-column type="index" min-width="50"></el-table-column>
         <el-table-column prop="classname" class="name" label="班级名称" min-width="170"></el-table-column>
         <el-table-column prop="college" label="学校" min-width="170"></el-table-column>
         <el-table-column prop="teachername" label="老师" min-width="170"></el-table-column>
         <el-table-column prop="major" label="科目" min-width="170"></el-table-column>
-        <el-table-column align="right" min-width="230">
+        <el-table-column align="center" min-width="230">
           <template slot="header" slot-scope="scope">
-            <el-button style="float: right;display: inline-block" size="mini" @click="searchClass">Search</el-button>
-            <el-input
-              style="float: right;width: 143px"
-              v-model="search"
-              size="mini"
-              placeholder="搜索"
-            />
+           <span>操作</span>
           </template>
           <template slot-scope="scope">
             <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看</el-button>
@@ -23,20 +17,27 @@
           </template>
         </el-table-column>
       </el-table>
+       <pageTool :step="step" :list="classList" @check="changeList"></pageTool>
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import pageTool from "../components/pageTool"
 export default {
   name: "showClass",
+  components: {
+    pageTool
+  },
   data() {
     return {
+      currentList: [],
       url: axios.defaults.baseURL,
       student: JSON.parse(sessionStorage.getItem("userInfo")),
       classList: [],
-      search: ""
+      search: "",
+      step:8
     };
   },
   created() {
@@ -49,6 +50,7 @@ export default {
       .then(res => {
         console.log(res);
         this.classList = res.data;
+        this.currentList = this.classList.slice(0, this.step);
       });
   },
   methods: {
@@ -85,18 +87,6 @@ export default {
         }
       });
     },
-    //按照班级名称所有班级
-    searchClass(){
-       axios
-        .get(this.url + "/class/queryLike", {
-          params: {
-            name:this.search
-          }
-        })
-        .then(res => {
-          console.log(res);
-        })
-    }
   }
 };
 </script>

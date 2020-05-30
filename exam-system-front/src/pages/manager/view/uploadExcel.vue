@@ -1,12 +1,16 @@
 <template>
   <div class="excel">
-      导入教师名单
+      <upload/>
   </div>
 </template>
 
 <script>
+import upload from '../../../component/base/upload'
 export default {
   name: 'excel',
+  components:{
+    upload
+  }
  }
 </script>
 

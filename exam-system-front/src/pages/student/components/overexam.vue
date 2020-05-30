@@ -1,140 +1,173 @@
 <template>
-    <div class="exam">
-        <div class="formList">
-            <el-row class="choiceOne">
-                <p class="title" v-show="questionList.filter(item=>item.type===1).length">单选题</p>
-                <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type===1)" :key="index"
-                        :ref="'choiceOne'+index"
-                        :model="item"
-                        label-width="80px"
-                        :label-position="labelPosition"
-                >
-                    <p class="question">{{index+1}}、{{item.question}}</p>
-                    <el-form-item>
-                        <el-radio-group v-model="item.answer">
-                            <el-radio :label="'A'">A:{{item.oa}}</el-radio>
-                            <el-radio :label="'B'">B:{{item.ob}}</el-radio>
-                            <el-radio :label="'C'">C:{{item.oc}}</el-radio>
-                            <el-radio v-show="item.od" :label="'D'">D:{{item.od}}</el-radio>
-                        </el-radio-group>
-                    </el-form-item>
-                </el-form>
-            </el-row>
-            <el-row class="choiceMany">
-                <p  class="title" v-show="questionList.filter(item=>item.type===2).length">多选题</p>
-                <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type===2)" :key="index"
-                        :ref="'choiceMany'+index"
-                        :model="item"
-                        label-width="80px"
-                        :label-position="labelPosition"
-                >
-                    <p class="question">{{index+1}}、{{item.question}}</p>
-                    <el-form-item>
-                        <el-checkbox-group v-model="item.answer.split('')">
-                            <el-checkbox :label="'A'">A:{{item.oa}}</el-checkbox>
-                            <el-checkbox :label="'B'">B:{{item.ob}}</el-checkbox>
-                            <el-checkbox :label="'C'">C:{{item.oc}}</el-checkbox>
-                            <el-checkbox v-show="item.od" :label="'D'">D:{{item.od}}</el-checkbox>
-                        </el-checkbox-group>
-                    </el-form-item>
-                </el-form>
-            </el-row>
-            <el-row class="judgeTest">
-                <p class="title" v-show="questionList.filter(item=>item.type===3).length">判断题</p>
-                <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type===3)" :key="index"
-                        :ref="'judgeTest'+index"
-                        :model="item"
-                        label-width="80px"
-                        :label-position="labelPosition"
-                >
-                    <p class="question">{{index+1}}、{{item.question}}</p>
-                    <el-form-item prop="rightAnswer">
-                        <el-radio-group v-model="item.answer">
-                            <el-radio label="1">正确</el-radio>
-                            <el-radio label="0">错误</el-radio>
-                        </el-radio-group>
-                    </el-form-item>
-                </el-form>
-            </el-row>
-            <el-row class="feedFull">
-                <p class="title" v-show="questionList.filter(item=>item.type===5).length">填空题</p>
-                <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type===5)" :key="index"
-                        :ref="'feedFull'+index"
-                        :model="item"
-                        label-width="80px"
-                        :label-position="labelPosition"
-                >
-                    <p class="question">{{index+1}}、{{item.question}}</p>
-                    <el-form-item prop="rightAnswer">
-                        <el-col class="line" :span="6" v-model="item.answer">
-                            <el-input placeholder="答案内容，多个答案用空格分隔" v-model="item.question"
-                            ></el-input>
-                        </el-col>
-                    </el-form-item>
-                </el-form>
-            </el-row>
-            <el-row class="shortAnswer">
-                <p class="title" v-show="questionList.filter(item=>item.type===4).length">简答题</p>
-                <el-form
-                        v-for="(item,index) in questionList.filter(it=>it.type===4)" :key="index"
-                        :ref="'shortAnswer'+index"
-                        :model="item"
-                        label-width="80px"
-                        :label-position="labelPosition"
-                        size="mini"
-                >
-                    <p class="question">{{index+1}}、{{item.question}}</p>
-                    <el-form-item prop="rightAnswer">
-                        <el-col class="line" :span="6" v-model="item.answer">
-                            <el-input
-                                    type="textarea"
-                                    :rows="2"
-                                    placeholder="答案内容" v-model="item.question"
-                            ></el-input>
-                        </el-col>
-                    </el-form-item>
-                </el-form>
-            </el-row>
-
+  <div>
+    <div v-for="(son,index) in question" :key="index" class="div">
+      {{index+1}}、
+      <span class="type" v-if="son.qtype== 1">单选</span>
+      <span
+        class="type"
+        v-if="son.qtype== 2"
+        style="background: #ffe2d9;border: 1px solid #ffb399;"
+      >多选</span>
+      <span class="type" v-if="son.qtype== 3" style="background: #eee;border: 1px solid #ddd;">判断</span>
+      <span class="type" v-if="son.qtype== 4">简答</span>
+      <span class="type" v-if="son.qtype== 5" style="background: #eee;border: 1px solid #ddd;">填空</span>
+      <span>({{son.qscore}}分)</span>
+      <span class="question">{{son.question }}</span>
+      <!-- 单选题 -->
+      <div v-if="son.qtype==1">
+        <el-form
+          :ref="'choiceOne'+index"
+          :model="son"
+          label-width="30px"
+          :label-position="labelPosition"
+        >
+          <el-form-item style="margin-bottom:1px !important">
+            <el-radio-group v-model="studentAns[index].answer">
+              <el-radio :label="'A'">A:{{son.oa}}</el-radio>
+              <el-radio :label="'B'">B:{{son.ob}}</el-radio>
+              <el-radio :label="'C'">C:{{son.oc}}</el-radio>
+              <el-radio v-show="son.od" :label="'D'">D:{{son.od}}</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-form>
+        <div class="adjust">
+             <span v-if="progress">你的答案的是<span style="color:red;" v-if="son.answer==studentAns[index].answer">正确</span><span style="color:red" v-else>错误</span>的,</span>
+            正确的答案是<span style="color:green">{{son.answer}}</span>
         </div>
+      </div>
+      <!-- 多选题 -->
+      <div v-if="son.qtype==2">
+        <el-form
+          :ref="'choiceMany'+index"
+          :model="son"
+          label-width="30px"
+          :label-position="labelPosition"
+        >
+          <el-form-item style="margin-bottom:1px !important">
+            <el-checkbox-group v-model="studentAns[index].answer.split('')">
+              <el-checkbox :label="'A'">A:{{son.oa}}</el-checkbox>
+              <el-checkbox :label="'B'">B:{{son.ob}}</el-checkbox>
+              <el-checkbox :label="'C'">C:{{son.oc}}</el-checkbox>
+              <el-checkbox v-show="son.od" :label="'D'">D:{{son.od}}</el-checkbox>
+            </el-checkbox-group>
+          </el-form-item>
+        </el-form>
+         <div class="adjust">
+             <span v-if="progress">你的答案的是<span style="color:red;" v-if="son.answer==studentAns[index].answer">正确</span><span style="color:red" v-else>错误</span>的,</span>
+            正确的答案是<span style="color:green">{{son.answer}}</span>
+        </div>
+      </div>
+      <!-- //判断题 -->
+      <div v-if="son.qtype==3">
+        <el-form
+          :ref="'choiceOne'+index"
+          :model="son"
+          label-width="30px"
+          :label-position="labelPosition"
+        >
+          <el-form-item style="margin-bottom:1px !important">
+            <el-radio-group v-model="studentAns[index].answer">
+              <el-radio :label="'1'">对</el-radio>
+              <el-radio :label="'0'">错</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-form>
+         <div class="adjust">
+             <span v-if="progress">你的答案的是<span style="color:red;" v-if="son.answer==studentAns[index].answer">正确</span><span style="color:red" v-else>错误</span>的,</span>
+            正确的答案是<span style="color:green">{{son.answer}}</span>
+        </div>
+      </div>
+      <!-- 填空题 -->
+      <div v-if="son.qtype==5">
+        <ul>
+          <li style="margin: 8px 0 8px 20px;">
+            <textarea
+              type="text"
+              :name="son.name"
+              v-model="studentAns[index].answer"
+              style="width: 240px;height: 25px;line-height: 25px;padding: 5px;font-size: 12px;border: none;overflow-y: auto;overflow-x: hidden;resize: none;border:1px solid grey;outline:none"
+            ></textarea>
+          </li>
+        </ul>
+         <div class="adjust">
+             <span v-if="progress">你的答案的是<span style="color:red;" v-if="son.answer==studentAns[index].answer">正确</span><span style="color:red" v-else>错误</span>的,</span>
+            正确的答案是<span style="color:green">{{son.answer}}</span>
+        </div>
+      </div>
+      <!-- 简答题 -->
+      <div v-if="son.qtype==4">
+        <ul>
+          <li style="margin: 8px 0px 8px 20px;">
+            <textarea
+              v-model="studentAns[index].answer"
+              style="width: 600px;height: 50px;line-height: 25px;padding: 5px;font-size: 12px;border: none;overflow-y: auto;overflow-x: hidden;resize: none;border:1px solid grey;outline:none"
+            ></textarea>
+          </li>
+        </ul>
+         <div class="adjust">
+             <span v-if="progress">你的答案的是<span style="color:red;" v-if="son.answer==studentAns[index].answer">正确</span><span style="color:red" v-else>错误</span>的,</span>
+            正确的答案是<span style="color:green">{{son.answer}}</span>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "exam",
-        data(){
-            return{
-                labelPosition:"left",
-            }
-        },
-        props:{
-            questionList:{
-                type:Array,
-                require:true
-            }
-        },
-        created() {
-            console.log(this.questionList);
-            this.questionList.forEach(item=>{
-                if(item.type==='2'){
-                    item.answer = item.answer.join('')
-                }
-            })
-        },
-        methods:{
-            
-        }
+import axios from "axios";
+export default {
+  name: "exam",
+  data() {
+    return {
+      url: axios.defaults.baseURL,
+      labelPosition: "left",
+      student: JSON.parse(sessionStorage.getItem("userInfo")), //学生的信息
+      studentAns:[]
+    };
+  },
+  props: {
+    question: {
+      type: Array,
+      require: true
+    },
+    item: {
+       type: Object,
+       require: true
+    },
+    progress:{
+        type:Boolean,
+        require:true
     }
+  },
+  created() {
+    console.log(this.question);
+    console.log(this.item);
+    console.log(this.progress);
+   //请求你做的答案
+   axios.get(this.url+'/paper/getClassAnswer',{
+       params:{
+           sid:this.student.id,
+           pid:this.item.pid,
+           qid:1
+       }
+   }).then(res => {
+       console.log(res);
+       this.studentAns=res.data
+   })
+  },
+  methods: {}
+};
 </script>
 
 <style scoped>
-.title{
-    font-weight: bold;
-    color: #409EFF;
+.title {
+  font-weight: bold;
+  color: #409eff;
+}
+.el-form-item__content{
+    margin-left:20px !important;
+}
+.adjust{
+    margin-bottom:10px;margin-left:30px;font-size:12px;color:#373a3c;font-weight:bolder
 }
 </style>

@@ -2,7 +2,7 @@
   <div class="paper" style="padding:10px;">
     <div class="showPaper">
       <el-button style="display: block;margin-left:10px;margin-top:4px" type="primary" size="mini" @click="prevStep">上一步</el-button>
-      <el-table :data="paperList" style="width: 100%">
+      <el-table :data="currentList" style="width: 100%">
         <el-table-column type="index" min-width="50"></el-table-column>
         <el-table-column prop="pname" class="name" label="试卷名称" min-width="180"></el-table-column>
         <el-table-column prop="teacher" label="老师" min-width="180"></el-table-column>
@@ -24,16 +24,23 @@
           </template>
         </el-table-column>
       </el-table>
+      <pageTool :step="step" :list="paperList" @check="changeList"></pageTool>
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import pageTool from "../components/pageTool"
 export default {
   name: "showPaper",
+  components: {
+    pageTool
+  },
   data() {
     return {
+       currentList: [],
+       step:8,
       url: axios.defaults.baseURL,
       student: JSON.parse(sessionStorage.getItem("userInfo")),
       paperList: [],
@@ -51,12 +58,14 @@ export default {
       .then(res => {
         console.log(res);
         this.paperList = res.data;
+        this.currentList = this.paperList.slice(0, this.step);
       });
   },
   methods: {
     prevStep() {
       this.$router.go(-1);
     },
+    //进入试卷页面
     handleEdit(index, row) {
       this.$router.push({
         name: "showStudent",

@@ -1,17 +1,12 @@
 <template>
   <div class="rightContent">
     <div class="title">
-      <span>输入班级号</span>
-      <el-input
-        v-model="input"
-        placeholder="请输入内容"
-        class="input"
-        @keydown.enter.native="searchClass"
-      ></el-input>
+       <el-button :type="progress==false ? 'primary':''" style="padding:0px 5px" @click="noProgress">未进行</el-button>
+       <el-button :type="progress==true ? 'primary':''" style="padding:3px 5px" @click="onProgress">已完成</el-button>
     </div>
     <!-- <div class="noneExam" v-if="isShow == false">请选择班级查看试卷信息！</div> -->
     <!-- <div class="info" v-else> -->
-    <div class="info" v-for="item,index in examList" @click="goPaper(item)">
+    <div class="info" v-for="item,index in examList" @click="goPaper(item,progress)">
       <div class="top">
         <div class="logo">
           <i class="el-icon-monitor"></i>
@@ -27,6 +22,7 @@
           <span class="school">{{item.classno}}</span>-->
           <i class="el-icon-s-check"></i>
           <span class="teacher">{{item.teacher}}</span>
+          <el-button type="primary" plain v-if="progress" style="padding:6px 3px;font-size:12px;margin-left:5px" @click.stop="getScore(item.pid)">查看成绩</el-button>
         </div>
       </div>
     </div>
@@ -49,52 +45,74 @@ export default {
       examList: [],
       over: false, // 获取当前时间
       timer: "", //定时器，
-      year: "",
-      month: "",
-      date: "",
-      hour: "",
-      min: "",
-      sec: ""
+      progress:false
     };
   },
   created() {
     var that = this;
-    //计时时间
-    this.timer = setInterval(() => {
-      // that.year=new Date().getFullYear();
-      // that.month=new Date().getMonth()+1;
-      // that.date=new Date().getDate();
-      // that.hour=new Date().getHours();
-      // that.min=new Date().getMinutes()
-      // that.sec=new Date().getSeconds();
-      //获取所有的试卷信息
-      axios
+    this.getExam('0');
+  },
+  methods: {
+    //获取试卷列表
+    getExam(e){
+       axios
         .get(this.url + "/paper/getPaperByNo", {
           params: {
             sid: this.student.id
           }
         })
         .then(res => {
-          console.log(res);
-          this.examList = res.data;
+          console.log(res.data);
+          this.examList = res.data.试卷信息;
+          if(e=='0'){
+             this.examList=this.examList.filter(item=>item.done==false);
+             console.log(this.examList);
+          }
+          else{
+             this.examList=this.examList.filter(item=>item.done==true);
+             console.log(this.examList);
+          }
         });
-    }, 1000);
-  },
-  methods: {
-    searchClass(e) {
-      //向后端发送班级号，后端返回试卷列表
-      const classNumber = this.input;
-      this.input = "";
     },
-    goPaper(item) {
+    //点击进入试卷
+    goPaper(item,progress) {
       // console.log(pid);
       this.$router.push({
         path: "/student.html/detailPaper",
         query: {
-          item: item
+          item: item,
+          progress:progress
         },
       });
+    },
+    //点击进入未完成
+    noProgress(){
+      this.progress=false;
+      this.getExam('0');
+    },
+    //点击进入已完成
+    onProgress(){
+      this.progress=true;
+      this.getExam('1');
+    },
+    //已完成界面的成绩显示
+    getScore(e){
+      axios.get(this.url + "/paper/getScore",{
+        params:{
+          sid:this.student.id,
+          pid:e
+        }
+      }).then(res => {
+        console.log(res.data)
+         this.$alert('你这次考试的成绩为'+res.data+'分', '考试成绩', {
+          confirmButtonText: '确定',
+          callback: action => {
+            
+          }
+        });
+      })
     }
+
   },
   beforeDestroy() {
     if (this.timer) {

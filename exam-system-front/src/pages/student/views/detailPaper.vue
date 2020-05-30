@@ -1,10 +1,9 @@
 <template>
   <div class="detailPaper">
     <div class="wrap">
-      <div
-        class="clock"
-        style="text-align: center;margin-top:5px;font-size:16px;color:#00c758"
-      >剩余时间：{{d}}天 {{h}}时 {{m}}分 {{s}}秒</div>
+      <div class="clock" v-if="!over && item.last_time!=0 && !progress">距考试截至时间：{{min}}分 {{sec}}秒</div>
+      <div v-else-if="!over" class="clock">距离截至时间：{{d}}天 {{h}}时 {{m}}分 {{s}}秒</div>
+      <div class="clock" v-else-if="over&&!progress">您已经错过了答题时间</div>
       <div class="ti">
         <div class="title">{{item.pname}}</div>
         <div class="info">
@@ -27,11 +26,12 @@
         </div>
       </div>
       <div class="right" style="width:70%">
-        <div class="over" v-if="over">
-          <overexam :questionList="question"/>
+        <div class="over" v-if="progress || over">
+          <overexam :question="question" :item="item" :progress="progress" />
         </div>
-        <div class="noover" v-if="!over">
-          <div v-for="(son,index) in question" :key="index" class="div">
+        <!-- //未进行false -->
+        <div class="noover" v-if="!progress && !over">
+          <div v-for="(son,index,progress) in question" :key="index" class="div">
             {{index+1}}、
             <span class="type" v-if="son.qtype== 1">单选</span>
             <span
@@ -54,118 +54,55 @@
             <div class="question">{{son.question }}</div>
             <!-- 单选题 -->
             <div v-if="son.qtype==1">
-              <ul>
-                <li>
-                  <input
-                    type="radio"
-                    :name="son.name"
-                    :value="son.oa"
-                    v-model="one[index]"
-                    @change="getAnswer('A',index,son.qtype)"
-                  />
-                  <span class="sql">{{son.oa}}</span>
-                </li>
-                <li>
-                  <input
-                    type="radio"
-                    :name="son.name"
-                    :value="son.ob"
-                    v-model="one[index]"
-                    @change="getAnswer('B',index,son.qtype)"
-                  />
-                  <span class="sql">{{son.ob}}</span>
-                </li>
-                <li>
-                  <input
-                    type="radio"
-                    :name="son.name"
-                    :value="son.oc"
-                    v-model="one[index]"
-                    @change="getAnswer('C',index,son.qtype)"
-                  />
-                  <span class="sql">{{son.oc}}</span>
-                </li>
-                <li>
-                  <input
-                    type="radio"
-                    :name="son.name"
-                    :value="son.od"
-                    v-model="one[index]"
-                    @change="getAnswer('D',index,son.qtype)"
-                  />
-                  <span class="sql">{{son.od}}</span>
-                </li>
-              </ul>
+              <el-form
+                :ref="'choiceOne'+index"
+                :model="son"
+                label-width="30px"
+                :label-position="labelPosition"
+              >
+                <el-form-item>
+                  <el-radio-group v-model="answer[index]">
+                    <el-radio :label="'A'">A:{{son.oa}}</el-radio>
+                    <el-radio :label="'B'">B:{{son.ob}}</el-radio>
+                    <el-radio :label="'C'">C:{{son.oc}}</el-radio>
+                    <el-radio v-show="son.od" :label="'D'">D:{{son.od}}</el-radio>
+                  </el-radio-group>
+                </el-form-item>
+              </el-form>
             </div>
             <!-- 多选题 -->
             <div v-if="son.qtype==2">
-              <ul>
-                <li>
-                  <input
-                    type="checkbox"
-                    :name="son.name"
-                    :value="son.oa"
-                    v-model="many[0]"
-                    @change="getAnswer(son.oa,index,son.qtype)"
-                  />
-                  <span class="sql">{{son.oa}}</span>
-                </li>
-                <li>
-                  <input
-                    type="checkbox"
-                    :name="son.name"
-                    :value="son.ob"
-                    v-model="many[1]"
-                    @change="getAnswer(son.ob,index,son.qtype)"
-                  />
-                  <span class="sql">{{son.ob}}</span>
-                </li>
-                <li>
-                  <input
-                    type="checkbox"
-                    :name="son.name"
-                    :value="son.oc"
-                    v-model="many[2]"
-                    @change="getAnswer(son.oc,index,son.qtype)"
-                  />
-                  <span class="sql">{{son.oc}}</span>
-                </li>
-                <li>
-                  <input
-                    type="checkbox"
-                    :name="son.name"
-                    :value="son.od"
-                    v-model="many[3]"
-                    @change="getAnswer(son.od,index,son.qtype)"
-                  />
-                  <span class="sql">{{son.od}}</span>
-                </li>
-              </ul>
+              <el-form
+                :ref="'choiceMany'+index"
+                :model="son"
+                label-width="30px"
+                :label-position="labelPosition"
+              >
+                <el-form-item>
+                  <el-checkbox-group v-model="much" :click="many(index)">
+                    <el-checkbox :label="'A'">A:{{son.oa}}</el-checkbox>
+                    <el-checkbox :label="'B'">B:{{son.ob}}</el-checkbox>
+                    <el-checkbox :label="'C'">C:{{son.oc}}</el-checkbox>
+                    <el-checkbox v-show="son.od" :label="'D'">D:{{son.od}}</el-checkbox>
+                  </el-checkbox-group>
+                </el-form-item>
+              </el-form>
             </div>
             <!-- //判断题 -->
             <div v-if="son.qtype==3">
-              <ul>
-                <li>
-                  <input
-                    type="radio"
-                    :name="son.name"
-                    value="right"
-                    v-model="adjust"
-                    @change="getAnswer('1',index,son.qtype)"
-                  />
-                  <span class="sql">√</span>
-                </li>
-                <li>
-                  <input
-                    type="radio"
-                    :name="son.name"
-                    value="wrong"
-                    v-model="adjust"
-                    @change="getAnswer('0',index,son.qtype)"
-                  />
-                  <span class="sql">×</span>
-                </li>
-              </ul>
+              <el-form
+                :ref="'choiceOne'+index"
+                :model="son"
+                label-width="30px"
+                :label-position="labelPosition"
+              >
+                <el-form-item>
+                  <el-radio-group v-model="answer[index]">
+                    <el-radio :label="'1'">对</el-radio>
+                    <el-radio :label="'0'">错</el-radio>
+                  </el-radio-group>
+                </el-form-item>
+              </el-form>
             </div>
             <!-- 填空题 -->
             <div v-if="son.qtype==5">
@@ -175,7 +112,6 @@
                     type="text"
                     :name="son.name"
                     v-model="answer[index]"
-                    @change="getAnswer(son.oa,index,son.qtype)"
                     style="width: 240px;height: 25px;line-height: 25px;padding: 5px;font-size: 12px;border: none;overflow-y: auto;overflow-x: hidden;resize: none;border:1px solid grey;outline:none"
                   ></textarea>
                 </li>
@@ -187,14 +123,13 @@
                 <li style="margin: 8px 0px 8px 20px;">
                   <textarea
                     v-model="answer[index]"
-                    @change="getAnswer(son.oa,index,son.qtype)"
                     style="width: 600px;height: 50px;line-height: 25px;padding: 5px;font-size: 12px;border: none;overflow-y: auto;overflow-x: hidden;resize: none;border:1px solid grey;outline:none"
                   ></textarea>
                 </li>
               </ul>
             </div>
           </div>
-          <el-button type="success" @click="submit" style="margin-top:20px">提交</el-button>
+          <el-button type="success" @click="submit" style="margin-top:20px;margin-left:30px">提交</el-button>
         </div>
       </div>
     </div>
@@ -203,37 +138,57 @@
 
 <script>
 import axios from "axios";
-import overexam from "../components/overexam"
+import overexam from "../components/overexam";
 export default {
   name: "",
-  components:{
+  components: {
     overexam
   },
   data() {
     return {
+      labelPosition: "left",
       url: axios.defaults.baseURL,
       student: JSON.parse(sessionStorage.getItem("userInfo")), //学生的信息
       item: {},
-      question: "",
+      progress: null,
+      question: [],
       answer: [],
-      //   多选问题
-      many: [],
-      //单选问题
-      one: [],
-      adjust: [],
       storePaper: [],
       d: "",
       h: "",
       m: "",
       s: "",
       endtime: "",
-      over:false
+      over: false,
+      much: [],
+      last_time: 0,
+      min: 0,
+      sec: 0
     };
   },
   created() {
     this.item = this.$route.query.item;
+    this.progress = this.$route.query.progress;
     console.log(this.item);
     this.endtime = this.item.end_time;
+    this.last_time = this.item.last_time;
+    var that = this;
+    if (this.last_time != 0) {
+      that.min = that.last_time - 1;
+      that.sec = 59;
+      setInterval(function() {
+        that.sec--;
+        if (that.sec == 0) {
+          that.sec=59;
+          that.min--;
+        }
+        if (that.sec == 0 && that.min == 0) {
+          this.$router.push({
+            path: "/student.html/home",
+          });
+        }
+      }, 1000);
+    }
     axios
       .get(this.url + "/paper/getPaperQuestion", {
         params: {
@@ -244,12 +199,6 @@ export default {
         console.log(res);
         this.question = res.data;
       });
-    for (var i = 0; i < this.question.length; i++) {
-      this.many[i] = "";
-      for (var j = 0; j < 4; j++) {
-        this.many[i][j] = false;
-      }
-    }
   },
   mounted() {
     this.countTime();
@@ -267,8 +216,7 @@ export default {
         this.h = 0;
         this.m = 0;
         this.s = 0;
-        //回到开始的页面
-        this.over=true;
+        this.over = true;
         return;
       }
       // 用结束时间减去当前时间获得倒计时时间戳
@@ -289,45 +237,9 @@ export default {
         that.countTime();
       }, 1000);
     },
-    getAnswer(e, index, type) {
-      if (type == 1) {
-        console.log(e);
-        this.answer[index] = e;
-      }
-      if (type == 2) {
-        //拼接字符串
-        this.answer[index] = "";
-        for (var i = 0; i < 4; i++) {
-          console.log(this.many[i]);
-          if (this.many[i] == true) {
-            if (i == 0) {
-              this.answer[index] = "A" + this.answer[index];
-              console.log(this.answer[index]);
-            }
-            if (i == 1) {
-              this.answer[index] = "B" + this.answer[index];
-            }
-            if (i == 2) {
-              this.answer[index] = "C" + this.answer[index];
-            }
-            if (i == 3) {
-              this.answer[index] = "D" + this.answer[index];
-            }
-          }
-        }
-        console.log(this.answer[index]);
-      }
-      if (type == 3) {
-        this.answer[index] = e;
-      }
-      //简答题
-      if (type == 4) {
-        console.log(this.answer[index]);
-      }
-      //填空题
-      if (type == 5) {
-        console.log(this.answer[index]);
-      }
+    //多选的转换
+    many(e) {
+      this.answer[e] = this.much.join("");
     },
     submit() {
       for (var x = 0; x < this.question.length; x++) {
@@ -342,7 +254,8 @@ export default {
       for (var i = 0; i < this.question.length; i++) {
         let pid = this.item.pid;
         let sid = this.student.id;
-        let qid = i + 1;
+        let qid = this.question[i].qid;
+        console.log(this.question[i]);
         let answer = this.answer[i];
         this.storePaper[i] = { pid, qid, sid, answer };
       }
@@ -351,14 +264,30 @@ export default {
         .post(this.url + "/paper/storeAnswerAndJudge", this.storePaper)
         .then(res => {
           console.log(res);
-          //回到开始的页面
-          this.$router.push({
-            path: "/student.html/home"
-          });
+          axios
+            .get(this.url + "/paper/getScore", {
+              params: {
+                sid: this.student.id,
+                pid: this.item.pid
+              }
+            })
+            .then(res => {
+              console.log(res);
+              this.$alert(
+                res.data + "分，请继续加油鸭",
+                "恭喜你，你选择于填空的的成绩为",
+                {
+                  confirmButtonText: "确定",
+                  callback: action => {
+                    //回到开始的页面
+                    this.$router.push({
+                      path: "/student.html/home"
+                    });
+                  }
+                }
+              );
+            });
         });
-      // .fail(error => {
-      //     console.log(res);
-      // })
     }
   }
 };
@@ -418,8 +347,9 @@ input {
     .clock {
       padding-top: 20px;
       vertical-align: middle;
-      width: 35%;
+      width: 26%;
       text-align: center;
+      color: #00c758;
     }
     .ti {
       margin-left: 40px;
@@ -429,6 +359,7 @@ input {
         padding: 10px 0;
         font-size: 22px;
         font-weight: bold;
+        margin-left: 50px;
       }
       .info {
         font-size: 12px;
