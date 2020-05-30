@@ -28,13 +28,13 @@
                         min-width="180">
                 </el-table-column>
                 <el-table-column
-                        prop="start_time"
-                        label="开始时间"
+                        prop="teacher"
+                        label="老师"
                         min-width="180">
                 </el-table-column>
                 <el-table-column
-                        prop="end_time"
-                        label="结束时间"
+                        prop="full_score"
+                        label="总分"
                         min-width="180"
                 >
                 </el-table-column>
