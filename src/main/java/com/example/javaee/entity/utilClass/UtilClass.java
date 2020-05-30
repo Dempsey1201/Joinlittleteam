@@ -16,6 +16,24 @@ public class UtilClass {
     private Integer qscore;
     private Integer getscore;
     private Integer qtype;
+    private String teacher;
+    private String full_score;
+
+    public String getFull_score() {
+        return full_score;
+    }
+
+    public void setFull_score(String full_score) {
+        this.full_score = full_score;
+    }
+
+    public String getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(String teacher) {
+        this.teacher = teacher;
+    }
 
     public Integer getQtype() {
         return qtype;

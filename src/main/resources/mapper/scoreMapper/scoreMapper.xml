@@ -10,7 +10,7 @@
     </select>
 
     <select id="getScoreByUser" resultType="com.example.javaee.entity.utilClass.UtilClass">
-        select pname,score
+        select pname,score,teacher,full_score
         from t_paper,t_score
         where sid = #{sid} and t_paper.pid = t_score.pid
     </select>
