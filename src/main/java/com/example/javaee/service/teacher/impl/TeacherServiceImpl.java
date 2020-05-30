@@ -108,6 +108,10 @@ public class TeacherServiceImpl implements TeacherService {
         }
         return b;
     }
+
+    public Teacher query(int id)throws Exception{
+        return teacherMapper.query(id);
+    }
     /**
      * 上传头像
      * @param

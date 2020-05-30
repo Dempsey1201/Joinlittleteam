@@ -25,8 +25,8 @@
 
     <insert id="addUser">
         INSERT INTO t_user
-        (username,email,password,sex,college)
-        VALUES (#{user.username},#{user.email},#{user.password},#{user.sex},#{user.college})
+        (username,email,password,sex,college,headUrl,path)
+        VALUES (#{user.username},#{user.email},#{user.password},#{user.sex},#{user.college},#{user.headUrl},#{user.path})
     </insert>
 
     <select id="listUser" resultType="user">
