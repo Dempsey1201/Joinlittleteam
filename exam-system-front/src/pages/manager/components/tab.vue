@@ -3,7 +3,7 @@
     >
         <el-menu
                 :collapse="check"
-                :default-active="this.$route.path"
+                :default-active="route[0].path"
                 class="el-menu-vertical-demo"
                 background-color="rgba(255,255,255,0.5)"
                 :router="bool"
