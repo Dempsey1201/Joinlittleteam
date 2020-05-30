@@ -3,6 +3,7 @@ package com.example.javaee.test;
 import com.example.javaee.JavaeeApplication;
 import com.example.javaee.controller.teacher.TeacherController;
 import com.example.javaee.entity.teacher.Teacher;
+import com.example.javaee.service.teacher.TeacherService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class TeacherTest {
     @Autowired
     TeacherController teacherController;
+    @Autowired
+    TeacherService teacherService;
 
     @Test
     public void testList()throws Exception{
@@ -60,6 +63,6 @@ public class TeacherTest {
     }
     @Test
     public void testQuery()throws Exception{
-        System.out.println(teacherController.query("test1"));
+        System.out.println(teacherService.query(30));
     }
 }

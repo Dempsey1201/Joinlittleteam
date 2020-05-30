@@ -71,6 +71,11 @@ public interface TeacherMapper {
      * @throws Exception
      */
     public List<Teacher> listTeacher()throws Exception;
+
+
+    public Teacher query(@Param("id")int id)throws Exception;
+
+
     /**
      * 查询
      * @return

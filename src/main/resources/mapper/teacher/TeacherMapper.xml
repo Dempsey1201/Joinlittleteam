@@ -26,8 +26,8 @@
 
     <insert id="addTeacher">
         INSERT INTO t_teacher
-        (teachername,card,password,college,sex,email)
-        VALUES (#{teacher.teachername},#{teacher.card},#{teacher.password},#{teacher.college},#{teacher.sex},#{teacher.email})
+        (teachername,card,password,college,sex,email,headUrl,path)
+        VALUES (#{teacher.teachername},#{teacher.card},#{teacher.password},#{teacher.college},#{teacher.sex},#{teacher.email},#{teacher.headUrl},#{teacher.path})
     </insert>
 
     <select id="listTeacher" resultType="teacher">
@@ -68,6 +68,13 @@
         SELECT *
         FROM t_teacher
         WHERE card=#{card}
+    </select>
+
+
+    <select id="query" resultType="teacher">
+        SELECT *
+        FROM t_teacher
+        WHERE id=#{id}
     </select>
 
     <!--<select id="queryReport" resultType="report">-->

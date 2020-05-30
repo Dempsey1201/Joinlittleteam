@@ -11,6 +11,8 @@ import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.File;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
@@ -59,6 +61,8 @@ public class UserController {
     public int addUser(User user) throws Exception{
         String str=user.getPassword();
         user.setPassword(getMD5String(str));
+        user.setHeadUrl("/img/user.png");
+        user.setPath("/yfn/user.png");
         return userService.addUser(user);
     }
 
@@ -84,9 +88,7 @@ public class UserController {
 
     @RequestMapping(value = "/email")
     public String email(String email) throws Exception{
-        System.out.println("1email"+email);
         String code=getRandom();
-        System.out.println("2email"+email+code);
         Boolean b=sendEmail(email,code);
         if(b==true){
             return code;
@@ -115,14 +117,12 @@ public class UserController {
     public String pictureupload(@RequestParam(value = "imgStr", required=false)String imgStr,int id)throws Exception{
         if (StringUtils.isEmpty(imgStr)) // 图像数据为空
             return "fail";
-        //System.out.println("begin");
         Decoder decoder = Base64.getDecoder();
         String words_to = "/yfn/";
         //String words_to = "e://yfn/";
         String son = id+"user"+getRandom()+".jpg";
         String path = words_to +son;
         String url = "/img/"+son;
-        System.out.println("user-head-try-catch");
         try {
             // Base64解码
             byte[] b = decoder.decode(imgStr);
@@ -131,14 +131,20 @@ public class UserController {
                     b[i] += 256;
                 }
             }
-            //System.out.println("path:"+path);
-            //System.out.println("url:"+url);
+
             OutputStream out = new FileOutputStream(path);
             out.write(b);
             out.flush();
             out.close();
-            //System.out.println("userService.uploadHead");
-            System.out.println(id+path+url);
+
+            String filename=userService.queryUser(id).getPath();
+            File file=new File(filename);
+            String[] strArray = filename.split("\\.");
+            int suffixIndex = strArray.length -1;
+            System.out.println(strArray[suffixIndex]);
+            if (strArray[suffixIndex].equals("jpg")){
+                file.delete();
+            }
             userService.uploadHead(id,path,url);
             return url;
         } catch (Exception e) {

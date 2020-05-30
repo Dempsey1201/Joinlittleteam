@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.math.BigInteger;
@@ -62,6 +63,8 @@ public class TeacherController {
         String str=teacher.getPassword();
         System.out.println("teacher"+sendEmail(teacher.getEmail(),teacher.getCard(),str));
         teacher.setPassword(getMD5String(str));
+        teacher.setHeadUrl("/img/teacher.png");
+        teacher.setPath("/yfn/teacher.png");
         return teacherService.addTeacher(teacher);
     }
     @RequestMapping(value = "/updatePassword")
@@ -112,7 +115,15 @@ public class TeacherController {
             out.write(b);
             out.flush();
             out.close();
-            System.out.println(id+path+url);
+
+            String filename=teacherService.query(id).getPath();
+            File file=new File(filename);
+            String[] strArray = filename.split("\\.");
+            int suffixIndex = strArray.length -1;
+            System.out.println(strArray[suffixIndex]);
+            if (strArray[suffixIndex].equals("jpg")){
+                file.delete();
+            }
             teacherService.uploadHead(id,path,url);
             return url;
         } catch (Exception e) {
