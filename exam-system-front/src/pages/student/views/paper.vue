@@ -56,9 +56,10 @@ export default {
   created() {
     //获取试卷信息
     axios
-      .get(this.url + "/paper/getPaperByClass", {
+      .get(this.url + "/paper/getPaperByClass2", {
         params: {
-          classno: this.$route.params.row.id
+          classno: this.$route.params.row.id,
+          sid:this.student.id
         }
       })
       .then(res => {

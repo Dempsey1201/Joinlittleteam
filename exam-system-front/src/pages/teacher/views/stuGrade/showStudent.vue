@@ -20,11 +20,11 @@
                     min-width="180">
             </el-table-column>
             <el-table-column
-                    label="总分"
+                    label="得分"
                     min-width="180"
             >
                 <template slot-scope="scope">
-                    {{scope.row.score?scope.row.score:'暂无成绩'}}
+                    {{scope.row.score?scope.row.score+"/"+fullScore:'暂无成绩'}}
                 </template>
             </el-table-column>
             <el-table-column
@@ -59,7 +59,8 @@
         },
         data(){
             return{
-                studentList:[]
+                studentList:[],
+                fullScore:this.$route.params.row.full_score
             }
         },
         methods:{
@@ -81,7 +82,8 @@
                     params: {
                         pid:this.$route.params.row.pid,// pid
                         classno:this.$route.params.classInfo.id,// 班级id
-                        sid:row.uid
+                        sid:row.uid,
+                        fullScore:this.$route.params.row.full_score
                     }
                 })
             }

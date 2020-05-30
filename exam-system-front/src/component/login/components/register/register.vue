@@ -7,9 +7,18 @@
                 :label-position="labelPosition"
                 :rules="rules"
         >
-            <el-form-item label="用户名" prop="username">
-                <el-input placeholder="请输入用户名" v-model="form.username"
+            <el-form-item label="邮箱" prop="email">
+                <el-input placeholder="请输入邮箱" v-model="form.email"
                 ></el-input>
+            </el-form-item>
+            <el-form-item label="" prop="identifyCode">
+                <el-input style="display:inline-block;width: 50%" placeholder="请输入验证码" v-model="form.identifyCode"
+                ></el-input>
+                <el-button
+                        style="display: inline-block;float: right"
+                        type="primary"
+                        @click="getCode"
+                >获取验证码{{time>0?' ('+time+') ':""}}</el-button>
             </el-form-item>
             <el-form-item label="密码" prop="password">
                 <el-input placeholder="请输入密码" v-model="form.password" show-password></el-input>
@@ -25,7 +34,8 @@
 </template>
 
 <script>
-	export default {
+    import {getcode,addUser} from "../../api/login";
+    export default {
 		name: "register",
         data(){
 	        let validatePass = (rule, value, callback) => {
@@ -47,21 +57,38 @@
 			        callback();
                 }
             }
+            let checkEmail = (rule, value, callback) => {
+                const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
+                if (!value) {
+                    return callback(new Error('邮箱不能为空'))
+                }
+                setTimeout(() => {
+                    if (mailReg.test(value)) {
+                        callback()
+                    } else {
+                        callback(new Error('请输入正确的邮箱格式'))
+                    }
+                }, 100)
+            }
 			return{
 				form:{
-					username:"",
+					email:"2873435684@qq.com",
                     password:"",
 					idenPassword:"",
-                    radio:"1"
+                    radio:"1",
+                    identifyCode:"",
+                    rightCode:""
                 },
+                time:0,
 				labelPosition:"left",
                 rules:{
-					username:[
+                    email:[
 						{
 							required:true,
-							message: '请输入用户名',
+							message: '请输入邮箱',
 							trigger: 'blur'
-						}
+						},
+                        { validator:checkEmail,trigger: 'blur'}
                     ],
                     password:[
 	                    {
@@ -69,7 +96,6 @@
 		                    message: '请输入密码',
 		                    trigger: 'blur'
 	                    },
-	                    { validator:validatePass,trigger: 'blur'}
                     ],
 	                idenPassword:[
 		                {
@@ -85,8 +111,14 @@
 			                message: '请选择身份',
 			                trigger: 'blur'
 		                }
+                    ],
+                    identifyCode:[
+                        {
+                            required:true,
+                            message: '请输入验证码',
+                            trigger: 'blur'
+                        },
                     ]
-
                 }
             }
         },
@@ -96,17 +128,62 @@
             }else {
                 this.form.radio="2"
             }
+            if(sessionStorage.getItem("code")){
+                this.form.rightCode = sessionStorage.getItem("code");
+            }
         },
         methods:{
 	        submitForm(formName){
 		        this.$refs[formName].validate((valid) => {
 			        if (valid) {//表单验证成功
 			        	//开始进行服务器验证
-				        alert('submit!');
+                        if(this.form.identifyCode!=this.form.rightCode){
+                            this.$message.error('验证码不正确');
+                            return ;
+                        }
+                        addUser({
+                            email:this.form.email,
+                            password:this.form.password
+                        }).then(res=>{
+                            if(res.data){
+                                // 跳转到
+                                this.$message({
+                                    message: '注册成功',
+                                    type: 'success'
+                                });
+                                this.$router.push({
+                                    path:"/student.html/login"
+                                })
+
+                            }
+                        })
 			        } else {
 				        return false;
 			        }
 		        });
+            },
+            getCode(){
+	            if(this.time>0){
+                    this.$message({
+                        message: '请稍后再进行操作',
+                        type: 'warning'
+                    });
+                    return;
+                }
+
+                getcode({
+                    email:this.form.email
+                }).then(res=>{
+                    this.form.rightCode = res.data+"";
+                    sessionStorage.setItem("code",this.form.rightCode);
+                    this.time = 60;
+                    let timer = setInterval(()=>{
+                        this.time -= 1;
+                        if(this.time===0)clearInterval(timer);
+                    },1000)
+                }).catch(err=>{
+                    throw err;
+                })
             }
         }
 	}

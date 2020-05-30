@@ -67,19 +67,19 @@
                 let list2 = [];
                 this.questionList.forEach((item,index)=>{
                     switch (item.type) {
-                        case '1':
+                        case 1:
                             score+=3;
                             break;
-                        case '2':
+                        case 2:
                             score+=3;
                             break;
-                        case '3':
+                        case 3:
                             score+=2;
                             break;
-                        case '4':
+                        case 4:
                             score+=5;
                             break;
-                        case '5':
+                        case 5:
                             score+=2;
                             break;
                     }

@@ -5,6 +5,12 @@
       <el-table-column prop="pname" label="试卷名称" min-width="170"></el-table-column>
       <el-table-column prop="teacher" label="老师" min-width="170"></el-table-column>
       <el-table-column prop="score" label="成绩" min-width="170"></el-table-column>
+      <el-table-column align="center" min-width="210">
+        <template slot="header" slot-scope="scope"></template>
+        <template slot-scope="scope">
+          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <pageTool :step="step" :list="scoreList" @check="changeList"></pageTool>
   </div>
@@ -25,11 +31,12 @@ export default {
       url: axios.defaults.baseURL,
       student: JSON.parse(sessionStorage.getItem("userInfo")),
       scoreList: [],
-      search: ""
+      search: "",
+      item: ""
     };
   },
   created() {
-      //获取我的成绩
+    //获取我的成绩
     axios
       .get(this.url + "/paper/getScoreByUser", {
         params: {
@@ -38,22 +45,34 @@ export default {
       })
       .then(res => {
         console.log(res);
-         this.scoreList = res.data;
+        this.scoreList = res.data;
         this.currentList = this.scoreList.slice(0, this.step);
       });
   },
   methods: {
-     //分页
+    //分页
     changeList(list) {
       this.currentList = list;
     },
+    //进入试卷页面
     handleEdit(index, row) {
-      this.$router.push({
-        name: "paper",
-        params: {
-          row: row
-        }
-      });
+      //通过pid获取试卷信息
+      axios
+        .get(this.url + "/paper/getPaperById", {
+          params: {
+            pid: row.pid
+          }
+        })
+        .then(re => {
+          console.log(re);
+          this.$router.push({
+            path: "/student.html/detailPaper",
+            query: {
+              item: re.data[0],
+              progress: true
+            }
+          });
+        });
     }
   }
 };

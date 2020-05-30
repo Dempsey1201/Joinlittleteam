@@ -95,7 +95,7 @@
                     <el-form-item prop="rightAnswer">
                         <el-col class="line" :span="6">
                             <el-input
-                                    :disabled="true"
+                                    :readonly="true"
                                     placeholder="答案内容，多个答案用空格分隔" v-model="item.stuAnswer"
                             ></el-input>
                         </el-col>
@@ -123,7 +123,7 @@
                     <el-form-item prop="rightAnswer">
                         <el-col class="line" :span="6">
                             <el-input
-                                    :disabled="true"
+                                    :readonly="true"
                                     type="textarea"
                                     :rows="2"
                                     placeholder="答案内容" v-model="item.stuAnswer"
@@ -132,29 +132,40 @@
                     </el-form-item>
                     <p
                             v-if="item.getScore>=0"
-                            class="result" :class="item.stuAnswer===item.answer?'right':'wrong'">
-                        <span :class="item.stuAnswer===item.answer?'el-icon-circle-check':'el-icon-circle-close'">
-                            {{item.stuAnswer===item.answer?"正确":"错误"}}
+                            class="result" :class="item.getScore>=item.qscore?'right':'wrong'">
+                        <span :class="item.getScore >= item.qscore?'el-icon-circle-check':'el-icon-circle-close'">
+                            {{item.getScore >= item.qscore?"正确":"错误"}}
                         </span>
                         <span style="margin-left: 10px">答案：{{item.answer}}</span>
                         <span style="position: absolute;right: 10px">得分：{{item.getScore}}</span>
                     </p>
+                    <el-form-item v-else label="给出得分">
+                        <el-radio-group  v-model="score[index].getScore">
+                            <el-radio :label="0">0分</el-radio>
+                            <el-radio :label="1">1分</el-radio>
+                            <el-radio :label="2">2分</el-radio>
+                            <el-radio :label="3">3分</el-radio>
+                            <el-radio :label="4">4分</el-radio>
+                            <el-radio :label="5">5分</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
                 </el-form>
             </el-row>
-
+            <el-button v-if="score.length" style="display: block;margin-top: 10px;" type="primary" size="small" @click="submitScore">提交评分</el-button>
         </div>
     </div>
 </template>
 
 <script>
-    import {getStuPaper} from "../../api/stuGrade";
+    import {getStuPaper,addScore} from "../../api/stuGrade";
 
     export default {
         name: "showStuPaper",
         data(){
             return{
                 questionList:[],
-                labelPosition:"left"
+                labelPosition:"left",
+                score:[]
             }
         },
         created() {
@@ -173,6 +184,11 @@
                     que[i] = Object.assign(list[i],answer[i]);
                 }
                 this.questionList = que;
+                this.score = this.questionList.filter(item=>item.getScore===-1)
+                    .map(item=>({
+                    getScore:0,
+                    qid:item.qid
+                }))
             }).catch(err=>{
                 throw err;
             })
@@ -187,10 +203,44 @@
                         },
                         row:{
                             pid:this.$route.params.pid,
+                            full_score:this.$route.params.fullScore
                         }
                     }
                 })
             },
+            submitScore(){
+                if(confirm("确定要提交吗")){
+                    this.score.forEach((item)=>{
+                        addScore({
+                            pid:this.$route.params.pid,
+                            qid:item.qid,
+                            sid:this.$route.params.sid,
+                            getscore:item.getScore
+                        }).then(res=>{
+                            if(res.data){
+                                this.$message({
+                                    message: '提交成功',
+                                    type: 'success'
+                                });
+                                this.$router.push({
+                                    name: 'showStudent',
+                                    params: {
+                                        classInfo:{
+                                            id:this.$route.params.classno,
+                                        },
+                                        row:{
+                                            pid:this.$route.params.pid,
+                                        }
+                                    }
+                                })
+                            }
+                        }).catch(err=>{
+                            throw err;
+                        })
+                    })
+
+                }
+            }
         }
     }
 </script>

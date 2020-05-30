@@ -289,7 +289,6 @@
 			},
 			finalSubmit(){
 	        	let list = this.questionList.filter(item=>!item.isOK);
-	        	console.log(list)
 	        	if(list.length){
 			        this.$message.error('请填写所有的试题并提交');
                 }else{

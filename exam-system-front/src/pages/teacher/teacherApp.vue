@@ -24,6 +24,20 @@
 </script>
 
 <style lang="less">
+    .el-checkbox__input.is-disabled + span.el-checkbox__label{
+        color: #606266 !important;
+    }
+    .el-radio__input.is-disabled+span.el-radio__label{
+        color: #606266 !important;
+    }
+    .el-radio__input.is-disabled.is-checked .el-radio__inner{
+        border-color: #409EFF !important;
+        background: #409EFF !important;
+    }
+    .el-checkbox__input.is-disabled.is-checked .el-checkbox__inner{
+        border-color: #409EFF !important;
+        background: #409EFF !important;
+    }
     html{
         margin: 0;
         padding: 0;

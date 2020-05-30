@@ -2,7 +2,7 @@
     <div id="headerTab">
         <div class="left">
             <img :src="managerInfo.url" alt="">
-            <span>{{managerInfo.name}}</span>
+            <span>管理员</span>
         </div>
         
         <div class="head">成才考试系统管理</div>

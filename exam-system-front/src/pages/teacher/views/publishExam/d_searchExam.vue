@@ -1,6 +1,6 @@
 <template>
     <div id="searchExam">
-        <div v-if="!paper&&!questionList.length" class="list">
+        <div v-show="!paper&&!questionList.length" class="list">
             <el-col :span="8" style="position: relative">
                 <el-input
                         placeholder="搜索试卷"
@@ -28,13 +28,13 @@
                         min-width="180">
                 </el-table-column>
                 <el-table-column
-                        prop="start_time"
-                        label="开始时间"
+                        prop="teacher"
+                        label="老师"
                         min-width="180">
                 </el-table-column>
                 <el-table-column
-                        prop="end_time"
-                        label="结束时间"
+                        prop="full_score"
+                        label="总分"
                         min-width="180"
                 >
                 </el-table-column>

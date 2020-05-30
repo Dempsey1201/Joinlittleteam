@@ -27,3 +27,10 @@ export const delPaper  = (info)=>{
         params:info
     })
 }
+
+// 老师批卷
+export const addScore  = (info)=>{
+    return axios.get("/paper/correctByTeacher",{
+        params:info
+    })
+}
