@@ -156,9 +156,10 @@ public class PaperServiceImpl implements PaperService {
         for(i = 0;i < storePaper.length;i++){
             Integer integer = storePaper[i].getQid();
             String string = storePaper[i].getAnswer();
+            Integer intege = questionMapper.getQuestionById(storePaper[i].getQid()).getQtype();
             answerMapper.insertAnswer(sid,integer,string);
             String ans = questionMapper.getAnswer(integer);
-            if(ans != null && ans.equals(string) && ans.length()!=0 && !ans.equals(" ")){
+            if(ans.equals(string) && intege != 4){
                 Integer integer1 = scoreMapper.getQscore(integer,pid);
                 System.out.println(integer1);
                 if(integer1 != -1){
@@ -166,7 +167,7 @@ public class PaperServiceImpl implements PaperService {
                 }
                 answerMapper.correctByTeacher(integer,sid,integer1);
             }else {
-                if(ans.equals(" ")||ans.length() == 0){
+                if(intege == 4){
                     answerMapper.correctByTeacher(integer,sid,-1);
                 }else {
                     answerMapper.correctByTeacher(integer,sid,0);

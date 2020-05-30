@@ -20,6 +20,12 @@
         from t_question
     </select>
 
+    <select id="getQuestionById" resultType="Question1">
+        select *
+        from t_question
+        where qid = #{qid}
+    </select>
+    
     <insert id="insertNewQuestion" parameterType="Question1">
         insert into t_question(question,oa,ob,oc,od,answer,qtype,author,subject)
         values (#{question.question},#{question.oa},#{question.ob},#{question.oc},#{question.od},#{question.answer},#{question.qtype},#{question.author},#{question.subject})
