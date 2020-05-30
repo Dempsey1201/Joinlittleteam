@@ -65,6 +65,11 @@ public class PaperController {
         return paperService.getPaperByClass(classno);
     }
 
+    @ResponseBody
+    @RequestMapping("/getPaperByClass2")
+    public List<Paper> getPaperByClass2(Integer sid,Integer classno){
+        return paperService.getPaperByClass2(sid,classno);
+    }
     /**
      * @param sid
      * @param qid
@@ -86,7 +91,7 @@ public class PaperController {
     @ResponseBody
     @RequestMapping("/storeAnswerAndJudge")
     boolean storeAnswerAndJudge(@RequestBody StorePaper[] storePaper) {
-        return paperService.storeAnswer(storePaper) && paperService.isDone(storePaper[0].getSid(), storePaper[0].getPid());
+        return paperService.isDone(storePaper[0].getSid(), storePaper[0].getPid()) && paperService.storeAnswer(storePaper);
     }
 
     @ResponseBody
@@ -169,5 +174,11 @@ public class PaperController {
     @RequestMapping("/getPaperByNo")
     public Map<String,Object> getPaperByNo(Integer sid){
         return paperService.getPaperByNo(sid);
+    }
+
+    @ResponseBody
+    @RequestMapping("/getPaperById")
+    public List<Paper> getPaperById(Integer pid){
+        return paperService.getPaperById(pid);
     }
 }

@@ -68,4 +68,10 @@
         from information_schema.`TABLES`
         where table_name='t_paper'
     </select>
+    
+    <select id="getPaperById" resultType="Paper">
+        select *
+        from t_paper
+        where pid = #{pid}
+    </select>
 </mapper>

@@ -26,4 +26,5 @@ public interface PaperMapper {
     List<Question1> getPaperQuestion(Integer pid);
     boolean insertQuestionToPaper(Integer pid,Integer no,Integer qid,Integer qscore);
     Integer selectMainKey();
+    List<Paper> getPaperById(Integer pid);
 }

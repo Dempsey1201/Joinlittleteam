@@ -41,4 +41,6 @@ public interface PaperService {
     boolean reusePaper(Integer pid,Integer pid1);
     List<UtilClass>  getScoreByPaper(Integer pid,Integer claano);
     Map<String,Object> getPaperByNo(Integer sid);
+    List<Paper> getPaperByClass2(Integer sid,Integer classno);
+    List<Paper> getPaperById(Integer pid);
 }

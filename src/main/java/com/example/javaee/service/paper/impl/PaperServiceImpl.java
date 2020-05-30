@@ -201,6 +201,22 @@ public class PaperServiceImpl implements PaperService {
     }
 
     @Override
+    public List<Paper> getPaperByClass2(Integer sid,Integer classno){
+        List<Paper> list = new ArrayList<>();
+        list = answerMapper.getPaperByClass(classno);
+        for(int i =0; i < list.size(); i++){
+            try{
+                if(paperMapper.getDone(sid,list.get(i).getPid()) == 1){
+                    list.get(i).setDone(true);
+                }
+            }catch (NullPointerException e){
+                list.get(i).setDone(false);
+            }
+        }
+        return list;
+    }
+
+    @Override
     public Integer getScore(Integer sid,Integer pid){
         return scoreMapper.getScore(sid,pid);
     }
@@ -213,6 +229,11 @@ public class PaperServiceImpl implements PaperService {
     @Override
     public List<UtilClass> getClassAnswer(Integer sid,Integer qid,Integer pid){
         return answerMapper.getClassAnswer(sid,qid,pid);
+    }
+
+    @Override
+    public List<Paper> getPaperById(Integer pid){
+        return paperMapper.getPaperById(pid);
     }
 
     @Override
