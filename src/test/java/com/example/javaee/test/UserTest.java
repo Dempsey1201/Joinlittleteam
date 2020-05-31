@@ -61,7 +61,7 @@ public class UserTest {
     }
     @Test
     public void testDeleteUser()throws Exception{
-        System.out.println(userController.delete(18));
+        System.out.println(userController.delete(29));
     }
     @Test
     public void testUpdateUser()throws Exception{

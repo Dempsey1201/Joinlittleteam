@@ -31,8 +31,8 @@ public class AdminTest {
     @Test
     public void testUpdate()throws Exception{
         Admin admin=new Admin();
-        admin.setId(1);
-        admin.setPassword("test");
+        admin.setId(2);
+        admin.setPassword("test123`");
         admin.setAdminname("test22");
         System.out.println(adminController.update(admin));
     }

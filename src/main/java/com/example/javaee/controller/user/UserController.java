@@ -101,7 +101,7 @@ public class UserController {
         if(s!=null){
             String[] arr=userService.queryUser(id).getClassno().split(",");
             for(String x:arr){
-                if(x.equals("")){
+                if(!x.equals("")){
                     int n=Integer.parseInt(x);
                     classroomController.outClassRoom(id,n);
                 }
