@@ -9,7 +9,7 @@
         <el-table-column prop="major" label="科目" min-width="170"></el-table-column>
         <el-table-column align="center" min-width="230">
           <template slot="header" slot-scope="scope">
-           <span>操作</span>
+            <span>操作</span>
           </template>
           <template slot-scope="scope">
             <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看</el-button>
@@ -17,14 +17,14 @@
           </template>
         </el-table-column>
       </el-table>
-       <pageTool :step="step" :list="classList" @check="changeList"></pageTool>
+      <pageTool :step="step" :list="classList" @check="changeList"></pageTool>
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import pageTool from "../components/pageTool"
+import pageTool from "../components/pageTool";
 export default {
   name: "showClass",
   components: {
@@ -37,7 +37,7 @@ export default {
       student: JSON.parse(sessionStorage.getItem("userInfo")),
       classList: [],
       search: "",
-      step:8
+      step: 8
     };
   },
   created() {
@@ -56,27 +56,29 @@ export default {
   methods: {
     // 退出班级
     handleDelete(index, row) {
-      console.log(row);
-      axios
-        .get(this.url + "/class/outClassRoom", {
-          params: {
-            id: this.student.id,
-            cid: row.id
-          }
-        })
-        .then(res => {
-          console.log(res);
-          axios
-            .get(this.url + "/class/queryUserClassroom", {
-              params: {
-                id: this.student.id
-              }
-            })
-            .then(res => {
-              console.log(res);
-              this.classList = res.data;
-            });
-        });
+      if (confirm("你想要退出这个班级嘛？")) {
+        console.log(row);
+        axios
+          .get(this.url + "/class/outClassRoom", {
+            params: {
+              id: this.student.id,
+              cid: row.id
+            }
+          })
+          .then(res => {
+            console.log(res);
+            axios
+              .get(this.url + "/class/queryUserClassroom", {
+                params: {
+                  id: this.student.id
+                }
+              })
+              .then(res => {
+                console.log(res);
+                this.classList = res.data;
+              });
+          });
+      }
     },
     // 进入班级
     handleEdit(index, row) {
@@ -87,9 +89,9 @@ export default {
         }
       });
     },
-    changeList(list){
-                this.currentList = list;
-            }
+    changeList(list) {
+      this.currentList = list;
+    }
   }
 };
 </script>

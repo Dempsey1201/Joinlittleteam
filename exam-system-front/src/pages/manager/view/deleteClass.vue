@@ -58,38 +58,44 @@ export default {
   methods: {
     // 删除班级
     handleDelete(index, row) {
-      console.log(row);
-      axios
-        .get(this.url + "/class/delete", {
-          params: {
-            id: row.id
-          }
-        })
-        .then(res => {
-          console.log(res);
-          axios.get(this.url + "/class/list").then(res => {
+      if (confirm("确定要删除班级嘛？")) {
+        console.log(row);
+        axios
+          .get(this.url + "/class/delete", {
+            params: {
+              id: row.id
+            }
+          })
+          .then(res => {
             console.log(res);
-            this.classList = res.data;
-            this.currentList = this.classList.slice(0, this.step);
+            axios.get(this.url + "/class/list").then(res => {
+              console.log(res);
+              this.classList = res.data;
+              this.currentList = this.classList.slice(0, this.step);
+            });
           });
-        });
+      }
     },
-    //按照班级的classno搜索
+    //按照班级的名模糊搜索搜索
     searchClass() {
-        // class/queryClassroom?classno=45437fd391bc797cabf953b898a58
+      // class/queryClassroom?classno=45437fd391bc797cabf953b898a58
 
       axios
-        .get(this.url + "/class/queryClassroom", {
+        .get(this.url + "/class/queryLike", {
           params: {
-            classno: this.search
+            name: this.search
           }
         })
         .then(res => {
-          console.log(res);
-          this.classList =[];
-          this.classList.push(res.data);
+          console.log(res.data);
+          // if(res.data==''){
+          //   res.data=[]
+          // }
+          this.classList = [];
+          this.classList=res.data;
+          console.log(this.classList);
           this.currentList = this.classList.slice(0, this.step);
-          this.search=''
+          this.search = "";
         });
     },
     //分页
