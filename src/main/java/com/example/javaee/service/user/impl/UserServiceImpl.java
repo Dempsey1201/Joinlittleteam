@@ -96,8 +96,10 @@ public class UserServiceImpl implements UserService {
         String[] arr=str.split(",");
         List<User> list=new ArrayList<User>();
         for(String x:arr){
-            int n=Integer.parseInt(x);
-            list.add(userMapper.queryUser(n));
+            if (!x.equals("")){
+                int n=Integer.parseInt(x);
+                list.add(userMapper.queryUser(n));
+            }
         }
         return list;
 

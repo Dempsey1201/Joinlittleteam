@@ -57,11 +57,11 @@ public class UserTest {
     }
     @Test
     public void testQueryClass()throws Exception{
-        System.out.println(userController.queryClass(1));
+        System.out.println(userController.queryClass(32));
     }
     @Test
     public void testDeleteUser()throws Exception{
-        System.out.println(userController.delete(2));
+        System.out.println(userController.delete(18));
     }
     @Test
     public void testUpdateUser()throws Exception{

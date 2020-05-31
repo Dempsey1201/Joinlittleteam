@@ -51,7 +51,7 @@ public class ClassroomTest {
 
     @Test
     public void testJoin()throws Exception{
-        System.out.println(classroomController.joinClassRoom(1,"aa"));
+        System.out.println(classroomController.joinClassRoom(1,"305663071050f784e1a554ffbaf16e0f"));
     }
 
     @Test
