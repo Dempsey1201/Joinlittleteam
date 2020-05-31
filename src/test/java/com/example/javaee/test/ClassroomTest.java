@@ -51,12 +51,12 @@ public class ClassroomTest {
 
     @Test
     public void testJoin()throws Exception{
-        System.out.println(classroomController.joinClassRoom(1,"305663071050f784e1a554ffbaf16e0f"));
+        System.out.println(classroomController.joinClassRoom(20,"f043a866ea9bb7f9bd5a90a1147ff8e9"));
     }
 
     @Test
     public void testOut()throws Exception{
-        System.out.println(classroomController.outClassRoom(1,9));
+        System.out.println(classroomController.outClassRoom(12,34));
     }
 
     @Test

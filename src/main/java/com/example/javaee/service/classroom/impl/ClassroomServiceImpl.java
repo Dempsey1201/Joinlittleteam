@@ -47,9 +47,11 @@ public class ClassroomServiceImpl implements ClassroomService {
     public int joinClassroom(int id,int cid) throws Exception{
         User user=userService.queryUser(id);
         List<User> list=userService.queryClass(cid);
-        for(User u:list){
-            if(id==user.getId()){
-                return -1;
+        if(list!=null){
+            for(User u:list){
+                if(id==u.getId()){
+                    return -1;
+                }
             }
         }
 
