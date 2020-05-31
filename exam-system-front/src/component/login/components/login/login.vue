@@ -111,8 +111,8 @@
 			        //进行下一步，向后端发送请求
                     if(this.form.radio=='1'){
                         studentLogin({
-                            email:"",
-                            password:""
+                            email:this.form.email,
+                            password:this.form.password
                         }).then(res=>{
                             if(!res.data){
                                 this.$message.error('密码或用户名不正确');
@@ -128,8 +128,8 @@
                         })
                     }else if(this.form.radio=='2'){
                         teacherLogin({
-                            card:"",
-                            password:""
+                            card:this.form.card,
+                            password:this.form.password
                         }).then(res=>{
                             if(res.data){
                                 sessionStorage.setItem("userInfo",JSON.stringify(res.data))
