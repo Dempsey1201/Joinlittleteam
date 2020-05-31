@@ -25,7 +25,7 @@
         data(){
 			return{
 				bool:true,
-                route:this.$router.options.routes.slice(1,this.$router.options.routes.length)
+                route:this.$router.options.routes.slice(2,this.$router.options.routes.length)
             }
         },
         props:{

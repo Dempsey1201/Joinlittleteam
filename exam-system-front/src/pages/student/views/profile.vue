@@ -16,10 +16,25 @@
           <el-button type="primary" plain @click="changeNick" style="margin-left: 10px" v-else>确定</el-button>
         </el-form-item>
         <el-form-item label="学校">
-          <label>{{student.college}}</label>
+          <label v-if="isShowcoll">{{student.college}}</label>
+          <el-input v-model="coll" style="width: 200px" v-else></el-input>
+          <el-button
+            type="primary"
+            plain
+            @click="changecollege"
+            style="margin-left: 10px"
+            v-if="isShowcoll"
+          >修改学校</el-button>
+          <el-button
+            type="primary"
+            plain
+            @click="changecollege2"
+            style="margin-left: 10px"
+            v-else
+          >确定</el-button>
         </el-form-item>
         <el-form-item label="头像">
-          <img :src="url+imgUrl" alt width="80px" height="80px"/>
+          <img :src="url+imgUrl" alt width="80px" height="80px" />
           <el-button
             type="primary"
             @click="upload"
@@ -94,7 +109,7 @@
             </span>
           </el-dialog>
         </el-form-item>
-        <el-form-item label="应邀做题">
+        <el-form-item label="加入班级">
           <el-input v-model="acceptNum" style="width: 200px"></el-input>
           <el-button type="primary" plain @click="accept" style="margin-left: 10px">接受邀请</el-button>
         </el-form-item>
@@ -111,12 +126,14 @@ export default {
   data() {
     return {
       url: axios.defaults.baseURL,
-      imgUrl:"",
+      imgUrl: "",
       student: JSON.parse(sessionStorage.getItem("userInfo")),
       //从后端请求的学生信息
       nickname: "",
+      coll: "",
       isShow: true,
       isShow2: true,
+      isShowcoll: true,
       //修改密码的弹窗
       dialogVisible: false,
       //修改密码
@@ -158,6 +175,30 @@ export default {
     change1() {
       this.isShow = !this.isShow;
     },
+    //修改学校
+    changecollege() {
+      this.isShowcoll = !this.isShowcoll;
+    },
+    changecollege2() {
+      console.log("click");
+      this.isShowcoll = !this.isShowcoll;
+      //像后端传送数据
+      axios
+        .get(this.url + "/user/updateUser", {
+          params: {
+            id: this.student.id,
+            username: this.student.username,
+            email: this.student.email,
+            college: this.coll
+          }
+        })
+        .then(res => {
+          console.log(res);
+          this.student.college = this.coll;
+          this.coll = "";
+        });
+    },
+
     changeNick() {
       console.log("click");
       this.isShow = !this.isShow;
@@ -167,7 +208,8 @@ export default {
           params: {
             id: this.student.id,
             email: this.student.email,
-            username: this.nickname
+            username: this.nickname,
+            college: this.student.college
           }
         })
         .then(res => {
@@ -186,23 +228,30 @@ export default {
         inputErrorMessage: "邮箱格式不正确"
       })
         .then(({ value }) => {
-          this.$message({
-            type: "success",
-            message: "你的邮箱是: " + value
-            //像后端传输邮箱
-          });
-          axios
-            .get(this.url + "/user/updateUser", {
-              params: {
-                id: that.student.id,
-                email: value,
-                username: that.student.username
-              }
-            })
-            .then(res => {
-              console.log(res);
-              that.student.email = value;
+          if (value == "") {
+            this.$message({
+              type: "info",
+              message: "邮箱输入不能为空"
             });
+          } else {
+            this.$message({
+              type: "success",
+              message: "你的邮箱是: " + value
+              //像后端传输邮箱
+            });
+            axios
+              .get(this.url + "/user/updateUser", {
+                params: {
+                  id: that.student.id,
+                  email: value,
+                  username: that.student.username
+                }
+              })
+              .then(res => {
+                console.log(res);
+                that.student.email = value;
+              });
+          }
         })
         .catch(() => {
           this.$message({
@@ -254,20 +303,34 @@ export default {
         //像后端传送数据
         console.log(this.acceptNum);
         axios
-        .get(this.url + "/class/joinClassRoom", {
-          params: {
-            id: this.student.id,
-            classno: this.acceptNum
-          }
-        })
-        .then(res => {
-          console.log(res);
-          this.acceptNum = "";
-          this.$message({
-            message: "传送成功",
-            type: "success"
+          .get(this.url + "/class/joinClassRoom", {
+            params: {
+              id: this.student.id,
+              classno: this.acceptNum
+            }
+          })
+          .then(res => {
+            console.log(res);
+            this.acceptNum = "";
+            if (res.data == -1) {
+              this.$message({
+                message: "不可重复加入班级",
+                type: "error"
+              });
+            }
+            if (res.data == 2) {
+              this.$message({
+                message: "成功加入班级",
+                type: "error"
+              });
+            }
+            if (res.data == (0 || 1)) {
+              this.$message({
+                message: "加入失败，重新输入邀请码",
+                type: "error"
+              });
+            }
           });
-        });
       }
     },
     //上传图片问题
@@ -303,19 +366,21 @@ export default {
         reader.onloadend = function() {
           //将转换结果赋值给img标签
           that.student.headUrl = reader.result;
-          var base64=reader.result.split(',')[1];
+          var base64 = reader.result.split(",")[1];
           console.log(base64);
           //像后端传送base64格式的图片
-          var img={id: that.student.id,imgStr: base64}
+          var img = { id: that.student.id, imgStr: base64 };
           axios
-            .post(that.url + "/user/uploadHead", qs.stringify(img),{headers:{'Content-Type':'application/x-www-form-urlencoded'}})
+            .post(that.url + "/user/uploadHead", qs.stringify(img), {
+              headers: { "Content-Type": "application/x-www-form-urlencoded" }
+            })
             .then(res => {
               console.log(res);
-              that.imgUrl=res.data;
+              that.imgUrl = res.data;
               console.log(that.imgUrl);
               //清除缓存
               that.$refs.upload.clearFiles();
-              that.$emit('imgUrl', that.imgUrl);
+              that.$emit("imgUrl", that.imgUrl);
             });
           //输出结果
           console.log(reader.result);

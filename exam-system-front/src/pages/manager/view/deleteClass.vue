@@ -7,9 +7,9 @@
       <el-table-column prop="college" label="学校" min-width="140"></el-table-column>
       <el-table-column prop="major" label="专业" min-width="140"></el-table-column>
       <el-table-column prop="teachername" label="老师" min-width="140"></el-table-column>
-      <el-table-column align="center" min-width="100" label="操作">
+      <el-table-column align="center" min-width="200" label="操作">
         <template slot-scope="scope">
-          <!-- <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看</el-button> -->
+          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看</el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -88,6 +88,15 @@ export default {
     //分页
     changeList(list) {
       this.currentList = list;
+    },
+    //进入班级
+    handleEdit(index,row){
+       this.$router.push({
+        name: "stu",
+        params: {
+          row: row
+        }
+      });
     }
   }
 };
