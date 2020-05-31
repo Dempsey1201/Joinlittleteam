@@ -14,7 +14,12 @@
     </div>
     <!-- <div class="noneExam" v-if="isShow == false">请选择班级查看试卷信息！</div> -->
     <!-- <div class="info" v-else> -->
-    <div class="info" v-for="item,index in examList" @click="goPaper(item,progress)">
+    <div
+      class="info"
+      v-for="item,index in examList"
+      @click="goPaper(item,progress)"
+      style="border:1px solid rgba(26, 26, 26, 0.08);box-shadow: 0 1px 4px rgba(26, 26, 26, 0.08);background: #fff"
+    >
       <div class="top">
         <div class="logo">
           <i class="el-icon-monitor"></i>
@@ -49,6 +54,7 @@ export default {
   name: "rightContent",
   data() {
     return {
+      starttime: "",
       url: axios.defaults.baseURL,
       student: JSON.parse(sessionStorage.getItem("userInfo")), //学生的信息
       //查询班级
@@ -64,7 +70,6 @@ export default {
     };
   },
   created() {
-    var that = this;
     this.getExam("0");
   },
   methods: {
@@ -79,8 +84,15 @@ export default {
         .then(res => {
           console.log(res.data);
           this.examList = res.data.试卷信息;
+          // this.starttime = this.examList.start_time;
+          // // 定义结束时间戳
+          // const start = Date.parse(new Date(this.starttime));
+          // // 定义当前时间戳
+          // const now = Date.parse(new Date());
+
           if (e == "0") {
             this.examList = this.examList.filter(item => item.done == false);
+            this.examList = this.examList.filter(item => (Date.parse(new Date(item.start_time))<=Date.parse(new Date())));
             console.log(this.examList);
           } else {
             this.examList = this.examList.filter(item => item.done == true);

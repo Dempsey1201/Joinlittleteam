@@ -1,15 +1,20 @@
 <template>
   <div class="detailPaper">
     <div class="wrap">
-      <div class="clock" v-if="!over && item.last_time!=0 && !progress">距考试截至时间：{{min}}分 {{sec}}秒</div>
-      <div v-else-if="!over" class="clock">距离截至时间：{{d}}天 {{h}}时 {{m}}分 {{s}}秒</div>
-      <div class="clock" v-else-if="over&&!progress">您已经错过了答题时间</div>
-      <div class="ti">
+      <div style="width:30%" class="btn">
+        <el-button type="primary" @click="goHome">返回首页</el-button>
+      </div>
+      <div class="ti" style="width:40%">
         <div class="title">{{item.pname}}</div>
         <div class="info">
           <span class="teacher">老师：{{item.teacher}}</span>
           <span class="endtime">截至时间：{{item.end_time}}</span>
         </div>
+      </div>
+      <div style="width:30%" class="clock">
+        <div v-if="!over && item.last_time!=0 && !progress">距考试截至时间：{{min}}分 {{sec}}秒</div>
+        <div v-else-if="!over">距离截至时间：{{d}}天 {{h}}时 {{m}}分 {{s}}秒</div>
+        <div v-else-if="over&&!progress">您已经错过了答题时间</div>
       </div>
     </div>
     <div class="content">
@@ -165,14 +170,14 @@ export default {
       last_time: 0,
       min: 0,
       sec: 0,
-      shortAnswer:'',
-      fullScore:0,
+      shortAnswer: "",
+      fullScore: 0
     };
   },
   created() {
     this.item = this.$route.query.item;
     this.progress = this.$route.query.progress;
-    console.log(this.item+this.progress);
+    console.log(this.item + this.progress);
     this.endtime = this.item.end_time;
     this.last_time = this.item.last_time;
     var that = this;
@@ -207,8 +212,8 @@ export default {
           if (this.question[i].qtype == 2) {
             this.answer[i] = [];
           }
-          this.fullScore=this.question[i].qscore+this.fullScore;
-          console.log('总分'+this.fullScore);
+          this.fullScore = this.question[i].qscore + this.fullScore;
+          console.log("总分" + this.fullScore);
         }
       });
   },
@@ -216,6 +221,12 @@ export default {
     this.countTime();
   },
   methods: {
+    //返回首页
+    goHome: function() {
+      this.$router.push({
+        name: "Home",
+      });
+    },
     // 时间倒计时
     countTime: function() {
       // 定义结束时间戳
@@ -268,10 +279,10 @@ export default {
       }
       for (var i = 0; i < this.question.length; i++) {
         if (this.question[i].qtype == 2) {
-          this.answer[i]=this.answer[i].join("");
+          this.answer[i] = this.answer[i].join("");
         }
-        if(this.question[i].qtype == 4){
-          this.shortAnswer='请耐心等待老师批改你简答题呀'
+        if (this.question[i].qtype == 4) {
+          this.shortAnswer = "请耐心等待老师批改你简答题呀";
         }
         let pid = this.item.pid;
         let sid = this.student.id;
@@ -294,7 +305,13 @@ export default {
             .then(res => {
               console.log(res);
               this.$alert(
-                '你选择和填空的的成绩为'+res.data+'/'+this.fullScore + "分,"+this.shortAnswer+'继续加油',
+                "你选择和填空的的成绩为" +
+                  res.data +
+                  "/" +
+                  this.fullScore +
+                  "分," +
+                  this.shortAnswer +
+                  "继续加油",
                 "恭喜你",
                 {
                   confirmButtonText: "确定",
@@ -354,6 +371,8 @@ input {
 }
 .detailPaper {
   height: 800px;
+  overflow-x: hidden;
+  overflow-y: scroll;
   margin-top: 4px;
   padding: 4px;
   box-sizing: border-box;
@@ -365,10 +384,14 @@ input {
     display: flex;
     align-content: center;
     border-bottom: 1px solid #eee;
+    .btn {
+      text-align: center;
+      padding-top: 20px;
+      vertical-align: middle;
+    }
     .clock {
       padding-top: 20px;
       vertical-align: middle;
-      width: 26%;
       text-align: center;
       color: #00c758;
     }

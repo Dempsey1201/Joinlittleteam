@@ -38,7 +38,7 @@
         </el-form>
         <div class="adjust">
              <span v-if="progress">你的答案的是<span style="color:red;" v-if="son.answer==studentAns[index].answer">正确</span><span style="color:red" v-else>错误</span>的,</span>
-            正确的答案是<span style="color:green">{{son.answer}}</span>
+            参考答案是<span style="color:green">{{son.answer}}</span>
         </div>
       </div>
       <!-- 多选题 -->

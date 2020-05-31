@@ -111,8 +111,8 @@
 			        //进行下一步，向后端发送请求
                     if(this.form.radio=='1'){
                         studentLogin({
-                            email:"",
-                            password:""
+                            email:"1559114369@qq.com",
+                            password:"11"
                         }).then(res=>{
                             if(!res.data){
                                 this.$message.error('密码或用户名不正确');

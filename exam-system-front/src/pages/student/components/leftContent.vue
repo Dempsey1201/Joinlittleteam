@@ -4,8 +4,12 @@
       <div class="pic">
         成才考试
       </div>
-      <div class="detail">
-        <div class="one">
+      <div class="detail" style="color:grey;padding:8px;font-size:12px;line-height:20px;">
+        学生可以通过老师提供的邀请码加入班级，十分方便；
+		    学生可以在线作答老师发布的试卷，在作答结束后可以查看自己分数与正确答案；
+		    学生在答题时可以看到距离结束的剩余时间，方便学生在答题时可以合理利用时间。
+
+        <!-- <div class="one">
           <div class="name">老师</div>
           <div class="num">233</div>
         </div>
@@ -20,7 +24,7 @@
         <div class="one">
           <div class="name">老师</div>
           <div class="num">233</div>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="middle">
