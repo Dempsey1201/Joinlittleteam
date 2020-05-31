@@ -1,16 +1,16 @@
 <template>
   <div class="sidebar">
     <el-menu
-      default-active="/student.html/personal/profile"
+      :default-active="this.$route.path"
       class="el-menu-vertical-demo"
       background-color="rgba(255,255,255,0.75)"
       text-color="rgb(191, 203, 217)"
       active-text-color="#409EFF"
       router
     >
-      <template v-for="(item,index) in routers">
-        <div v-if="index==0"></div>
-        <el-menu-item :index="item.path" :key="index" v-else>
+      <template
+              v-for="(item,index) in routers">
+        <el-menu-item :index="item.path" :key="index">
           <i :class="item.meta.icon"></i>
           <span slot="title">{{item.meta.name}}</span>
         </el-menu-item>
@@ -23,13 +23,11 @@
 export default {
   data() {
     return {
-      routers: this.$root._router.options.routes[2].children[1].children,
+      routers: this.$root._router.options.routes[2].children[1].children.slice(1,4),
     };
   },
   methods: {},
   created() {
-    console.log(this.$root._router.options.routes[2].children[1].children);
-    this.$root._router.options.routes[2].children[1].children.pop();
   },
   computed: {
     slidechange() {

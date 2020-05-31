@@ -30,12 +30,16 @@
         },
         watch:{
 		    userInfo(newValue,old){
-		        console.log(newValue,old)
                 this.info = newValue
             }
         },
         created() {
-		    this.info = this.userInfo;
+		    if(sessionStorage.getItem("userInfo")){
+                this.info = JSON.parse(sessionStorage.getItem("userInfo"));
+            }else {
+                this.info = JSON.parse(this.userInfo);
+            }
+
         },
         methods:{
 	        showTab(){

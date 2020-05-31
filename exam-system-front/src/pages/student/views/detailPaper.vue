@@ -22,7 +22,7 @@
         <div class="card">
           <div class="title" style="text-align:center">答题卡</div>
           <div class="detail">
-            <div v-for="item,index in question" style="display: inline-block;">
+            <div v-for="(item,index) in question" style="display: inline-block;">
               <div
                 :class="{'small':true,'show':(answer[index]!=undefined && answer[index] != '')}"
               >{{1+index}}</div>

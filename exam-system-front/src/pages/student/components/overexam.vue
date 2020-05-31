@@ -50,13 +50,13 @@
           :label-position="labelPosition"
         >
           <el-form-item style="margin-bottom:1px !important">
-            <el-checkbox-group v-model="studentAns[index].answer.split('')" v-if="studentAns.length!=0">
+            <el-checkbox-group v-model="studentAns[index].answer.split('')" disabled v-if="studentAns.length!=0">
               <el-checkbox :label="'A'">A:{{son.oa}}</el-checkbox>
               <el-checkbox :label="'B'">B:{{son.ob}}</el-checkbox>
               <el-checkbox :label="'C'">C:{{son.oc}}</el-checkbox>
               <el-checkbox v-show="son.od" :label="'D'">D:{{son.od}}</el-checkbox>
             </el-checkbox-group>
-            <el-checkbox-group v-else v-model="a">
+            <el-checkbox-group v-else v-model="a" disabled>
               <el-checkbox :label="'A'">A:{{son.oa}}</el-checkbox>
               <el-checkbox :label="'B'">B:{{son.ob}}</el-checkbox>
               <el-checkbox :label="'C'">C:{{son.oc}}</el-checkbox>
@@ -78,11 +78,11 @@
           :label-position="labelPosition"
         >
           <el-form-item style="margin-bottom:1px !important">
-            <el-radio-group v-model="studentAns[index].answer" v-if="studentAns.length!=0">
+            <el-radio-group disabled v-model="studentAns[index].answer" v-if="studentAns.length!=0">
               <el-radio :label="'1'">对</el-radio>
               <el-radio :label="'0'">错</el-radio>
-            </el-radio-group>
-             <el-radio-group v-else>
+            </el-radio-group >
+             <el-radio-group v-else disabled>
               <el-radio :label="'1'">对</el-radio>
               <el-radio :label="'0'">错</el-radio>
             </el-radio-group>
@@ -102,9 +102,11 @@
               :name="son.name"
               v-model="studentAns[index].answer"
               v-if="studentAns.length!=0"
+              readonly
               style="width: 240px;height: 25px;line-height: 25px;padding: 5px;font-size: 12px;border: none;overflow-y: auto;overflow-x: hidden;resize: none;border:1px solid grey;outline:none"
             ></textarea>
             <textarea
+                    readonly
               type="text"
               :name="son.name"
               v-else
@@ -122,12 +124,14 @@
         <ul>
           <li style="margin: 8px 0px 8px 20px;">
             <textarea
+                    readonly
               v-model="studentAns[index].answer"
               v-if="studentAns.length!=0"
               style="width: 600px;height: 50px;line-height: 25px;padding: 5px;font-size: 12px;border: none;overflow-y: auto;overflow-x: hidden;resize: none;border:1px solid grey;outline:none"
             ></textarea>
             <textarea
               v-else
+              readonly
               style="width: 600px;height: 50px;line-height: 25px;padding: 5px;font-size: 12px;border: none;overflow-y: auto;overflow-x: hidden;resize: none;border:1px solid grey;outline:none"
             ></textarea>
           </li>
