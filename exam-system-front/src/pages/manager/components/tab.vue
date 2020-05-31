@@ -25,7 +25,7 @@
         data(){
 			return{
 				bool:true,
-                route:this.$router.options.routes.slice(1,this.$router.options.routes.length)
+                route:this.$router.options.routes[1].children.slice(1,this.$router.options.routes[1].children.length)
             }
         },
         props:{
@@ -34,6 +34,7 @@
             }
         },
         created() {
+		    console.log(this.route)
         }
 	}
 </script>
