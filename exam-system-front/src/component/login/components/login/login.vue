@@ -51,9 +51,9 @@
 	        };
 			return{
 				form: {//表单数据内容
-					email: '123@qq.com',//邮箱
-                    password: 'aefbwetb35243@',//密码
-                    card:'grq3g4a',// 教师学工号
+					email: '',//邮箱
+                    password: '',//密码
+                    card:'',// 教师学工号
 					radio:"1",// 1 为学生 2 为老师
 				},
 				labelPosition:"left",
@@ -70,7 +70,6 @@
 		                    message: '请输入密码',
 		                    trigger: 'blur'
 	                    },
-                        // { validator:validatePass,trigger: 'blur'}
                     ],
                     card:[
                         {
@@ -112,8 +111,8 @@
 			        //进行下一步，向后端发送请求
                     if(this.form.radio=='1'){
                         studentLogin({
-                            email:"aaa",
-                            password:"test"
+                            email:"",
+                            password:""
                         }).then(res=>{
                             if(!res.data){
                                 this.$message.error('密码或用户名不正确');
@@ -129,8 +128,8 @@
                         })
                     }else if(this.form.radio=='2'){
                         teacherLogin({
-                            card:"2018010993",
-                            password:"000000"
+                            card:"",
+                            password:""
                         }).then(res=>{
                             if(res.data){
                                 sessionStorage.setItem("userInfo",JSON.stringify(res.data))

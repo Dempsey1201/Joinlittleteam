@@ -15,6 +15,11 @@ const routes = [
    redirect: '/manager.html/uploadExcel'
   },
   {
+    path: '/manager.html/deleteClass/deleteStu',
+    name:'stu',
+    component:deleteStu
+  },
+  {
     path: '/manager.html/uploadExcel',
     meta:{
 			icon:"el-icon-document",
@@ -31,20 +36,12 @@ const routes = [
 		component:deleteTeacher
   },
   {
-    path: '/manager.html/deleteStu',
-    meta:{
-			icon:"el-icon-place",
-			text:"学生管理"
-		},
-		component:deleteStu
-  },
-  {
     path: '/manager.html/deleteClass',
     meta:{
 			icon:"el-icon-document-add",
 			text:"班级管理"
 		},
-		component:deleteClass
+    component:deleteClass
   },
   {
     path: '/manager.html/deletePaper',
@@ -52,14 +49,34 @@ const routes = [
 			icon:"el-icon-c-scale-to-original",
 			text:"试卷管理"
 		},
-		component:deletePaper
+    component:deletePaper,
   }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes
 })
+
+import store from "../../../store/index"
+router.beforeEach((to, from, next) =>{
+	console.log(to)
+	if(to.meta.needLogin){// 需要登录
+		if(!store.getters.userInfo){
+			// 没有登陆
+			console.log("请登录");
+			next({
+				path:'/teacher.html/login'
+
+			})
+		}else {
+			next();
+		}
+	}else {
+		next();
+	}
+})
+
 
 export default router

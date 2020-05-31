@@ -72,7 +72,7 @@
             }
 			return{
 				form:{
-					email:"2873435684@qq.com",
+					email:"",
                     password:"",
 					idenPassword:"",
                     radio:"1",

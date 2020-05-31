@@ -3,26 +3,13 @@
     <el-table :data="currentList" style="width: 100%">
       <el-table-column type="index" min-width="50"></el-table-column>
       <el-table-column prop="classname" class="name" label="班级名称" min-width="140"></el-table-column>
-      <el-table-column prop="classno" label="班级号" min-width="140"></el-table-column>
+      <el-table-column prop="classno" label="邀请码" min-width="140"></el-table-column>
       <el-table-column prop="college" label="学校" min-width="140"></el-table-column>
       <el-table-column prop="major" label="专业" min-width="140"></el-table-column>
       <el-table-column prop="teachername" label="老师" min-width="140"></el-table-column>
-      <el-table-column align="center" min-width="240">
-        <template slot="header" slot-scope="scope">
-          <el-button
-            style="float: right;display: inline-block"
-            size="mini"
-            @click="searchClass"
-          >Search</el-button>
-          <el-input
-            style="float: right;width: 143px"
-            v-model="search"
-            size="mini"
-            placeholder="搜索"
-          />
-        </template>
+      <el-table-column align="center" min-width="200" label="操作">
         <template slot-scope="scope">
-          <!-- <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看</el-button> -->
+          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看</el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -101,6 +88,15 @@ export default {
     //分页
     changeList(list) {
       this.currentList = list;
+    },
+    //进入班级
+    handleEdit(index,row){
+       this.$router.push({
+        name: "stu",
+        params: {
+          row: row
+        }
+      });
     }
   }
 };
