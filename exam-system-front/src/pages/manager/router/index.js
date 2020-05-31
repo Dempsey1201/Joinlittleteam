@@ -4,6 +4,7 @@ import app from '../App'
 import uploadExcel from '../view/uploadExcel.vue';
 import deleteTeacher from '../view/deleteTeacher.vue';
 import deleteClass from '../view/deleteClass.vue';
+import deletePaper from '../view/deletePaper.vue'
 
 Vue.use(VueRouter)
 
@@ -35,6 +36,14 @@ const routes = [
             text: "班级管理"
         },
         component: deleteClass
+    },
+    {
+        path: '/manager.html/deletePaper',
+        meta: {
+            icon: "el-icon-c-scale-to-original",
+            text: "试卷管理"
+        },
+        component: deletePaper
     }
 ]
 

@@ -57,21 +57,23 @@ export default {
   methods: {
     // 删除老师
     handleDelete(index, row) {
-      console.log(row);
-      axios
-        .get(this.url + "/teacher/delete", {
-          params: {
-            id: row.id
-          }
-        })
-        .then(res => {
-          console.log(res);
-          axios.get(this.url + "/teacher/list").then(res => {
+      if (confirm("确定要删除这位老师嘛？")) {
+        console.log(row);
+        axios
+          .get(this.url + "/teacher/delete", {
+            params: {
+              id: row.id
+            }
+          })
+          .then(res => {
             console.log(res);
-            this.teacherList = res.data;
-            this.currentList = this.teacherList.slice(0, this.step);
+            axios.get(this.url + "/teacher/list").then(res => {
+              console.log(res);
+              this.teacherList = res.data;
+              this.currentList = this.teacherList.slice(0, this.step);
+            });
           });
-        });
+      }
     },
     //按照老师的card搜索
     searchClass() {
@@ -85,7 +87,7 @@ export default {
           console.log(res);
           this.teacherList = res.data;
           this.currentList = this.teacherList.slice(0, this.step);
-          this.search=''
+          this.search = "";
         });
     },
     //分页
