@@ -39,44 +39,57 @@ const routes = [
       {
         path: '/student.html/home',
         name: 'Home',
-        component: () => import("../components/home.vue")
+        component: () => import("../components/home.vue"),
+          meta:{
+              needLogin:true
+          }
       },
       {
         path: '/student.html/personal',
         name: 'personal',
         component: personal,
+          meta:{
+              needLogin:true
+          },
         children: [
           {
             path: '/student.html/personal',
-            meta:{name: "我的信息",icon: "el-icon-user"},
+            meta:{name: "我的信息",icon: "el-icon-user",needLogin:true},
             redirect:'/student.html/personal/profile'
           },
           {
             path: '/student.html/personal/profile',
-            meta:{name: "我的信息",icon: "el-icon-user"},
+            meta:{name: "我的信息",icon: "el-icon-user",needLogin:true},
             component: () => import("../views/profile.vue")
           },
           {
             path: '/student.html/personal/myGrade',
-            meta:{name: "我的班级",icon: "el-icon-school"},
+            meta:{name: "我的班级",icon: "el-icon-school",needLogin:true},
             component: () => import("../views/myGrade.vue")
           },
           {
             path: '/student.html/personal/score',
-            meta:{name: "我的成绩",icon: "el-icon-bank-card"},
+            meta:{name: "我的成绩",icon: "el-icon-bank-card",needLogin:true},
             component: () => import("../views/score.vue")
           },
           {
             path: '/student.html/personal/myGrade/myPaper',
             name: "paper",
-            component: () => import("../views/paper.vue")
+            component: () => import("../views/paper.vue"),
+              meta:{
+                  needLogin:true
+              }
           }
         ],
       },
       {
         path:'/student.html/detailPaper',
         name:'detailPaper',
-        component: () => import("../views/detailPaper.vue")
+        component: () => import("../views/detailPaper.vue"),
+        meta:{
+            needLogin:true
+        }
+
       }
     ]
   },
@@ -90,24 +103,22 @@ const router = new VueRouter({
   routes
 })
 
-// import store from "../../../store/index"
-// router.beforeEach((to, from, next) =>{
-// 	console.log(to)
-// 	if(to.meta.needLogin){// 需要登录
-// 		if(!store.getters.userInfo){
-// 			// 没有登陆
-// 			console.log("请登录");
-// 			next({
-// 				path:'/teacher.html/login'
 
-// 			})
-// 		}else {
-// 			next();
-// 		}
-// 	}else {
-// 		next();
-// 	}
-// })
+router.beforeEach(
+    (to, from, next) =>{
+    if(to.meta.needLogin){// 需要登录
+        if(!JSON.parse(sessionStorage.getItem("userInfo"))||!JSON.parse(sessionStorage.getItem("userInfo")).username){
+            // 老师没有登陆
+            next({
+                path:'/student.html/login'
+            })
+        }else {
+            next();
+        }
+    }else {
+        next();
+    }
+})
 
 
 export default router
