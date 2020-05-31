@@ -9,7 +9,7 @@
                 :xl="{span:17}"
             >
                 <div class="titleL ">
-                    PTA考试系统<i class="el-icon-check"></i>
+                    成才考试系统<i class="el-icon-check"></i>
                 </div>
             </el-col>
             <el-col class="con"
@@ -21,9 +21,9 @@
             >
                 <!-- 导航 -->
                 <el-menu
-                        :default-active="router[1].path"
+                        :default-active="this.$route.path"
                         class="el-menu-demo" mode="horizontal"
-                        :router="bool"
+                        router
                 >
                     <el-menu-item :index="router[1].path" class="nav">
                             登陆
@@ -51,9 +51,8 @@
 					b: 255
                 },
 				bg_color:"rgba(236, 245, 255,0.3)",//背景颜色
-                bool:true,
                 router:this.$root._router.options.routes[1].children,
-                bool:false
+                bool:false,
 		    }
 		},
         components:{
