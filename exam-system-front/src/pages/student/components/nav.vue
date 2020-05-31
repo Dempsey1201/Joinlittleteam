@@ -15,7 +15,9 @@
                 <img :src="url+student.headUrl" alt="" width="50px" height="50px" style="border-radius:100%;vertical-align:middle"/> -->
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item icon="el-icon-s-home"><router-link tag="span" to="/student.html/personal">个人中心</router-link></el-dropdown-item>
+              <el-dropdown-item icon="el-icon-s-home">
+                <router-link tag="span" to="/student.html/personal">个人中心</router-link>
+              </el-dropdown-item>
               <el-dropdown-item icon="el-icon-switch-button">
                 <a href="http://localhost:8080/student.html">登出</a>
               </el-dropdown-item>
