@@ -38,7 +38,7 @@ public class UserTest {
     public void testAddUser()throws Exception{
         User user=new User();
         user.setUsername("name");
-        user.setEmail("test");
+        user.setEmail("1240208775@qq.com");
         user.setPassword("test");
         user.setSex("女");
         System.out.println(userController.addUser(user));
@@ -57,18 +57,19 @@ public class UserTest {
     }
     @Test
     public void testQueryClass()throws Exception{
-        System.out.println(userController.queryClass(1));
+        System.out.println(userController.queryClass(32));
     }
     @Test
     public void testDeleteUser()throws Exception{
-        System.out.println(userController.delete(2));
+        System.out.println(userController.delete(18));
     }
     @Test
     public void testUpdateUser()throws Exception{
         User user=new User();
-        user.setId(2);
+        user.setId(20);
         user.setUsername("testUpdate");
         user.setEmail("123123@qq.com");
+        user.setCollege("123123");
         System.out.println(userController.update(user));
     }
 //    @Test

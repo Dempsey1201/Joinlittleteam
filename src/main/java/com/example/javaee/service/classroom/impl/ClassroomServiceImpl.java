@@ -46,6 +46,15 @@ public class ClassroomServiceImpl implements ClassroomService {
     @Override
     public int joinClassroom(int id,int cid) throws Exception{
         User user=userService.queryUser(id);
+        List<User> list=userService.queryClass(cid);
+        if(list!=null){
+            for(User u:list){
+                if(id==u.getId()){
+                    return -1;
+                }
+            }
+        }
+
         String str=user.getClassno();
         if(str==null){
             str=String.valueOf(cid);
@@ -58,15 +67,17 @@ public class ClassroomServiceImpl implements ClassroomService {
         }
         else idStr=idStr+","+id;
 
-        //String[] arr = str.split(",");
+
         return classroomMapper.join(idStr,cid)+classroomMapper.joinB(id,str);
     }
     public List<Classroom> queryUserClassroom(String str)throws Exception{
         String[] arr=str.split(",");
         List<Classroom> list=new ArrayList<Classroom>();
         for(String x:arr){
-            int n=Integer.parseInt(x);
-            list.add(classroomMapper.queryClassroom(n));
+            if(!x.equals("")){
+                int n=Integer.parseInt(x);
+                list.add(classroomMapper.queryClassroom(n));
+            }
         }
         return list;
     }

@@ -36,7 +36,7 @@
 
     <update id="updateUser">
         UPDATE t_user
-        SET email=#{user.email},username=#{user.username}
+        SET email=#{user.email},username=#{user.username},college=#{user.college}
         WHERE id=#{user.id}
     </update>
 

@@ -58,12 +58,6 @@
         WHERE id=#{id}
     </update>
 
-    <!--<update id="updateStatus">-->
-        <!--UPDATE t_user-->
-        <!--SET status=#{status}-->
-        <!--WHERE id=#{id}-->
-    <!--</update>-->
-
     <select id="queryTeacher" resultType="teacher">
         SELECT *
         FROM t_teacher
@@ -77,15 +71,4 @@
         WHERE id=#{id}
     </select>
 
-    <!--<select id="queryReport" resultType="report">-->
-        <!--SELECT *-->
-        <!--FROM t_report-->
-        <!--WHERE stu_id=#{stu_id}-->
-    <!--</select>-->
-
-    <!--<insert id="addFeelBack">-->
-        <!--INSERT INTO t_feelback-->
-        <!--(stu_id,message,status)-->
-        <!--VALUES (#{feelBack.stu_id},#{feelBack.message},#{feelBack.status})-->
-    <!--</insert>-->
 </mapper>

@@ -97,10 +97,16 @@ public class UserController {
     }
     @RequestMapping(value = "/delete")
     public int delete(@RequestParam(value = "id", required = false)int id) throws Exception{
-        String[] arr=userService.queryUser(id).getClassno().split(",");
-        for(String x:arr){
-            int n=Integer.parseInt(x);
-            classroomController.outClassRoom(id,n);
+        String s=userService.queryUser(id).getClassno();
+        if(s!=null){
+            String[] arr=userService.queryUser(id).getClassno().split(",");
+            for(String x:arr){
+                if(x.equals("")){
+                    int n=Integer.parseInt(x);
+                    classroomController.outClassRoom(id,n);
+                }
+
+            }
         }
         return userService.delete(id);
     }
