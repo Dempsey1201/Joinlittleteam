@@ -43,8 +43,6 @@ dongml1 成员董明龙个人分支，试卷考试管理部分
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200531220137818.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzQ2MDI1MQ==,size_16,color_FFFFFF,t_70)
 #### 用户个人信息页
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200531220300663.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzQ2MDI1MQ==,size_16,color_FFFFFF,t_70)
-#### 答题与查看成绩详细页面
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200531220349503.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzQ2MDI1MQ==,size_16,color_FFFFFF,t_70)
 #### 老师登录个人信息界面
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200531220456811.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzQ2MDI1MQ==,size_16,color_FFFFFF,t_70)
 #### 老师批改试卷
@@ -53,3 +51,5 @@ dongml1 成员董明龙个人分支，试卷考试管理部分
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200531220645704.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzQ2MDI1MQ==,size_16,color_FFFFFF,t_70)
 #### 管理员管理操作界面
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2020053122071592.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzQ2MDI1MQ==,size_16,color_FFFFFF,t_70)
+#### 答题与查看成绩详细页面
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200531220349503.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzQ2MDI1MQ==,size_16,color_FFFFFF,t_70)
