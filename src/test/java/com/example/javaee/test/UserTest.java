@@ -72,11 +72,7 @@ public class UserTest {
         user.setCollege("123123");
         System.out.println(userController.update(user));
     }
-//    @Test
-//    public void testUpdateStatus()throws Exception{
-//        int id=94,status=1;
-//        System.out.println(userController.updateUserStatus(id,status));
-//    }
+
 
     @Test
     public void testUpdatePassword()throws Exception{

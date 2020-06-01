@@ -93,7 +93,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> queryClass(int id)throws Exception{
         String str=classroomMapper.queryClassroom(id).getSid();
-        System.out.println(str);
         if (str==null){
             return null;
         }
