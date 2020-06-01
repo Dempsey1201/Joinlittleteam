@@ -1,0 +1,24 @@
+module.exports = {
+	pages:{
+		student:{
+			entry:"./src/pages/student/main.js",
+			template:"./public/index.html",
+			filename:"student.html"
+		},
+		manager:{
+			entry:"./src/pages/manager/main.js",
+			template:"./public/index.html",
+			filename:"manager.html"
+		},
+		teacher:{
+			entry:"./src/pages/teacher/main.js",
+			template:"./public/index.html",
+			filename:"teacher.html"
+		},
+		managerLogin:{
+			entry:"./src/pages/managerLogin/main.js",
+			template:"./public/index.html",
+			filename:"managerLogin.html"
+		}
+	}
+}
