@@ -54,7 +54,7 @@
 </template>
 
 <script>
-    import {getStudent} from "../../api/yourClass";
+    import {getStudent,deleteUSer} from "../../api/yourClass";
     import pageTool from "../pageTool";
     export default {
         name: "checkClass",
@@ -91,6 +91,25 @@
             },
             changeList(list){
                 this.currentList = list;
+            },
+            handleDelete(index,row){
+                if(confirm("确定要删除该学生吗？")){
+                    deleteUSer({
+                        id:row.id,
+                        cid:this.currentClass.id
+                    }).then(res=>{
+                        if(res.data){
+                            this.$message({
+                                message: '删除成功',
+                                type: 'success'
+                            });
+                            this.stuList.splice(index,1);
+                            this.currentList = this.stuList.slice(0,this.step);
+                        }else{
+                            this.$message.error('删除失败');
+                        }
+                    })
+                }
             }
         }
     }

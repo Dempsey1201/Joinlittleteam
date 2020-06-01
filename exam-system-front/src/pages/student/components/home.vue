@@ -35,7 +35,10 @@ export default {
       },
       bg_color: "rgba(236, 245, 255,0.3)" //背景颜色
     };
-  }
+  },
+  created() {
+    document.title="首页"
+  },
 };
 </script>
 

@@ -45,6 +45,9 @@
         </div>
       </div>
     </div>
+    <div v-if="examList.length==0" style="color: #333;font-size:20px;padding-top:10px;padding-left:10px;">
+      目前你的账号还没有<span v-if="!progress">未进行</span><span>已完成</span>的试卷!
+    </div>
   </div>
 </template>
 
@@ -56,7 +59,7 @@ export default {
     return {
       starttime: "",
       url: axios.defaults.baseURL,
-      student: JSON.parse(sessionStorage.getItem("userInfo")), //学生的信息
+      student: JSON.parse(sessionStorage.getItem("studentInfo")), //学生的信息
       //查询班级
       input: "",
       //是否查询了班级
@@ -66,7 +69,7 @@ export default {
       over: false, // 获取当前时间
       timer: "", //定时器，
       progress: false,
-      msg: "你的简答题老师已经批改了" //简答题老师是否批改
+      msg: "" //简答题老师是否批改
     };
   },
   created() {
@@ -137,8 +140,11 @@ export default {
           var grade = res.data;
           for (var i = 0; i < grade.length; i++) {
             console.log(grade[i].getscore);
+            if(grade[i].qtype==5){
+              this.msg = "，你的简答题老师已经批改了";
+            }
             if (grade[i].getscore == -1) {
-              this.msg = "你的简答题老师还没有批改呀";
+              this.msg = "，你的简答题老师还没有批改呀";
             }
           }
         });
@@ -152,12 +158,12 @@ export default {
         .then(res => {
           console.log(res.data);
           this.$alert(
-            "你这次考试的成绩为" + res.data + "分," + this.msg,
+            "你这次考试的成绩为" + res.data + "分" + this.msg,
             "考试成绩",
             {
               confirmButtonText: "确定",
               callback: action => {
-                this.msg = "你的简答题老师已经批改了";
+                this.msg = "";
               }
             }
           );

@@ -107,7 +107,7 @@ const router = new VueRouter({
 router.beforeEach(
     (to, from, next) =>{
     if(to.meta.needLogin){// 需要登录
-        if(!JSON.parse(sessionStorage.getItem("userInfo"))||!JSON.parse(sessionStorage.getItem("userInfo")).username){
+        if(!JSON.parse(sessionStorage.getItem("studentInfo"))||!JSON.parse(sessionStorage.getItem("studentInfo")).username){
             // 老师没有登陆
             next({
                 path:'/student.html/login'

@@ -50,11 +50,12 @@ export default {
       url: axios.defaults.baseURL,
       search: "",
       stuList: [],
-      step: 6,
+      step: 8,
       item: this.$route.params.row
     };
   },
   created() {
+    document.title="学生管理";
     axios
       .get(this.url + "/user/queryClass", {
         params: {

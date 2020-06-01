@@ -84,8 +84,10 @@
         created() {
             if(location.href.indexOf("student")>=0){
                 this.form.radio="1"
+                document.title = "学生登陆"
             }else {
                 this.form.radio="2"
+                document.title = "教师登陆"
             }
             console.log()
         },
@@ -97,8 +99,7 @@
 		        this.$refs[formName].validate((valid) => {
 			        if (valid) {//表单验证成功
 			        	//开始机器人验证
-				        // this.coverShow = true;
-                        this.idenCode({code:true});
+				        this.coverShow = true;
 			        } else {
 				        return false;
 			        }
@@ -109,7 +110,7 @@
 			        alert("验证成功");
 			        this.coverShow = false;
 			        //进行下一步，向后端发送请求
-                    if(this.form.radio=='1'){
+                    if(this.form.radio==='1'){
                         studentLogin({
                             email:this.form.email,
                             password:this.form.password
@@ -117,7 +118,7 @@
                             if(!res.data){
                                 this.$message.error('密码或用户名不正确');
                             }else {
-                                sessionStorage.setItem("userInfo",JSON.stringify(res.data))
+                                sessionStorage.setItem("studentInfo",JSON.stringify(res.data))
                                 this.setUserInfo(JSON.stringify(res.data))
                                 this.$router.push({
                                     path:this.$root._router.options.routes[2].path
@@ -126,7 +127,7 @@
                         }).catch(err=>{
                             throw err;
                         })
-                    }else if(this.form.radio=='2'){
+                    }else if(this.form.radio==='2'){
                         teacherLogin({
                             card:this.form.card,
                             password:this.form.password

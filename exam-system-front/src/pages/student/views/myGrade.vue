@@ -34,13 +34,14 @@ export default {
     return {
       currentList: [],
       url: axios.defaults.baseURL,
-      student: JSON.parse(sessionStorage.getItem("userInfo")),
+      student: JSON.parse(sessionStorage.getItem("studentInfo")),
       classList: [],
       search: "",
       step: 8
     };
   },
   created() {
+    document.title = "班级管理";
     axios
       .get(this.url + "/class/queryUserClassroom", {
         params: {
@@ -49,6 +50,9 @@ export default {
       })
       .then(res => {
         console.log(res);
+        if (res.data == "") {
+          res.data = [];
+        }
         this.classList = res.data;
         this.currentList = this.classList.slice(0, this.step);
       });
@@ -75,7 +79,11 @@ export default {
               })
               .then(res => {
                 console.log(res);
+                if (res.data == "") {
+                  res.data = [];
+                }
                 this.classList = res.data;
+                this.currentList = this.classList.slice(0, this.step);
               });
           });
       }

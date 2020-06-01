@@ -81,6 +81,7 @@ body {
     }
     .right {
       float: right;
+      cursor: pointer;
     }
   }
 }

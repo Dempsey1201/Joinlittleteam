@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       url: axios.defaults.baseURL,
-      student: JSON.parse(sessionStorage.getItem("userInfo")),
+      student: JSON.parse(sessionStorage.getItem("studentInfo")),
       
     }
   },

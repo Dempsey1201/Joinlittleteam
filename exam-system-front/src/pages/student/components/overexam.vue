@@ -79,12 +79,12 @@
         >
           <el-form-item style="margin-bottom:1px !important">
             <el-radio-group disabled v-model="studentAns[index].answer" v-if="studentAns.length!=0">
-              <el-radio :label="'1'">对</el-radio>
-              <el-radio :label="'0'">错</el-radio>
+              <el-radio :label="'对'">对</el-radio>
+              <el-radio :label="'错'">错</el-radio>
             </el-radio-group >
              <el-radio-group v-else disabled>
-              <el-radio :label="'1'">对</el-radio>
-              <el-radio :label="'0'">错</el-radio>
+              <el-radio :label="'对'">对</el-radio>
+              <el-radio :label="'错'">错</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-form>
@@ -154,7 +154,7 @@ export default {
     a:[],
       url: axios.defaults.baseURL,
       labelPosition: "left",
-      student: JSON.parse(sessionStorage.getItem("userInfo")), //学生的信息
+      student: JSON.parse(sessionStorage.getItem("studentInfo")), //学生的信息
       studentAns:[]
     };
   },
@@ -185,16 +185,24 @@ export default {
        }
    }).then(res => {
        console.log(res);
-       this.studentAns=res.data;
+        this.studentAns=res.data;
        for(var i=0;i<this.question.length;i++){
-        console.log(this.question[i]);
-        if(this.question[i].qtype==3){
-
-            if(this.question[i].answer==0){
-                this.question[i].answer='对'
+        // console.log(this.question[i]);
+       if(this.studentAns[i].qtype==3){
+          if(this.studentAns[i].answer==0){
+                this.studentAns[i].answer='错'
             }
             else{
+                this.studentAns[i].answer='对'
+            }
+       }
+       console.log(this.studentAns[i]);
+        if(this.question[i].qtype==3){
+            if(this.question[i].answer==0){
                 this.question[i].answer='错'
+            }
+            else{
+                this.question[i].answer='对'
             }
         }
     }

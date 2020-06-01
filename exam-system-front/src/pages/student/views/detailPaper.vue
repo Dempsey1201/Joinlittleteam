@@ -154,7 +154,7 @@ export default {
     return {
       labelPosition: "left",
       url: axios.defaults.baseURL,
-      student: JSON.parse(sessionStorage.getItem("userInfo")), //学生的信息
+      student: JSON.parse(sessionStorage.getItem("studentInfo")), //学生的信息
       item: {},
       progress: null,
       question: [],
@@ -175,6 +175,7 @@ export default {
     };
   },
   created() {
+    document.title="在线考试"
     this.item = this.$route.query.item;
     this.progress = this.$route.query.progress;
     console.log(this.item + this.progress);

@@ -127,7 +127,7 @@ export default {
     return {
       url: axios.defaults.baseURL,
       imgUrl: "",
-      student: JSON.parse(sessionStorage.getItem("userInfo")),
+      student: JSON.parse(sessionStorage.getItem("studentInfo")),
       //从后端请求的学生信息
       nickname: "",
       coll: "",
@@ -150,6 +150,7 @@ export default {
     };
   },
   created() {
+    document.title="个人信息"
     console.log(this.student);
     axios
       .get(this.url + "/user/queryUser", {
@@ -321,7 +322,7 @@ export default {
             if (res.data == 2) {
               this.$message({
                 message: "成功加入班级",
-                type: "error"
+                type: "success"
               });
             }
             if (res.data == (0 || 1)) {

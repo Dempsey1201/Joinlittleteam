@@ -44,10 +44,11 @@ export default {
       url: axios.defaults.baseURL,
       search: "",
       teacherList: [],
-      step: 6
+      step: 8
     };
   },
   created() {
+    document.title="教师管理"
     axios.get(this.url + "/teacher/list").then(res => {
       console.log(res);
       this.teacherList = res.data;

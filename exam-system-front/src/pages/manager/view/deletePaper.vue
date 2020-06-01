@@ -34,11 +34,12 @@ import pageTool from "../components/pageTool";
 export default {
   name: "showPaper",
   data() {
+    document.title="试卷管理"
     return {
       url: axios.defaults.baseURL,
       paperList: [],
       currentList: [],
-      step: 9,
+      step: 8,
       search: ""
     };
   },

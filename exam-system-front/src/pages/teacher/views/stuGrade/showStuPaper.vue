@@ -230,6 +230,7 @@
                                         },
                                         row:{
                                             pid:this.$route.params.pid,
+                                            full_score:this.$route.params.fullScore
                                         }
                                     }
                                 })

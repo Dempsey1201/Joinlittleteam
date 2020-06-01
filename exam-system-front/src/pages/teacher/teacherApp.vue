@@ -19,8 +19,11 @@
 		},
         components:{
 		    background
+        },
+        created() {
+            document.title = "成才考试系统教师管理"
         }
-	}
+    }
 </script>
 
 <style lang="less">

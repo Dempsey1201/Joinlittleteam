@@ -30,7 +30,7 @@
         data(){
 	        let validatePass = (rule, value, callback) => {
 		        let reg1 = /[0-9]+/ //数字字母下划线
-		        let reg2 = /[,\.?~`!@#$%^&*(){}\[\]\-+/|\\]+///特殊字符
+		        let reg2 = /[,\.?~`!@#$%^&*(){}\[\]\-+/|\\]+/
 		        let reg3 = /[A-z]+/
                 let reg4 = /.{6,16}/
 		        let bool = reg4.test(this.form.password)&&reg1.test(this.form.password)&&reg2.test(this.form.password)&&reg3.test(this.form.password);
@@ -42,9 +42,9 @@
 	        };
 			return{
 				form: {//表单数据内容
-					email: '123@qq.com',//邮箱
-                    password: 'aefbwetb35243@',//密码
-                    card:'grq3g4a',// 教师学工号
+					email: '',//邮箱
+                    password: '',//密码
+                    card:'',// 教师学工号
 					radio:"1",// 1 为学生 2 为老师
 				},
 				labelPosition:"left",
@@ -56,7 +56,7 @@
 		                    message: '请输入密码',
 		                    trigger: 'blur'
 	                    },
-                        { validator:validatePass,trigger: 'blur'}
+                        // { validator:validatePass,trigger: 'blur'}
                     ],
                     card:[
                         {
@@ -77,8 +77,8 @@
 		        this.$refs[formName].validate((valid) => {
 			        if (valid) {//表单验证成功
                         managerLogin({
-                            admin_card:"123123",
-                            password:"test"
+                            admin_card:this.form.card,
+                            password:this.form.password
                         }).then(res=>{
                             if(res.data){
                                 sessionStorage.setItem("userInfo",JSON.stringify(res.data))

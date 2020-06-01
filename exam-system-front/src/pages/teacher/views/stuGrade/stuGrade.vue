@@ -6,8 +6,11 @@
 
 <script>
 	export default {
-		name: "stuGrade"
-	}
+		name: "stuGrade",
+        created() {
+            document.title = "成绩管理"
+        }
+    }
 </script>
 
 <style scoped>

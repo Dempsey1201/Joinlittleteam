@@ -32,13 +32,14 @@ export default {
       url: axios.defaults.baseURL,
       search: "",
       classList: [],
-      step: 6
+      step: 8
     };
   },
   created() {
+    document.title="班级管理"
     axios.get(this.url + "/class/list").then(res => {
       console.log(res);
-      this.classList = res.data;
+      this.classList = res.data.filter(item => item!=null);
       this.currentList = this.classList.slice(0, this.step);
     });
   },

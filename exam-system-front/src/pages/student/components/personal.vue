@@ -39,7 +39,7 @@ export default {
   },
   computed: {},
   created() {
-
+    document.title="我的信息"
   },
   methods: {
     getImg(value){

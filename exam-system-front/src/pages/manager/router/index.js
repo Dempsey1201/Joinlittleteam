@@ -29,6 +29,11 @@ const routes = [
                 redirect: '/manager.html/home/uploadExcel',
             },
             {
+                path: '/manager.html/home/deleteStu',
+                name:'stu',
+                component: deleteStu
+            },
+            {
                 path: '/manager.html/home/uploadExcel',
                 meta: {
                     icon: "el-icon-document",
@@ -78,7 +83,7 @@ router.beforeEach((to, from, next) =>{
     if(to.meta.needLogin){// 需要登录
         if(!JSON.parse(sessionStorage.getItem("userInfo"))||!JSON.parse(sessionStorage.getItem("userInfo")).adminname){
             // 老师没有登陆
-            window.location = window.location.origin+"/managerLogin.html/login"
+            window.location = window.location.origin+"/managerLogin.html"
         }else {
             next();
         }

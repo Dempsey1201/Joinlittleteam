@@ -10,7 +10,10 @@ export default {
   name: 'excel',
   components:{
     upload
-  }
+  },
+  created() {
+    document.title="导入老师名单"
+  },
  }
 </script>
 

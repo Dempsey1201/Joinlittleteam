@@ -113,6 +113,7 @@
             }
         },
         created() {
+            document.title = "个人中心"
             // 获取 数据以及图片路径等信息
             allClass({
                 id:JSON.parse(sessionStorage.getItem("userInfo")).id

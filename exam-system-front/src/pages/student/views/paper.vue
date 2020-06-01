@@ -47,13 +47,14 @@ export default {
       currentList: [],
       step: 8,
       url: axios.defaults.baseURL,
-      student: JSON.parse(sessionStorage.getItem("userInfo")),
+      student: JSON.parse(sessionStorage.getItem("studentInfo")),
       paperList: [],
       search: "",
       progress:''
     };
   },
   created() {
+    document.title="试卷管理"
     //获取试卷信息
     axios
       .get(this.url + "/paper/getPaperByClass2", {
