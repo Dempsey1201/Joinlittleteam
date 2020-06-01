@@ -54,6 +54,7 @@ export default {
           res.data = [];
         }
         this.classList = res.data;
+        this.classList = res.data.filter(item => item!=null);
         this.currentList = this.classList.slice(0, this.step);
       });
   },
@@ -83,6 +84,7 @@ export default {
                   res.data = [];
                 }
                 this.classList = res.data;
+                this.classList = res.data.filter(item => item!=null);
                 this.currentList = this.classList.slice(0, this.step);
               });
           });
