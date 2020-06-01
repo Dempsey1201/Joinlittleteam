@@ -19,11 +19,17 @@
         },
         components:{
             background
+        },
+        created() {
+            document.body.style.height = document.documentElement.clientHeight+"px";
         }
     }
 </script>
 
 <style lang="less">
+    #app{
+       min-height: 100%;
+    }
     .el-checkbox__input.is-disabled + span.el-checkbox__label{
         color: #606266 !important;
     }

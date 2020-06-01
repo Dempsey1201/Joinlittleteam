@@ -173,9 +173,6 @@ export default {
     }
   },
   created() {
-    console.log(this.question);
-    console.log(this.item);
-    console.log(this.progress);
    //请求你做的答案
    axios.get(this.url+'/paper/getClassAnswer',{
        params:{
@@ -184,7 +181,6 @@ export default {
            qid:1
        }
    }).then(res => {
-       console.log(res);
         this.studentAns=res.data;
        for(var i=0;i<this.question.length;i++){
         // console.log(this.question[i]);
@@ -196,7 +192,6 @@ export default {
                 this.studentAns[i].answer='对'
             }
        }
-       console.log(this.studentAns[i]);
         if(this.question[i].qtype==3){
             if(this.question[i].answer==0){
                 this.question[i].answer='错'

@@ -174,7 +174,6 @@ export default {
         //拼接字符串
         this.answer[index] = "";
         for (var i = 0; i < 4; i++) {
-          console.log(this.many[i]);
           if (this.many[i] == true) {
             if (i == 0) {
               this.answer[index] = "A" + this.answer[index];
@@ -191,18 +190,15 @@ export default {
             }
           }
         }
-        console.log(this.answer[index]);
       }
       if (type == 3) {
         this.answer[index] = e;
       }
       //简答题
       if (type == 4) {
-        console.log(this.answer[index]);
       }
       //填空题
       if (type == 5) {
-        console.log(this.answer[index]);
       }
     },
   },

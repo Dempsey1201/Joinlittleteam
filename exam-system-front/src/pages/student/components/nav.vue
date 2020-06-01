@@ -43,7 +43,6 @@ export default {
     student:Object
   },
   created() {
-    console.log(this.student)
   },
 };
 </script>

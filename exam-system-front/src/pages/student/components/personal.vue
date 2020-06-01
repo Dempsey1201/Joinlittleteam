@@ -44,7 +44,6 @@ export default {
   methods: {
     getImg(value){
       this.imgUrl=value;
-      consloe.log('imgUrl----------------'+this.imgUrl)
     }
   },
 };

@@ -1,5 +1,5 @@
 <template>
-  <div class="rightContent">
+  <div class="rightContent" ref="rightContent">
     <div class="title">
       <el-button
         :type="progress==false ? 'primary':''"
@@ -16,7 +16,7 @@
     <!-- <div class="info" v-else> -->
     <div
       class="info"
-      v-for="item,index in examList"
+      v-for="(item,index) in examList"
       @click="goPaper(item,progress)"
       style="border:1px solid rgba(26, 26, 26, 0.08);box-shadow: 0 1px 4px rgba(26, 26, 26, 0.08);background: #fff"
     >
@@ -74,6 +74,9 @@ export default {
   },
   created() {
     this.getExam("0");
+  },
+  mounted() {
+      this.$refs.rightContent.style.height = document.documentElement.clientHeight-65+"px"
   },
   methods: {
     //获取试卷列表
@@ -191,7 +194,6 @@ export default {
 .rightContent {
   height: 600px;
   overflow-x: hidden;
-  overflow-y: scroll;
   margin-left: 10px;
   background: rgba(255, 255, 255, 0.7);
   .title {

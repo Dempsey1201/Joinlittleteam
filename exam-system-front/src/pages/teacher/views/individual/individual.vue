@@ -189,6 +189,9 @@
                                                 message: '修改密码成功',
                                                 type: 'success'
                                             });
+                                            this.form.password = "";
+                                            this.from.rePassword = "";
+                                            this.form.newPassword = "";
                                             this.bool = false;
                                             this.info.password = this.form.rePassword;
                                             sessionStorage.setItem("userInfo", JSON.stringify(this.info))

@@ -49,7 +49,6 @@ export default {
         }
       })
       .then(res => {
-        console.log(res);
         if (res.data == "") {
           res.data = [];
         }
@@ -71,7 +70,6 @@ export default {
             }
           })
           .then(res => {
-            console.log(res);
             axios
               .get(this.url + "/class/queryUserClassroom", {
                 params: {
@@ -79,7 +77,6 @@ export default {
                 }
               })
               .then(res => {
-                console.log(res);
                 if (res.data == "") {
                   res.data = [];
                 }

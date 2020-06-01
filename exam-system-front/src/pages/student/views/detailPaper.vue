@@ -178,7 +178,6 @@ export default {
     document.title="在线考试"
     this.item = this.$route.query.item;
     this.progress = this.$route.query.progress;
-    console.log(this.item + this.progress);
     this.endtime = this.item.end_time;
     this.last_time = this.item.last_time;
     var that = this;
@@ -207,14 +206,12 @@ export default {
         }
       })
       .then(res => {
-        console.log(res);
         this.question = res.data;
         for (var i = 0; i < this.question.length; i++) {
           if (this.question[i].qtype == 2) {
             this.answer[i] = [];
           }
           this.fullScore = this.question[i].qscore + this.fullScore;
-          console.log("总分" + this.fullScore);
         }
       });
   },
@@ -265,7 +262,6 @@ export default {
     many(e) {
       // this.answer[e] = this.much.join("");
       this.answer[e] = [];
-      console.log(this.answer[e]);
       // this.answer[e]=this.answer[e].join("");
     },
     submit() {
@@ -295,7 +291,6 @@ export default {
       axios
         .post(this.url + "/paper/storeAnswerAndJudge", this.storePaper)
         .then(res => {
-          console.log(res);
           axios
             .get(this.url + "/paper/getScore", {
               params: {
@@ -304,7 +299,6 @@ export default {
               }
             })
             .then(res => {
-              console.log(res);
               this.$alert(
                 "你选择和填空的的成绩为" +
                   res.data +

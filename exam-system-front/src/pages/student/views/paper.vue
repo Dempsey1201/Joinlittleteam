@@ -64,7 +64,6 @@ export default {
         }
       })
       .then(res => {
-        console.log(res);
         this.paperList = res.data;
         this.paperList = this.paperList.filter(item => (Date.parse(new Date(item.start_time))<=Date.parse(new Date())));
         // console.log(this.paperList);
@@ -81,7 +80,6 @@ export default {
     },
     //进入试卷页面
     handleEdit(index, row) {
-      console.log("uauauauauaua"+row.done);
       this.progress=row.done;
       this.$router.push({
         path: "/student.html/detailPaper",
@@ -93,7 +91,6 @@ export default {
     },
     //点击进入试卷
     goPaper(item, progress) {
-      // console.log(pid);
       this.$router.push({
         path: "/student.html/detailPaper",
         query: {

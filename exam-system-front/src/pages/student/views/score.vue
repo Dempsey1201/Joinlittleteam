@@ -47,7 +47,6 @@ export default {
         }
       })
       .then(res => {
-        console.log(res);
         this.scoreList = res.data;
         this.currentList = this.scoreList.slice(0, this.step);
       });
@@ -67,7 +66,6 @@ export default {
           }
         })
         .then(re => {
-          console.log(re);
           this.$router.push({
             path: "/student.html/detailPaper",
             query: {

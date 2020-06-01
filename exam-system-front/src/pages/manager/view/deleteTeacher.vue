@@ -66,7 +66,6 @@ export default {
           })
           .then(res => {
             axios.get(this.url + "/teacher/list").then(res => {
-              console.log(res);
               this.teacherList = res.data;
               this.currentList = this.teacherList.slice(0, this.step);
             });

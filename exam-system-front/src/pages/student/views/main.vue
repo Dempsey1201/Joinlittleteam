@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div ref="app">
     <navBar :student="student"/>
     <!-- <div class="main"> -->
       <router-view></router-view>
@@ -22,9 +22,8 @@ export default {
       
     }
   },
-  created() {
-    console.log(this.student);
-    console.log(this.student + this.url);
+  mounted() {
+    this.$refs.app.style.height = document.documentElement.clientHeight+"px";
   },
 };
 </script>
@@ -38,5 +37,7 @@ export default {
   border-radius: 10px;
   min-height: 100%;
 }
-
+.app{
+  min-height: 100%;
+}
 </style>

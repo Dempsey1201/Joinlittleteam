@@ -74,7 +74,6 @@ export default {
           this.classList = [];
           this.classList=res.data;
           this.classList = res.data.filter(item => item!=null);
-          console.log(this.classList);
           this.currentList = this.classList.slice(0, this.step);
           this.search = "";
         });

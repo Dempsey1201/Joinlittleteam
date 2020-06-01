@@ -151,7 +151,6 @@ export default {
   },
   created() {
     document.title="个人信息"
-    console.log(this.student);
     axios
       .get(this.url + "/user/queryUser", {
         params: {
@@ -159,7 +158,6 @@ export default {
         }
       })
       .then(res => {
-        console.log(res);
         this.student = res.data;
         this.imgUrl = res.data.headUrl;
       });
@@ -181,7 +179,6 @@ export default {
       this.isShowcoll = !this.isShowcoll;
     },
     changecollege2() {
-      console.log("click");
       this.isShowcoll = !this.isShowcoll;
       //像后端传送数据
       axios
@@ -194,14 +191,12 @@ export default {
           }
         })
         .then(res => {
-          console.log(res);
           this.student.college = this.coll;
           this.coll = "";
         });
     },
 
     changeNick() {
-      console.log("click");
       this.isShow = !this.isShow;
       //像后端传送数据
       axios
@@ -214,7 +209,6 @@ export default {
           }
         })
         .then(res => {
-          console.log(res);
           this.student.username = this.nickname;
           this.nickname = "";
         });
@@ -249,7 +243,6 @@ export default {
                 }
               })
               .then(res => {
-                console.log(res);
                 that.student.email = value;
               });
           }
@@ -266,7 +259,6 @@ export default {
       this.dialogVisible = true;
     },
     changePass() {
-      console.log(this.ruleForm.pass, this.ruleForm.checkPass);
       if (this.ruleForm.pass != this.ruleForm.checkPass) {
         this.$message({
           message: "两个密码不一样",
@@ -287,7 +279,6 @@ export default {
             }
           })
           .then(res => {
-            console.log(res);
           });
       }
       this.ruleForm.pass = "";
@@ -311,7 +302,6 @@ export default {
             }
           })
           .then(res => {
-            console.log(res);
             this.acceptNum = "";
             if (res.data == -1) {
               this.$message({
@@ -336,13 +326,10 @@ export default {
     },
     //上传图片问题
     handleRemove(file, fileList) {
-      console.log(file, fileList);
     },
     handlePreview(file) {
-      console.log(file);
     },
     beforeUpload(file) {
-      console.log(file);
       const isSize = file.size / 1024 / 1024 < 1;
       if (!isSize) {
         this.$message({
@@ -350,13 +337,11 @@ export default {
           type: "error"
         });
       }
-      console.log(file);
       return isSize;
     },
     httpRequest(params) {
       var that = this;
       let fd = new FormData();
-      console.log(params);
       var file = params.file;
       //声明js的文件流
       var reader = new FileReader();
@@ -368,7 +353,6 @@ export default {
           //将转换结果赋值给img标签
           that.student.headUrl = reader.result;
           var base64 = reader.result.split(",")[1];
-          console.log(base64);
           //像后端传送base64格式的图片
           var img = { id: that.student.id, imgStr: base64 };
           axios
@@ -376,15 +360,12 @@ export default {
               headers: { "Content-Type": "application/x-www-form-urlencoded" }
             })
             .then(res => {
-              console.log(res);
               that.imgUrl = res.data;
-              console.log(that.imgUrl);
               //清除缓存
               that.$refs.upload.clearFiles();
               that.$emit("imgUrl", that.imgUrl);
             });
           //输出结果
-          console.log(reader.result);
         };
       }
       return true;
