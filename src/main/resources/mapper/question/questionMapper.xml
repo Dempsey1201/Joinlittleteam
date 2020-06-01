@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.javaee.mapper.question.QuestionMapper">
+    <resultMap id="Question1" type="com.example.javaee.entity.question.Question1">
+        <id property="qid" column="qid"/>
+        <result property="question" column="question"/>
+        <result property="oa" column="oa"/>
+        <result property="ob" column="ob"/>
+        <result property="oc" column="oc"/>
+        <result property="od" column="od"/>
+        <result property="answer" column="answer"/>
+        <result property="qtype" column="type"/>
+        <result property="author" column="author"/>
+        <result property="subject" column="subject"/>
+    </resultMap>
+
+    <select id="getAll" resultType="Question1">
+        select *
+        from t_question
+    </select>
+
+    <select id="getQuestionById" resultType="Question1">
+        select *
+        from t_question
+        where qid = #{qid}
+    </select>
+    
+    <insert id="insertNewQuestion" parameterType="Question1">
+        insert into t_question(question,oa,ob,oc,od,answer,qtype,author,subject)
+        values (#{question.question},#{question.oa},#{question.ob},#{question.oc},#{question.od},#{question.answer},#{question.qtype},#{question.author},#{question.subject})
+    </insert>
+
+    <delete id="deleteQuestion">
+        delete from t_question
+        where qid = #{qid}
+    </delete>
+
+    <update id="updateQuestion" parameterType="Question1">
+        update t_question
+        set question= #{question.question},
+        oa = #{question.oa},
+        ob = #{question.ob},
+        oc = #{question.oc},
+        od = #{question.od},
+        answer = #{question.answer},
+        qtype = #{question.qtype},
+        author = #{question.author},
+        subject = #{question.subject}
+        where qid = #{question.qid};
+    </update>
+
+    <select id="getAnswer" resultType="String">
+        select answer
+        from t_question
+        where qid = #{qid}
+    </select>
+
+    <select id="searchQuestion" parameterType="String" resultType="com.example.javaee.entity.question.Question1">
+        select *
+        from t_question
+        where question like concat('%',#{question},'%')
+    </select>
+    
+    <select id="searchQuestionBySubject" resultType="com.example.javaee.entity.question.Question1">
+        select *
+        from t_question
+        where subject like concat('%',#{subject},'%') and question like concat('%',#{question},'%')
+    </select>
+
+    <select id="searchSubject" resultType="com.example.javaee.entity.question.Question1">
+        select subject
+        from t_question
+        where subject like concat('%',#{subject},'%')
+    </select>
+
+    <select id="selectMainKeyInQuestion" resultType="Integer">
+        select auto_increment
+        from information_schema.`TABLES`
+        where table_name='t_question'
+    </select>
+</mapper>
