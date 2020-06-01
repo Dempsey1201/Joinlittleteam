@@ -11,11 +11,15 @@
                 <el-input placeholder="请输入邮箱" v-model="form.email"
                 ></el-input>
             </el-form-item>
+            <el-form-item label="用户名" prop="username">
+                <el-input placeholder="请输入用户名" v-model="form.username"
+                ></el-input>
+            </el-form-item>
             <el-form-item label="" prop="identifyCode">
-                <el-input style="display:inline-block;width: 50%" placeholder="请输入验证码" v-model="form.identifyCode"
+                <el-input style="display:inline-block;width: 45%" placeholder="请输入验证码" v-model="form.identifyCode"
                 ></el-input>
                 <el-button
-                        style="display: inline-block;float: right"
+                        style="display: inline-block;float: right;padding: 12px 10px !important;"
                         type="primary"
                         @click="getCode"
                 >获取验证码{{time>0?' ('+time+') ':""}}</el-button>
@@ -77,7 +81,8 @@
 					idenPassword:"",
                     radio:"1",
                     identifyCode:"",
-                    rightCode:""
+                    rightCode:"",
+                    username:""
                 },
                 time:0,
 				labelPosition:"left",
@@ -96,6 +101,13 @@
 		                    message: '请输入密码',
 		                    trigger: 'blur'
 	                    },
+                    ],
+                    username:[
+                        {
+                            required:true,
+                            message: '请输入用户名',
+                            trigger: 'blur'
+                        },
                     ],
 	                idenPassword:[
 		                {
@@ -143,7 +155,8 @@
                         }
                         addUser({
                             email:this.form.email,
-                            password:this.form.password
+                            password:this.form.password,
+                            username:this.form.username
                         }).then(res=>{
                             if(res.data){
                                 // 跳转到

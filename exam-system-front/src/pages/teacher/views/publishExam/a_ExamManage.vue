@@ -38,8 +38,11 @@
         components:{
             newExam,
             searchExam,
+        },
+        created() {
+            document.title = "试卷管理"
         }
-	}
+    }
 </script>
 
 <style scoped>

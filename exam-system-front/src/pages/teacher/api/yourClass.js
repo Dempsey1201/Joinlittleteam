@@ -23,3 +23,9 @@ export const deleteClass  = (info)=>{
         params:info
     })
 }
+// 删除学生
+export const deleteUSer  = (info)=>{
+    return axios.get("/class/outClassRoom",{
+        params:info
+    })
+}

@@ -76,9 +76,9 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) =>{
     if(to.meta.needLogin){// 需要登录
-        if(!JSON.parse(sessionStorage.getItem("userInfo"))||!JSON.parse(sessionStorage.getItem("userInfo")).adminname){
+        if(!JSON.parse(sessionStorage.getItem("managerInfo"))||!JSON.parse(sessionStorage.getItem("managerInfo")).adminname){
             // 老师没有登陆
-            window.location = window.location.origin+"/managerLogin.html/login"
+            window.location = window.location.origin+"/managerLogin.html"
         }else {
             next();
         }

@@ -1,7 +1,8 @@
 <template>
-    <div class="Home">
+    <div class="Home" ref="box">
         <background :bg_color="bg_color" :ball_color="ball_color"></background>
-        <el-container class="con">
+        <el-container class="con" :style="'height:'+height+'px'">
+
             <el-header class="elHeader">
                 <!-- 头部导航 -->
                 <headerTab></headerTab>
@@ -36,19 +37,24 @@
                     b: 255
                 },
                 bg_color: "rgba(236, 245, 255,0.3)", //背景颜色
-                bool: true
+                bool: true,
+                height:0
             };
         },
         components: {
             tab,
             background,
             headerTab
+        },
+        mounted() {
+            this.height = this.$refs["box"].clientHeight
         }
     }
 </script>
 
 <style scoped>
     .Home{
+        position: relative;
         min-height: 100%;
     }
 </style>

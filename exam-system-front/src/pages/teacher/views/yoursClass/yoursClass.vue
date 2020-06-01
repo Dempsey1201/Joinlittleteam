@@ -84,6 +84,7 @@
         created() {
             this.classList = JSON.parse(sessionStorage.getItem("classInfo"))
             this.currentList = this.classList.slice(0,this.step);
+            document.title = "班级管理"
         },
         computed:{
         },

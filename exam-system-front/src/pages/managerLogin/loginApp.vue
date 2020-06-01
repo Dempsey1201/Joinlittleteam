@@ -44,6 +44,7 @@
             managerLogin,
         },
         created() {
+            document.title = "管理员登陆"
         }
 	}
 </script>
