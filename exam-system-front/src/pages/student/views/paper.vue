@@ -66,6 +66,8 @@ export default {
       .then(res => {
         console.log(res);
         this.paperList = res.data;
+        this.paperList = this.paperList.filter(item => (Date.parse(new Date(item.start_time))<=Date.parse(new Date())));
+        // console.log(this.paperList);
         this.currentList = this.paperList.slice(0, this.step);
       });
   },

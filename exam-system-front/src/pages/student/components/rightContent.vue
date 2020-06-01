@@ -92,6 +92,7 @@ export default {
           // const start = Date.parse(new Date(this.starttime));
           // // 定义当前时间戳
           // const now = Date.parse(new Date());
+          console.log(this.examList);
 
           if (e == "0") {
             this.examList = this.examList.filter(item => item.done == false);
