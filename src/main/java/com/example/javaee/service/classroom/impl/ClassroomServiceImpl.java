@@ -92,6 +92,9 @@ public class ClassroomServiceImpl implements ClassroomService {
         String cidStr=String.join(",", arrList);
 
         Classroom classroom=classroomMapper.queryClassroom(cid);
+        if(classroom==null){
+            return 2;
+        }
         String idStr=classroom.getSid();
         String[] idS=idStr.split(",");
         List<String> list1=Arrays.asList(idS);
