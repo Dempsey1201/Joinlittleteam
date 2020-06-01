@@ -50,7 +50,6 @@ export default {
   created() {
     document.title="教师管理"
     axios.get(this.url + "/teacher/list").then(res => {
-      console.log(res);
       this.teacherList = res.data;
       this.currentList = this.teacherList.slice(0, this.step);
     });
@@ -59,7 +58,6 @@ export default {
     // 删除老师
     handleDelete(index, row) {
       if (confirm("确定要删除这位老师嘛？")) {
-        console.log(row);
         axios
           .get(this.url + "/teacher/delete", {
             params: {
@@ -67,7 +65,6 @@ export default {
             }
           })
           .then(res => {
-            console.log(res);
             axios.get(this.url + "/teacher/list").then(res => {
               console.log(res);
               this.teacherList = res.data;
@@ -85,7 +82,6 @@ export default {
           }
         })
         .then(res => {
-          console.log(res);
           this.teacherList = res.data;
           this.currentList = this.teacherList.slice(0, this.step);
           this.search = "";

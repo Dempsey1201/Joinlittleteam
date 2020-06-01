@@ -63,7 +63,6 @@ export default {
         }
       })
       .then(res => {
-        console.log(res);
         this.stuList = res.data;
         this.currentList = this.stuList.slice(0, this.step);
       });
@@ -76,7 +75,6 @@ export default {
     // 删除老师
     handleDelete(index, row) {
       if (confirm("确定要删除这位学生嘛？")) {
-        console.log(row);
         axios
           .get(this.url + "/user/delete", {
             params: {
@@ -84,7 +82,6 @@ export default {
             }
           })
           .then(res => {
-            console.log(res);
             axios
               .get(this.url + "/user/queryClass", {
                 params: {
@@ -92,7 +89,6 @@ export default {
                 }
               })
               .then(res => {
-                console.log(res);
                 this.stuList = res.data;
                 this.currentList = this.stuList.slice(0, this.step);
               });
@@ -108,7 +104,6 @@ export default {
           }
         })
         .then(res => {
-          console.log(res);
           this.stuList = res.data;
           this.currentList = this.stuList.slice(0, this.step);
           this.search = "";

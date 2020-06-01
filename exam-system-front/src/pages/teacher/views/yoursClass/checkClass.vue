@@ -79,7 +79,7 @@
             getStudent({
                 id:this.currentClass.id
             }).then(res=>{
-                this.stuList = res.data;
+                this.stuList = res.data.filter(item=>item);
                 this.currentList = this.stuList.slice(0,this.step);
             }).catch(err=>{
                 throw err;
