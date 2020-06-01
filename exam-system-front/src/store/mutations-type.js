@@ -27,3 +27,5 @@ export const SET_CLASSINFO = "SET_CLASSINFO";// 设置班级信息
 
 // 用户对象
 export const SET_USERINFO = "SET_USERINFO"// 设置用户信息
+export const SET_STUDENTINFO = "SET_STUDENTINFO"//
+export const SET_MANAGERINFO = "SET_MANAGERINFO"//

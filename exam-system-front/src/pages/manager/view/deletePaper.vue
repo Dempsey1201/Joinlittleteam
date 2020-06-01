@@ -45,7 +45,6 @@ export default {
   },
   created() {
     axios.get(this.url + "/paper/getAllPaper").then(res => {
-      console.log(res);
       this.paperList = res.data;
       this.currentList = this.paperList.slice(0, this.step);
     });
@@ -60,7 +59,6 @@ export default {
         })
         .then(res => {
           this.paperList = res.data;
-          console.log(this.paperList);
           this.currentList = this.paperList.slice(0, this.step);
           this.search = "";
         });
@@ -74,7 +72,6 @@ export default {
             }
           })
           .then(res => {
-            console.log(res);
             this.paperList.splice(index, 1);
             this.currentList = this.paperList.slice(0, this.step);
           });

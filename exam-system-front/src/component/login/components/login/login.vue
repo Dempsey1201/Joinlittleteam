@@ -119,7 +119,7 @@
                                 this.$message.error('密码或用户名不正确');
                             }else {
                                 sessionStorage.setItem("studentInfo",JSON.stringify(res.data))
-                                this.setUserInfo(JSON.stringify(res.data))
+                                this.setStudentInfo(JSON.stringify(res.data))
                                 this.$router.push({
                                     path:this.$root._router.options.routes[2].path
                                 })
@@ -151,7 +151,8 @@
                 }
             },
             ...mapMutations({
-                setUserInfo:"SET_USERINFO"
+                setUserInfo:"SET_USERINFO",
+                setStudentInfo:"SET_STUDENTINFO"
             })
         },
 	}

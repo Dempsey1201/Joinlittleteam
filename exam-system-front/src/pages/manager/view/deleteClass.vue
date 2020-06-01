@@ -38,7 +38,6 @@ export default {
   created() {
     document.title="班级管理"
     axios.get(this.url + "/class/list").then(res => {
-      console.log(res);
       this.classList = res.data.filter(item => item!=null);
       this.currentList = this.classList.slice(0, this.step);
     });
@@ -47,7 +46,6 @@ export default {
     // 删除班级
     handleDelete(index, row) {
       if (confirm("确定要删除班级嘛？")) {
-        console.log(row);
         axios
           .get(this.url + "/class/delete", {
             params: {
@@ -55,7 +53,6 @@ export default {
             }
           })
           .then(res => {
-            console.log(res);
             axios.get(this.url + "/class/list").then(res => {
               console.log(res);
               this.classList = res.data;
@@ -67,8 +64,6 @@ export default {
     },
     //按照班级的名模糊搜索搜索
     searchClass() {
-      // class/queryClassroom?classno=45437fd391bc797cabf953b898a58
-
       axios
         .get(this.url + "/class/queryLike", {
           params: {
@@ -76,10 +71,6 @@ export default {
           }
         })
         .then(res => {
-          console.log(res.data);
-          // if(res.data==''){
-          //   res.data=[]
-          // }
           this.classList = [];
           this.classList=res.data;
           this.classList = res.data.filter(item => item!=null);

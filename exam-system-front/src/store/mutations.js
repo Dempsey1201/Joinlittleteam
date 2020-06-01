@@ -58,7 +58,13 @@ const mutations = {
 	// 用户信息
 	[types.SET_USERINFO](state,data){
 		state.userInfo = data;
-	}
+	},
+	[types.SET_STUDENTINFO](state,data){
+		state.SET_STUDENTINFO = data;
+	},
+	[types.SET_MANAGERINFO](state,data){
+		state.SET_MANAGERINFO = data;
+	},
 }
 
 export default mutations;//设置state
