@@ -149,7 +149,7 @@
                         if (formName === "email" || formName === "username") {
                             if (confirm("确定要修改吗？") === true) {
                                 updateOther({
-                                    college: this.info.password,
+                                    college: this.info.college,
                                     email: this.info.email,
                                     teachername: this.info.teachername,
                                     id: this.info.id
@@ -189,13 +189,13 @@
                                                 message: '修改密码成功',
                                                 type: 'success'
                                             });
-                                            this.form.password = "";
-                                            this.from.rePassword = "";
-                                            this.form.newPassword = "";
                                             this.bool = false;
                                             this.info.password = this.form.rePassword;
                                             sessionStorage.setItem("userInfo", JSON.stringify(this.info))
                                             this.setUserInfo(this.info)
+                                            this.form.password = "";
+                                            this.from.rePassword = "";
+                                            this.form.newPassword = "";
                                         }
                                     })
                                 }else {
